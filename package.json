@@ -1,17 +1,23 @@
 {
   "name": "electron-test-cra",
   "version": "0.1.0",
+  "main": "public/electron.js",
+  "homepage": "./",
   "private": true,
   "dependencies": {
+    "electron-is-dev": "^1.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "cra-start": "react-scripts start",
+    "cra-build": "react-scripts build",
+    "cra-test": "react-scripts test",
+    "cra-eject": "react-scripts eject",
+    "dev": "concurrently \"BROWSER=none yarn run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-build": "electron-builder",
+    "build": "rm -rf ./dist && yarn run cra-build && yarn run electron-build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -21,5 +27,20 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "electron": "^4.1.3",
+    "electron-builder": "^20.39.0",
+    "electron-devtools-installer": "^2.2.4",
+    "typescript": "^3.4.1",
+    "wait-on": "^3.2.0"
+  },
+  "build": {
+    "productName": "electra",
+    "appId": "com.dci.electra",
+    "files": [
+      "build/**/*"
+    ]
+  }
 }
