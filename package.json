@@ -15,6 +15,7 @@
     "cra-build": "react-scripts build",
     "cra-test": "react-scripts test",
     "cra-eject": "react-scripts eject",
+    "upgrade-dep": "yarn upgrade-interactive --latest",
     "dev": "concurrently \"BROWSER=none yarn run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "electron-builder",
     "build": "rm -rf ./dist && yarn run cra-build && yarn run electron-build"
