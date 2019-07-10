@@ -19,7 +19,7 @@
     "cra-eject": "react-scripts eject",
     "upgrade-dep": "yarn upgrade-interactive --latest",
     "lint": "eslint --fix .",
-    "precommit": "npm run lint",
+    "precommit": "yarn run lint",
     "dev": "concurrently \"BROWSER=none yarn run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "electron-builder",
     "build": "rm -rf ./dist && yarn run cra-build && yarn run electron-build"
@@ -38,7 +38,10 @@
     "electron": "^5.0.6",
     "electron-builder": "^20.39.0",
     "electron-devtools-installer": "^2.2.4",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "husky": "^3.0.0",
+    "prettier": "^1.18.2",
     "typescript": "^3.4.1",
     "wait-on": "^3.2.0"
   },
