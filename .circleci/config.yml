@@ -33,6 +33,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-       - run:
-           name: Run test
-           command: yarn cra-test
+      - run:
+          name: Run test
+          command: yarn run cra-test
