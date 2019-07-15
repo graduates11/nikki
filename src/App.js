@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import TextEditor from "./components/TextEditor";
+import EntriesByDate from "./components/entriesByDate";
+
 class App extends Component {
   render() {
-    return <TextEditor />;
+    return (
+      <div className="App">
+        <EntriesByDate />
+      <TextEditor />
+      </div>
+    );
   }
 }
 
