@@ -8,9 +8,13 @@
     "electron-is-dev": "^1.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.14.2",
+    "faker": "^4.1.0",
+    "lowdb": "^1.0.0",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "shortid": "^2.2.14"
   },
   "scripts": {
     "cra-start": "react-scripts start",
@@ -19,8 +23,8 @@
     "cra-eject": "react-scripts eject",
     "upgrade-dep": "yarn upgrade-interactive --latest",
     "lint": "eslint --fix .",
-    "precommit": "yarn run lint",
-    "dev": "concurrently \"BROWSER=none yarn run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "precommit": "npm run lint",
+    "dev": "concurrently \"BROWSER=none npm run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "electron-builder",
     "build": "rm -rf ./dist && yarn run cra-build && yarn run electron-build"
   },
