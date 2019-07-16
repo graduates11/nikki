@@ -23,12 +23,12 @@
     "cra-build": "react-scripts build",
     "cra-test": "react-scripts test",
     "cra-eject": "react-scripts eject",
-    "upgrade-dep": "yarn upgrade-interactive --latest",
+    "upgrade-dep": "yarn-or-npm upgrade-interactive --latest",
     "lint": "eslint --fix .",
-    "precommit": "npm run lint",
-    "dev": "concurrently \"BROWSER=none npm run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "precommit": "yarn-or-npm run lint",
+    "dev": "concurrently \"BROWSER=none yarn-or-npm run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "electron-builder",
-    "build": "rm -rf ./dist && yarn run cra-build && yarn run electron-build"
+    "build": "rm -rf ./dist && yarn-or-npm run cra-build && yarn yarn-or-npm electron-build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,7 +51,8 @@
     "lodash.template": "^4.5.0",
     "prettier": "^1.18.2",
     "typescript": "^3.4.1",
-    "wait-on": "^3.2.0"
+    "wait-on": "^3.2.0",
+    "yarn-or-npm": "^2.0.4"
   },
   "build": {
     "productName": "electra",
