@@ -39,6 +39,7 @@ for (let i = 0; i <= 5; i++) {
 }
 
 //moke entries
+moment.locale("de");
 
 for (let i = 0; i <= 10; i++) {
   var arr = [];

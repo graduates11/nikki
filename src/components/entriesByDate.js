@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 
-const entries = require("../lowdb/db.json");
-const testdate = "05/16/2019";
+const { entries } = require("../lowdb/db.json");
+const testdate = "18.01.2019";
 
 //Create a Array with all unique Dates of the Entries
 let uniqueDate = new Set();
-for (let entry of entries.entries) {
+for (let entry of entries) {
   uniqueDate.add(entry.date);
 }
 
 //Th Array with the Dates
 uniqueDate = Array.from(uniqueDate);
 
-const filterdate = entries.entries.filter(x => x.date === testdate);
+const filterdate = entries.filter(x => x.date === testdate);
 
 class EntriesByDate extends Component {
   state = { entry: [] };
