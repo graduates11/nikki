@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
 import SearchBar from "./components/SearchBar";
 import TextEditor from "./components/TextEditor";
-import EntriesByDate from "./components/entriesByDate";
-import MyCalendar from "./components/myCalendar";
+import EntriesByDate from "./components/EntriesByDate";
+import DatePicker from "./components/DatePicker";
 
 const styles = {
   fullHeight: {
@@ -32,7 +32,7 @@ class App extends Component {
           <Row style={styles.fullHeight}>
             <Col xs={4} className="border border-muted">
               <SearchBar />
-              <MyCalendar myDate={this.myDate} />
+              <DatePicker myDate={this.myDate} />
               <EntriesByDate date={this.state.date} />
             </Col>
             <Col xs={8} className="border border-muted">

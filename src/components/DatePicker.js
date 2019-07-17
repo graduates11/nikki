@@ -5,7 +5,7 @@ import localization from "moment/locale/de";
 
 moment.locale("de", localization);
 
-class myCalendar extends Component {
+class DatePicker extends Component {
   state = {
     date: new Date(),
     convertedDate: null
@@ -35,4 +35,4 @@ class myCalendar extends Component {
   }
 }
 
-export default myCalendar;
+export default DatePicker;
