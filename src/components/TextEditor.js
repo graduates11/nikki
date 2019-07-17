@@ -34,6 +34,7 @@ class TextEditor extends React.Component {
   onSave = () => {
     const text = this.getPlainText();
     const hashtags = this.getHashtags();
+    console.log(text, hashtags);
     // set the plain text and hashtags in the entry's object
   };
 
