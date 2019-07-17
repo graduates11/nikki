@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "reactstrap";
-import SearchBar from "./components/SearchBar";
-import TextEditor from "./components/TextEditor";
-import EntriesByDate from "./components/EntriesByDate";
-import DatePicker from "./components/DatePicker";
+import SearchBar from "./components/SearchBar.js";
+import TextEditor from "./components/TextEditor.js";
+import EntriesByDate from "./components/EntriesByDate.js";
+import DatePicker from "./components/DatePicker.js";
 
 const styles = {
   fullHeight: {
