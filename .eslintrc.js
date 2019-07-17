@@ -27,7 +27,13 @@ module.exports = {
     // semi: ["error", "never"],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "no-console": 1
+    "no-console": 1,
+    "no-unused-vars": [
+      1,
+      {
+        varsIgnorePattern: "React"
+      }
+    ]
   },
   settings: {
     react: {
