@@ -4,6 +4,7 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import * as serviceWorker from "./serviceWorker";
+import "./components/utils/hashtag.css";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

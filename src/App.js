@@ -32,7 +32,7 @@ class App extends Component {
           <Row style={styles.fullHeight}>
             <Col xs={4} className="border border-muted">
               <SearchBar />
-       <MyCalendar myDate={this.myDate} />
+              <MyCalendar myDate={this.myDate} />
               <EntriesByDate date={this.state.date} />
             </Col>
             <Col xs={8} className="border border-muted">
