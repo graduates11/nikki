@@ -1,28 +1,35 @@
 import React, { Component } from "react";
 
-const { entries } = require("../lowdb/db.json");
-const testdate = "18.01.2019";
-
-//Create a Array with all unique Dates of the Entries
-let uniqueDate = new Set();
-for (let entry of entries) {
-  uniqueDate.add(entry.date);
-}
-
-//Th Array with the Dates
-uniqueDate = Array.from(uniqueDate);
-
-const filterdate = entries.filter(x => x.date === testdate);
-
 class EntriesByDate extends Component {
   state = { entry: [] };
 
   componentDidMount() {
+    const { entries } = require("../lowdb/db.json");
+
+    //Create a Array with all unique Dates of the Entries
+    let uniqueDate = new Set();
+    for (let entry of entries) {
+      uniqueDate.add(entry.date);
+    }
+
+    //Th Array with the Dates
+    uniqueDate = Array.from(uniqueDate);
     this.setState({
-      entry: filterdate
+      entries,
+      uniqueDate
     });
   }
+  componentDidUpdate(prevProps) {
+    if (this.props.date !== prevProps.date) {
+      const filterdate = this.state.entries.filter(
+        x => x.date === this.props.date
+      );
 
+      this.setState({
+        entry: filterdate
+      });
+    }
+  }
   render() {
     return (
       <div>
