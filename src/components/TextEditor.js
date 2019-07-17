@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Editor, EditorState } from "draft-js";
+import { Button } from "reactstrap";
 
 class TextEditor extends React.Component {
   // create a new EditorState and keep it in state
@@ -30,13 +31,20 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <div className="editor">
+      <div className="editor mt-2">
         <h3>Date/Title</h3>
         <Editor
           editorState={this.state.editorState}
           onChange={this.editorStateChanged}
         />
-        <button onClick={this.onSave}>Save</button>
+        <Button
+          outline
+          color="secondary"
+          className="mt-2"
+          onClick={this.onSave}
+        >
+          Save
+        </Button>
       </div>
     );
   }

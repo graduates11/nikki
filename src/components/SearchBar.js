@@ -1,9 +1,10 @@
 import * as React from "react";
+import { Input } from "reactstrap";
 
 const SearchBar = () => {
   return (
     <div>
-      <input placeholder="Search..." type="text"></input>
+      <Input className="mt-2" placeholder="Search..." type="text"></Input>
     </div>
   );
 };

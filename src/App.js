@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-//import SearchBar from "./components/SearchBar";
-//import TextEditor from "./components/TextEditor";
+import { Container, Row, Col } from "reactstrap";
+import SearchBar from "./components/SearchBar";
+import TextEditor from "./components/TextEditor";
 import EntriesByDate from "./components/entriesByDate";
-//import EntriesByTag from "./components/entriesByTag";
 import MyCalendar from "./components/myCalendar";
+
+const styles = {
+  fullHeight: {
+    height: "100vh"
+  }
+};
 
 class App extends Component {
   constructor(props) {
@@ -21,9 +27,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <MyCalendar myDate={this.myDate} />
-        <EntriesByDate date={this.state.date} />
+      <div className="App mt-3 mb-3">
+        <Container style={styles.fullHeight}>
+          <Row style={styles.fullHeight}>
+            <Col xs={4} className="border border-muted">
+              <SearchBar />
+       <MyCalendar myDate={this.myDate} />
+              <EntriesByDate date={this.state.date} />
+            </Col>
+            <Col xs={8} className="border border-muted">
+              <TextEditor />
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
