@@ -25,15 +25,13 @@ class EntriesByTag extends Component {
   render() {
     return (
       <div>
-        <h1>{testtag}</h1>
+        <h4>{testtag}</h4>
         {this.state.entry.length === 0 ? (
           <p>No Entries for this tag</p>
         ) : (
           <ul>
             {this.state.entry.map(x => (
-              <li key={x.id}>
-                <h2>{x.title}</h2>
-              </li>
+              <li key={x.id}>{x.title}</li>
             ))}
           </ul>
         )}

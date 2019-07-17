@@ -32,7 +32,7 @@ class EntriesByDate extends Component {
           <ul>
             {this.state.entry.map(x => (
               <li key={x.id}>
-                <h2>{x.title}</h2>
+                {x.title}
                 {/* the date is just to check if the right entries a shown and will be deleted later */}
                 <p>{x.date}</p>
               </li>

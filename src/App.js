@@ -14,14 +14,14 @@ const styles = {
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="App mt-3 mb-3">
         <Container style={styles.fullHeight}>
           <Row style={styles.fullHeight}>
-            <Col className="border border-dark">
+            <Col xs={4} className="border border-muted">
               <SearchBar />
               <EntriesByTag />
             </Col>
-            <Col className="border border-dark">
+            <Col xs={8} className="border border-muted">
               <TextEditor />
             </Col>
           </Row>
