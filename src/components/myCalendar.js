@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
+import { Store } from "./Store";
 import Calendar from "react-calendar";
 import moment from "moment";
 import localization from "moment/locale/de";
-import { Store } from "./Store";
 
 moment.locale("de", localization);
 

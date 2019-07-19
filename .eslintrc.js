@@ -21,7 +21,7 @@ module.exports = {
   plugins: ["react", "prettier"],
   rules: {
     "prettier/prettier": "error",
-    indent: ["error", 2],
+    //indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
     quotes: ["error", "double"],
     // semi: ["error", "never"],

@@ -12,13 +12,13 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-  case "SET_DATE":
-    return {
-      date: action.payload.date,
-      convertedDate: action.payload.convertedDate
-    };
-  default:
-    return state;
+    case "SET_DATE":
+      return {
+        date: action.payload.date,
+        convertedDate: action.payload.convertedDate
+      };
+    default:
+      return state;
   }
 }
 
