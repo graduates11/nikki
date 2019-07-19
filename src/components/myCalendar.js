@@ -8,6 +8,7 @@ moment.locale("de", localization);
 
 const MyCalendar = () => {
   const { state, dispatch } = useContext(Store);
+  console.log(state);
 
   return (
     <div>
