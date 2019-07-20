@@ -2,8 +2,15 @@ import React, { Component } from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
 import localization from "moment/locale/de";
-
 moment.locale("de", localization);
+
+const { entries } = require("../lowdb/db.json");
+
+let datesWithEntries = [];
+for (let entry of entries) {
+  const dateWithEntry = new Date(entry.date).toDateString();
+  datesWithEntries.push(dateWithEntry);
+}
 
 class myCalendar extends Component {
   state = {
@@ -26,10 +33,20 @@ class myCalendar extends Component {
     this.props.myDate(newdate);
   };
 
+  tileClassName = ({ date, view }) => {
+    return view === "month" && datesWithEntries.includes(date.toDateString())
+      ? "highlight"
+      : null;
+  };
+
   render() {
     return (
       <div>
-        <Calendar onChange={this.onChange} value={this.state.date} />
+        <Calendar
+          onChange={this.onChange}
+          value={this.state.date}
+          tileClassName={this.tileClassName}
+        />
       </div>
     );
   }
