@@ -34,6 +34,12 @@ label:focus,
 }
 
 .highlight {
-    font-weight: bolder;
-    font-size: 115%;
+    /* font-weight: bolder;
+    font-size: 115%; */
+    border-radius: 50%;
+    background-color: #F2F2F2;
+}
+
+.circle {
+    border-radius: 50%;
 }

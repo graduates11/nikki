@@ -36,7 +36,7 @@ class myCalendar extends Component {
   tileClassName = ({ date, view }) => {
     return view === "month" && datesWithEntries.includes(date.toDateString())
       ? "highlight"
-      : null;
+      : "circle";
   };
 
   render() {
