@@ -4,9 +4,15 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import * as serviceWorker from "./serviceWorker";
+import { StoreProvider } from "./components/Store";
 import "./components/utils/hashtag.css";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <StoreProvider>
+    <App />
+  </StoreProvider>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
