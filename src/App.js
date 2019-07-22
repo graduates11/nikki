@@ -12,12 +12,6 @@ const styles = {
 };
 
 export default function App() {
-  // myDate = value => {
-  //   this.setState({
-  //     date: value
-  //   });
-  // };
-
   return (
     <div className="App mt-3 mb-3">
       <Container style={styles.fullHeight}>

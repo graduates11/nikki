@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import * as serviceWorker from "./serviceWorker";
 import { StoreProvider } from "./components/Store";
+import "./components/utils/hashtag.css";
 
 ReactDOM.render(
   <StoreProvider>
