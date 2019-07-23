@@ -22,6 +22,11 @@
     "reactstrap": "^8.0.1",
     "shortid": "^2.2.14"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn-or-npm run lint"
+    }
+  },
   "scripts": {
     "cra-start": "react-scripts start",
     "cra-build": "react-scripts build",
@@ -29,7 +34,6 @@
     "cra-eject": "react-scripts eject",
     "upgrade-dep": "yarn-or-npm upgrade-interactive --latest",
     "lint": "eslint --fix .",
-    "precommit": "yarn-or-npm run lint",
     "dev": "concurrently \"BROWSER=none yarn-or-npm run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "electron-builder",
     "build": "rm -rf ./dist && yarn-or-npm run cra-build && yarn yarn-or-npm electron-build"
