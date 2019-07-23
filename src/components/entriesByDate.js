@@ -5,7 +5,11 @@ const { entries } = require("../lowdb/db.json");
 const EntriesByDate = () => {
   const { state } = useContext(Store);
 
-  let result = entries.filter(entry => entry.date === state.convertedDate);
+  let result = entries.filter(entry => {
+    const existing = new Date(entry.date).toDateString();
+    const requested = new Date(state.date).toDateString();
+    return existing === requested;
+  });
 
   return (
     <div>

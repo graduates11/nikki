@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 
 const { entries, tags } = require("../lowdb/db.json");
-const testtag = "omnis";
+const testtag = "nisi";
 
 const filterTag = tags.filter(x => x.text === testtag)["0"].entries;
-console.log(filterTag);
 
 let result = [];
 
