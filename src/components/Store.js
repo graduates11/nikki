@@ -24,8 +24,7 @@ function reducer(state, action) {
     case "GET_ENTRY":
       return {
         date: action.payload.date,
-        titel: action.payload.titel,
-        text: action.payload.text
+        entry: { titel: action.payload.titel, text: action.payload.text }
       };
     default:
       return state;
