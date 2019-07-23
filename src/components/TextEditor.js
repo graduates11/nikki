@@ -3,7 +3,7 @@ import Editor from "draft-js-plugins-editor";
 import createHashtagPlugin from "draft-js-hashtag-plugin";
 import React from "react";
 import { Button, Input } from "reactstrap";
-
+import { Store } from "./Store";
 // Creates an Instance. At this step, a configuration object can be passed in
 // as an argument.
 const hashtagPlugin = createHashtagPlugin();
@@ -20,6 +20,9 @@ const sampleEntry = {
 };
 
 class TextEditor extends React.Component {
+  // connect to the store:
+  static contextType = Store;
+
   state = {
     entry: sampleEntry,
     editorState: EditorState.createWithContent(
