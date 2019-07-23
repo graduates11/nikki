@@ -10,7 +10,6 @@ moment.locale("de", localization);
 
 const MyCalendar = () => {
   const { state, dispatch } = useContext(Store);
-  // console.log(new Date(state.date).toDateString());
 
   let datesWithEntries = [];
   for (let entry of entries) {
