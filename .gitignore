@@ -12,6 +12,9 @@
 /build
 /dist
 
+# lowdb mock database (can be generated with lowdbtest.js
+/src/lowdb/db.json
+
 # misc
 .DS_Store
 .env.local
