@@ -7,7 +7,11 @@ export const Store = React.createContext();
 const day = new Date();
 const initialState = {
   date: day,
-  convertedDate: moment(day).format("L")
+  convertedDate: moment(day).format("L"),
+  entry: {
+    titel: "",
+    text: ""
+  }
 };
 
 function reducer(state, action) {
@@ -16,6 +20,12 @@ function reducer(state, action) {
       return {
         date: action.payload.date,
         convertedDate: action.payload.convertedDate
+      };
+    case "GET_ENTRY":
+      return {
+        date: action.payload.date,
+        titel: action.payload.titel,
+        text: action.payload.text
       };
     default:
       return state;

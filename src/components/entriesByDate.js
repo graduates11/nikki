@@ -1,20 +1,45 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Store } from "./Store";
 const { entries } = require("../lowdb/db.json");
 
 const EntriesByDate = () => {
-  const { state } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
 
-  let result = entries.filter(entry => entry.date === state.convertedDate);
 
+  let result = entries.filter(entry => {
+    const existing = new Date(entry.date).toDateString();
+    const requested = new Date(state.date).toDateString();
+    return existing === requested;
+  });
+
+  const [entrylist, setEntrylist] = useState(result);
   return (
     <div>
       {result.length === 0 ? (
         <p>No Entry for that date</p>
       ) : (
         <ul>
-          {result.map(entry => (
-            <li key={entry.id}>{entry.title}</li>
+          {entrylist.map(entry => (
+            <li
+              key={entry.id}
+              id={entry.id}
+              onClick={
+                e => {
+                  dispatch({
+                    type: "GET_ENTRY",
+                    payload: {
+                      date: state.date,
+                      titel: entrylist.filter(x => x.id === e.target.id)[0]
+                        .title,
+                      text: entrylist.filter(x => x.id === e.target.id)[0].text
+                    }
+                  });
+                }
+                //console.log(result.filter(x => x.id === e.target.id)[0].title)
+              }
+            >
+              {entry.title}
+            </li>
           ))}
         </ul>
       )}
