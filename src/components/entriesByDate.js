@@ -27,7 +27,7 @@ const EntriesByDate = () => {
                     type: "GET_ENTRY",
                     payload: {
                       date: state.date,
-                      titel: result.filter(x => x.id === e.target.id)[0].title,
+                      title: result.filter(x => x.id === e.target.id)[0].title,
                       text: result.filter(x => x.id === e.target.id)[0].text
                     }
                   });
