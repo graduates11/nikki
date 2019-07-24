@@ -1,19 +1,13 @@
 import { EditorState, ContentState } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHashtagPlugin from "draft-js-hashtag-plugin";
-import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
-import createLinkPlugin from "draft-js-anchor-plugin";
-import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
 // Creates an Instance. At this step, a configuration object can be passed in
 // as an argument.
 const hashtagPlugin = createHashtagPlugin();
-const inlineToolbarPlugin = createInlineToolbarPlugin();
-const linkPlugin = createLinkPlugin();
-const { InlineToolbar } = inlineToolbarPlugin;
-const plugins = [hashtagPlugin, inlineToolbarPlugin, linkPlugin];
+const plugins = [hashtagPlugin];
 
 const sampleEntry = {
   id: "EfmidzPin",
@@ -89,17 +83,6 @@ class TextEditor extends React.Component {
             this.editor = element;
           }}
         />
-        <InlineToolbar>
-          {// may be use React.Fragment instead of div to improve perfomance after React 16
-          externalProps => (
-            <React.Fragment>
-              <BoldButton {...externalProps} />
-              <ItalicButton {...externalProps} />
-              <UnderlineButton {...externalProps} />
-              <linkPlugin.LinkButton {...externalProps} />
-            </React.Fragment>
-          )}
-        </InlineToolbar>
         <Button
           outline
           color="secondary"
