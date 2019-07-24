@@ -8,10 +8,7 @@ const day = new Date();
 const initialState = {
   date: day,
   convertedDate: moment(day).format("L"),
-  entry: {
-    titel: "",
-    text: ""
-  }
+  entry: {}
 };
 
 function reducer(state, action) {
@@ -24,8 +21,7 @@ function reducer(state, action) {
     case "GET_ENTRY":
       return {
         date: action.payload.date,
-        titel: action.payload.titel,
-        text: action.payload.text
+        entry: action.payload.entry
       };
     default:
       return state;
