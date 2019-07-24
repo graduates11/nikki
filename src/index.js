@@ -6,6 +6,8 @@ import "./App.css";
 import * as serviceWorker from "./serviceWorker";
 import { StoreProvider } from "./components/Store";
 import "./components/utils/hashtag.css";
+import "./components/utils/Toolbar.css";
+import "./components/utils/Link.css";
 
 ReactDOM.render(
   <StoreProvider>
