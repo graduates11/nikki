@@ -7,6 +7,7 @@ import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
+const { ipcRenderer } = window;
 // Creates an Instance. At this step, a configuration object can be passed in
 // as an argument.
 const hashtagPlugin = createHashtagPlugin();
@@ -72,6 +73,35 @@ class TextEditor extends React.Component {
     // update lowdb with a new entry object
   };
 
+  addEntry = () => {
+    const { entry } = this.state;
+    // send message to ipcMain
+    ipcRenderer.send("add-entry", entry);
+    // wait for response from ipcMain
+    return new Promise((resolve, reject) => {
+      // if resolved:
+      ipcRenderer.once("add-entry-success", (event, response) => {
+        resolve(response);
+      });
+      // if rejected:
+      ipcRenderer.once("add-entry-error", (event, response) => {
+        reject(response);
+      });
+    });
+  };
+
+  getEntry = entryId => {
+    ipcRenderer.send("get-entry", entryId);
+    return new Promise((resolve, reject) => {
+      ipcRenderer.once("get-entry-reply", (event, entry) => {
+        resolve(entry);
+      });
+      ipcRenderer.once("get-entry-error", (event, args) => {
+        reject(args);
+      });
+    });
+  };
+
   render() {
     return (
       <div className="editor">
@@ -90,8 +120,7 @@ class TextEditor extends React.Component {
           }}
         />
         <InlineToolbar>
-          {// may be use React.Fragment instead of div to improve perfomance after React 16
-          externalProps => (
+          {externalProps => (
             <React.Fragment>
               <BoldButton {...externalProps} />
               <ItalicButton {...externalProps} />
@@ -104,7 +133,7 @@ class TextEditor extends React.Component {
           outline
           color="secondary"
           className="mt-2"
-          onClick={this.onSave}
+          onClick={this.getEntry}
         >
           Save
         </Button>
