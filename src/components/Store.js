@@ -5,7 +5,7 @@ const day = new Date();
 const initialState = {
   date: day,
   entry: {},
-  entriesByDate: []
+  allEntries: []
 };
 
 function reducer(state, action) {
@@ -22,7 +22,7 @@ function reducer(state, action) {
     case "GET_ALL_ENTRIES":
       return {
         date: action.payload.date,
-        entriesByDate: action.payload.entriesByDate
+        allEntries: action.payload.allEntries
       };
     default:
       return state;

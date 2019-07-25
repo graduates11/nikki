@@ -93,12 +93,12 @@ ipcMain.on("get-entry", async (event, entryId) => {
   }
 });
 
-ipcMain.on("get-entries-by-date", async event => {
+ipcMain.on("get-all-entries", async event => {
   try {
     const entry = await db.get("entries").value();
-    event.reply("get-entries-by-date-reply", entry);
+    event.reply("get-all-entries-reply", entry);
   } catch (e) {
-    event.sender.send("get-entries-by-date-error", e.message);
+    event.sender.send("get-all-entries-error", e.message);
   }
 });
 //REFACTOR TO USE LOWDB:

@@ -21,19 +21,19 @@ const MyCalendar = () => {
   }
 
   const getEntries = () => {
-    ipcRenderer.send("get-entries-by-date");
+    ipcRenderer.send("get-all-entries");
     return new Promise((resolve, reject) => {
-      ipcRenderer.once("get-entries-by-date-reply", (event, entry) => {
+      ipcRenderer.once("get-all-entries-reply", (event, entry) => {
         resolve(entry);
         dispatch({
-          type: "GET_ENTRY_BY_DATE",
+          type: "GET_ALL_ENTRIES",
           payload: {
             date: newdate === undefined ? state.date : newdate,
-            entriesByDate: [...entry]
+            allEntries: [...entry]
           }
         });
       });
-      ipcRenderer.once("get-entries-by-date-error", (event, args) => {
+      ipcRenderer.once("get-all-entries-error", (event, args) => {
         reject(args);
       });
     });
