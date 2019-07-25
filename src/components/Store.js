@@ -1,27 +1,28 @@
 import React from "react";
-import moment from "moment";
-import localization from "moment/locale/de";
-moment.locale("de", localization);
 
 export const Store = React.createContext();
 const day = new Date();
 const initialState = {
   date: day,
-  convertedDate: moment(day).format("L"),
-  entry: {}
+  entry: {},
+  entriesByDate: []
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "SET_DATE":
       return {
-        date: action.payload.date,
-        convertedDate: action.payload.convertedDate
+        date: action.payload.date
       };
     case "GET_ENTRY":
       return {
         date: action.payload.date,
         entry: action.payload.entry
+      };
+    case "GET_ENTRY_BY_DATE":
+      return {
+        date: action.payload.date,
+        entriesByDate: action.payload.entriesByDate
       };
     default:
       return state;

@@ -92,6 +92,15 @@ ipcMain.on("get-entry", async (event, entryId) => {
     event.sender.send("get-entry-error", e.message);
   }
 });
+
+ipcMain.on("get-entries-by-date", async event => {
+  try {
+    const entry = await db.get("entries").value();
+    event.reply("get-entries-by-date-reply", entry);
+  } catch (e) {
+    event.sender.send("get-entries-by-date-error", e.message);
+  }
+});
 //REFACTOR TO USE LOWDB:
 // ipcMain.on("add-entry", async (event, entry) => {
 //   try {

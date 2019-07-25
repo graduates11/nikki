@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Store } from "./Store";
 import Calendar from "react-calendar";
 import moment from "moment";
 import localization from "moment/locale/de";
+const { ipcRenderer } = window;
 
 const { entries } = require("../lowdb/db.json");
 
 moment.locale("de", localization);
-
+let newdate;
 const MyCalendar = () => {
   const { state, dispatch } = useContext(Store);
 
@@ -19,6 +20,30 @@ const MyCalendar = () => {
     }
   }
 
+  const getEntries = () => {
+    ipcRenderer.send("get-entries-by-date");
+    return new Promise((resolve, reject) => {
+      ipcRenderer.once("get-entries-by-date-reply", (event, entry) => {
+        resolve(entry);
+        dispatch({
+          type: "GET_ENTRY_BY_DATE",
+          payload: {
+            date: newdate === undefined ? state.date : newdate,
+            entriesByDate: [...entry]
+          }
+        });
+      });
+      ipcRenderer.once("get-entries-by-date-error", (event, args) => {
+        reject(args);
+      });
+    });
+  };
+
+  useEffect(() => {
+    getEntries();
+    // eslint-disable-next-line
+  }, []);
+
   const tileClassName = ({ date, view }) => {
     return view === "month" && datesWithEntries.includes(date.toDateString())
       ? "highlight"
@@ -29,9 +54,11 @@ const MyCalendar = () => {
     <div>
       <Calendar
         onChange={date => {
+          newdate = date;
+          getEntries(date.toDateString());
           dispatch({
             type: "SET_DATE",
-            payload: { date: date, convertedDate: moment(date).format("L") }
+            payload: { date: date }
           });
         }}
         value={state.date}
