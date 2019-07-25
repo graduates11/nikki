@@ -19,7 +19,7 @@ function reducer(state, action) {
         date: action.payload.date,
         entry: action.payload.entry
       };
-    case "GET_ENTRY_BY_DATE":
+    case "GET_ALL_ENTRIES":
       return {
         date: action.payload.date,
         entriesByDate: action.payload.entriesByDate
