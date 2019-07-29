@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Store } from "./Store";
+import { DeleteEntry } from "./index";
 
 const EntriesByDate = () => {
   const { state, dispatch } = useContext(Store);
@@ -34,6 +35,7 @@ const EntriesByDate = () => {
               }
             >
               {entry.title}
+              <DeleteEntry id={entry.id} />
             </li>
           ))}
         </ul>

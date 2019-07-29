@@ -9,6 +9,7 @@ const initialState = {
 };
 
 function reducer(state, action) {
+  console.log(action);
   switch (action.type) {
     case "SET_DATE":
       return {
@@ -26,6 +27,14 @@ function reducer(state, action) {
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
+        entry: state.entry
+      };
+    case "DELETE_ENTRY":
+      return {
+        date: action.payload.date,
+        allEntries: state.allEntries.filter(
+          item => item.id !== action.payload.id
+        ),
         entry: state.entry
       };
     default:
