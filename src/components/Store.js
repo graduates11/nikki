@@ -1,9 +1,9 @@
 import React from "react";
 
 export const Store = React.createContext();
-const day = new Date();
+
 const initialState = {
-  date: day,
+  date: "",
   entry: {},
   allEntries: []
 };
@@ -12,12 +12,14 @@ function reducer(state, action) {
   switch (action.type) {
     case "SET_DATE":
       return {
-        date: action.payload.date
+        date: action.payload.date,
+        allEntries: state.allEntries
       };
     case "GET_ENTRY":
       return {
         date: action.payload.date,
-        entry: action.payload.entry
+        entry: action.payload.entry,
+        allEntries: state.allEntries
       };
     case "GET_ALL_ENTRIES":
       return {

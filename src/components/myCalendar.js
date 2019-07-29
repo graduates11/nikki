@@ -8,7 +8,7 @@ const { ipcRenderer } = window;
 const { entries } = require("../lowdb/db.json");
 
 moment.locale("de", localization);
-let newdate;
+
 const MyCalendar = () => {
   const { state, dispatch } = useContext(Store);
 
@@ -23,13 +23,13 @@ const MyCalendar = () => {
   const getEntries = () => {
     ipcRenderer.send("get-all-entries");
     return new Promise((resolve, reject) => {
-      ipcRenderer.once("get-all-entries-reply", (event, entry) => {
-        resolve(entry);
+      ipcRenderer.once("get-all-entries-reply", (event, entries) => {
+        resolve(entries);
         dispatch({
           type: "GET_ALL_ENTRIES",
           payload: {
-            date: newdate === undefined ? state.date : newdate,
-            allEntries: [...entry]
+            date: new Date(),
+            allEntries: [...entries]
           }
         });
       });
@@ -54,8 +54,6 @@ const MyCalendar = () => {
     <div>
       <Calendar
         onChange={date => {
-          newdate = date;
-          getEntries(date.toDateString());
           dispatch({
             type: "SET_DATE",
             payload: { date: date }
