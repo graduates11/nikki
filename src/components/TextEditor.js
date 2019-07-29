@@ -23,7 +23,8 @@ class TextEditor extends React.Component {
     entry: {
       id: "default_id",
       text: "Your text...",
-      title: "Your title..."
+      title: "Your title...",
+      date: new Date()
     },
     editorState: EditorState.createEmpty()
   };
@@ -39,6 +40,7 @@ class TextEditor extends React.Component {
     if (currentEntry.id !== this.state.entry.id) {
       this.setState({
         entry: currentEntry,
+        // if entry has editors state set it to that else:
         editorState: EditorState.createWithContent(
           ContentState.createFromText(currentEntry.text)
         )
@@ -98,13 +100,20 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <div className="editor">
-        <Input
-          onChange={this.onTitleChange}
-          value={this.state.entry.title}
-          className="title-input mt-2"
-          type="text"
-        ></Input>
+      <section className="editor">
+        <div className="entry-header">
+          <span className="entry-date mt-2">
+            {new Date(this.state.entry.date).toDateString()}
+          </span>
+          <Input
+            onChange={this.onTitleChange}
+            value={this.state.entry.title}
+            className="title-input mt-2"
+            type="text"
+            maxLength="50"
+          ></Input>
+        </div>
+
         <Editor
           editorState={this.state.editorState}
           onChange={this.onChange}
@@ -123,16 +132,18 @@ class TextEditor extends React.Component {
             </React.Fragment>
           )}
         </InlineToolbar>
+        <Button outline color="secondary" className="m-2" onClick={this.onSave}>
+          Save
+        </Button>
         <Button
           outline
           color="secondary"
-          className="mt-2"
-          onClick={this.onSave}
+          className="m-2"
+          onClick={this.deleteEntry}
         >
-          Save
+          Delete
         </Button>
-        <Button onClick={this.deleteEntry}>Delete</Button>
-      </div>
+      </section>
     );
   }
 }
