@@ -12,6 +12,15 @@ div.DraftEditor-root {
     font-family: 'calibri', sans-serif;
 }
 
+.entry-header {
+    display: flex;
+    flex-direction: row
+}
+
+.entry-date {
+    font-size: 12px;
+}
+
 textarea:hover,
 input:hover,
 textarea:active,
