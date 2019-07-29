@@ -6,7 +6,7 @@ const DeleteEntry = props => {
   return (
     <button
       id={props.id}
-      onClick={e => {
+      onClick={() => {
         dispatch({
           type: "DELETE_ENTRY",
           payload: {

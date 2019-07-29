@@ -6,7 +6,7 @@ import createLinkPlugin from "draft-js-anchor-plugin";
 import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
 import React from "react";
 import { Button, Input } from "reactstrap";
-import { Store } from "./Store";
+import { Store, Consumer } from "./Store";
 
 const { ipcRenderer } = window;
 const hashtagPlugin = createHashtagPlugin();
@@ -69,11 +69,13 @@ class TextEditor extends React.Component {
     this.updateEntry();
   };
 
-  updateEntry = () => {
+  updateEntry = store => {
     // call ipc and save the entry from state + plus editorsState
     const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
     const text = this.getPlainText();
+    const { dispatch } = store;
+
     const updatedEntry = {
       ...entry,
       editorState: editorState,
@@ -81,15 +83,26 @@ class TextEditor extends React.Component {
       tags: hashtags
     };
 
-    if (
-      this.context.state.allEntries.find(
-        entry => entry.id === updatedEntry.id
-      ) !== undefined
-    ) {
-      // DISPATCH UPDATE ENTRY
-    } else {
-      // DISPATCH ADD ENTRY
-    }
+    console.log("BOB");
+
+    // dispatch({ lolo: "lolol" })
+
+    dispatch({
+      type: "UPDATE_ENTRY",
+      payload: {
+        id: updatedEntry
+      }
+    });
+
+    // if (
+    //   this.context.state.allEntries.find(
+    //     entry => entry.id === updatedEntry.id
+    //   ) !== undefined
+    // ) {
+    //   // DISPATCH UPDATE ENTRY
+    // } else {
+    //   // DISPATCH ADD ENTRY
+    // }
   };
 
   deleteEntry = () => {
@@ -98,41 +111,49 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <div className="editor">
-        <Input
-          onChange={this.onTitleChange}
-          value={this.state.entry.title}
-          className="title-input mt-2"
-          type="text"
-        ></Input>
-        <Editor
-          editorState={this.state.editorState}
-          onChange={this.onChange}
-          plugins={plugins}
-          ref={element => {
-            this.editor = element;
-          }}
-        />
-        <InlineToolbar>
-          {externalProps => (
-            <React.Fragment>
-              <BoldButton {...externalProps} />
-              <ItalicButton {...externalProps} />
-              <UnderlineButton {...externalProps} />
-              <linkPlugin.LinkButton {...externalProps} />
-            </React.Fragment>
-          )}
-        </InlineToolbar>
-        <Button
-          outline
-          color="secondary"
-          className="mt-2"
-          onClick={this.onSave}
-        >
-          Save
-        </Button>
-        <Button onClick={this.deleteEntry}>Delete</Button>
-      </div>
+      <Consumer>
+        {value => {
+          console.log(value.state);
+
+          return (
+            <div className="editor">
+              <Input
+                onChange={this.onTitleChange}
+                value={this.state.entry.title}
+                className="title-input mt-2"
+                type="text"
+              ></Input>
+              <Editor
+                editorState={this.state.editorState}
+                onChange={this.onChange}
+                plugins={plugins}
+                ref={element => {
+                  this.editor = element;
+                }}
+              />
+              <InlineToolbar>
+                {externalProps => (
+                  <React.Fragment>
+                    <BoldButton {...externalProps} />
+                    <ItalicButton {...externalProps} />
+                    <UnderlineButton {...externalProps} />
+                    <linkPlugin.LinkButton {...externalProps} />
+                  </React.Fragment>
+                )}
+              </InlineToolbar>
+              <Button
+                outline
+                color="secondary"
+                className="mt-2"
+                onClick={() => this.updateEntry(value)}
+              >
+                Save
+              </Button>
+              <Button onClick={this.deleteEntry}>Delete</Button>
+            </div>
+          );
+        }}
+      </Consumer>
     );
   }
 }
