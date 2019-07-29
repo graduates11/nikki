@@ -80,24 +80,20 @@ class TextEditor extends React.Component {
       text,
       tags: hashtags
     };
-    ipcRenderer.send("update-entry", updatedEntry);
+
+    if (
+      this.context.state.allEntries.find(
+        entry => entry.id === updatedEntry.id
+      ) !== undefined
+    ) {
+      // DISPATCH UPDATE ENTRY
+    } else {
+      // DISPATCH ADD ENTRY
+    }
   };
 
-  addEntry = () => {
-    const { entry } = this.state;
-    // send message to ipcMain
-    ipcRenderer.send("add-entry", entry);
-    // wait for response from ipcMain
-    return new Promise((resolve, reject) => {
-      // if resolved:
-      ipcRenderer.once("add-entry-success", (event, response) => {
-        resolve(response);
-      });
-      // if rejected:
-      ipcRenderer.once("add-entry-error", (event, response) => {
-        reject(response);
-      });
-    });
+  deleteEntry = () => {
+    // DISPATCH DELETE ENTRY
   };
 
   render() {
@@ -135,6 +131,7 @@ class TextEditor extends React.Component {
         >
           Save
         </Button>
+        <Button onClick={this.deleteEntry}>Delete</Button>
       </div>
     );
   }
