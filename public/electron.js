@@ -93,7 +93,7 @@ ipcMain.on("get-entry", async (event, entryId) => {
   }
 });
 
-ipcMain.on("get-all-entries", async event => {
+ipcMain.on("get-all-entries", async (event, arg) => {
   try {
     const entry = await db.get("entries").value();
     event.reply("get-all-entries-reply", entry);

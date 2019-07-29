@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Row, Col } from "reactstrap";
 import {
   EntriesByDate,
@@ -6,6 +6,7 @@ import {
   SearchBar,
   TextEditor
 } from "../src/components";
+import { Store } from "./components/Store";
 
 const styles = {
   fullHeight: {
@@ -14,6 +15,8 @@ const styles = {
 };
 
 export default function App() {
+  const { state, dispatch } = useContext(Store);
+  console.log(state);
   return (
     <div className="App mt-3 mb-3">
       <Container style={styles.fullHeight}>
@@ -24,7 +27,7 @@ export default function App() {
             <EntriesByDate />
           </Col>
           <Col xs={8} className="border border-muted">
-            <TextEditor />
+            {state.entry !== null ? <TextEditor /> : <p>No entry</p>}
           </Col>
         </Row>
       </Container>
