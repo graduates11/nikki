@@ -7,34 +7,25 @@ import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
+
 const { ipcRenderer } = window;
-// Creates an Instance. At this step, a configuration object can be passed in
-// as an argument.
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const linkPlugin = createLinkPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
 const plugins = [hashtagPlugin, inlineToolbarPlugin, linkPlugin];
 
-const sampleEntry = {
-  id: "EfmidzPin",
-  title: "Necessitatibus eos in saepe eaque rerum inventore quidem.",
-  text:
-    "Et quo corporis illo laborum ullam voluptate blanditiis assumenda molestias. Inventore assumenda dolor et officiis. Aut aliquid temporibus enim qui hic dolor sed. Minus atque qui molestiae eius rerum in adipisci perspiciatis aliquam.",
-  date: "16.07.2019",
-  tags: [1, 3, 5],
-  attachments: ["http://lorempixel.com/640/480"]
-};
-
 class TextEditor extends React.Component {
   // connect to the store:
   static contextType = Store;
 
   state = {
-    entry: sampleEntry,
-    editorState: EditorState.createWithContent(
-      ContentState.createFromText(sampleEntry.text)
-    )
+    entry: {
+      id: "default_id",
+      text: "Your text...",
+      title: "Your title..."
+    },
+    editorState: EditorState.createEmpty()
   };
 
   onChange = editorState => {
@@ -42,6 +33,18 @@ class TextEditor extends React.Component {
       editorState
     });
   };
+
+  componentDidUpdate() {
+    const currentEntry = this.context.state.entry;
+    if (currentEntry.id !== this.state.entry.id) {
+      this.setState({
+        entry: currentEntry,
+        editorState: EditorState.createWithContent(
+          ContentState.createFromText(currentEntry.text)
+        )
+      });
+    }
+  }
 
   onTitleChange = e => {
     this.setState({
@@ -62,15 +65,22 @@ class TextEditor extends React.Component {
     return hashtags;
   };
 
-  // update the state and lowdb
   onSave = () => {
-    const text = this.getPlainText();
+    this.updateEntry();
+  };
+
+  updateEntry = () => {
+    // call ipc and save the entry from state + plus editorsState
+    const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
-    let entry = { ...this.state.entry };
-    entry.text = text;
-    entry.tags = hashtags;
-    this.setState({ entry });
-    // update lowdb with a new entry object
+    const text = this.getPlainText();
+    const updatedEntry = {
+      ...entry,
+      editorState: editorState,
+      text,
+      tags: hashtags
+    };
+    ipcRenderer.send("update-entry", updatedEntry);
   };
 
   addEntry = () => {
@@ -86,18 +96,6 @@ class TextEditor extends React.Component {
       // if rejected:
       ipcRenderer.once("add-entry-error", (event, response) => {
         reject(response);
-      });
-    });
-  };
-
-  getEntry = entryId => {
-    ipcRenderer.send("get-entry", entryId);
-    return new Promise((resolve, reject) => {
-      ipcRenderer.once("get-entry-reply", (event, entry) => {
-        resolve(entry);
-      });
-      ipcRenderer.once("get-entry-error", (event, args) => {
-        reject(args);
       });
     });
   };
@@ -133,7 +131,7 @@ class TextEditor extends React.Component {
           outline
           color="secondary"
           className="mt-2"
-          onClick={this.getEntry}
+          onClick={this.onSave}
         >
           Save
         </Button>

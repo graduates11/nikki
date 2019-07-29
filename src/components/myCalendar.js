@@ -13,7 +13,7 @@ const MyCalendar = () => {
   const { state, dispatch } = useContext(Store);
 
   let datesWithEntries = [];
-  for (let entry of entries) {
+  for (let entry of state.allEntries) {
     const dateWithEntry = new Date(entry.date).toDateString();
     if (!datesWithEntries.includes(dateWithEntry)) {
       datesWithEntries.push(dateWithEntry);
@@ -42,7 +42,7 @@ const MyCalendar = () => {
   useEffect(() => {
     getEntries();
     // eslint-disable-next-line
-  }, []);
+	}, [])
 
   const tileClassName = ({ date, view }) => {
     return view === "month" && datesWithEntries.includes(date.toDateString())

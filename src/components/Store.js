@@ -4,7 +4,7 @@ export const Store = React.createContext();
 
 const initialState = {
   date: "",
-  entry: {},
+  entry: null,
   allEntries: []
 };
 
@@ -13,18 +13,20 @@ function reducer(state, action) {
     case "SET_DATE":
       return {
         date: action.payload.date,
-        allEntries: state.allEntries
+        allEntries: state.allEntries,
+        entry: state.entry
       };
     case "GET_ENTRY":
       return {
-        date: action.payload.date,
+        date: state.date,
         entry: action.payload.entry,
         allEntries: state.allEntries
       };
     case "GET_ALL_ENTRIES":
       return {
         date: action.payload.date,
-        allEntries: action.payload.allEntries
+        allEntries: action.payload.allEntries,
+        entry: state.entry
       };
     default:
       return state;
