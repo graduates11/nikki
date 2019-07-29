@@ -16,7 +16,7 @@ const styles = {
 
 export default function App() {
   const { state, dispatch } = useContext(Store);
-  console.log(state);
+  // console.log(state);
   return (
     <div className="App mt-3 mb-3">
       <Container style={styles.fullHeight}>
