@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Store } from "./Store";
 import Calendar from "react-calendar";
 import moment from "moment";
 import localization from "moment/locale/de";
+const { ipcRenderer } = window;
 
 const { entries } = require("../lowdb/db.json");
 
@@ -19,6 +20,30 @@ const MyCalendar = () => {
     }
   }
 
+  const getEntries = () => {
+    ipcRenderer.send("get-all-entries");
+    return new Promise((resolve, reject) => {
+      ipcRenderer.once("get-all-entries-reply", (event, entries) => {
+        resolve(entries);
+        dispatch({
+          type: "GET_ALL_ENTRIES",
+          payload: {
+            date: new Date(),
+            allEntries: [...entries]
+          }
+        });
+      });
+      ipcRenderer.once("get-all-entries-error", (event, args) => {
+        reject(args);
+      });
+    });
+  };
+
+  useEffect(() => {
+    getEntries();
+    // eslint-disable-next-line
+  }, []);
+
   const tileClassName = ({ date, view }) => {
     return view === "month" && datesWithEntries.includes(date.toDateString())
       ? "highlight"
@@ -31,7 +56,7 @@ const MyCalendar = () => {
         onChange={date => {
           dispatch({
             type: "SET_DATE",
-            payload: { date: date, convertedDate: moment(date).format("L") }
+            payload: { date: date }
           });
         }}
         value={state.date}
