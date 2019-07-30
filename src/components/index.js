@@ -3,6 +3,7 @@ import EntriesByTag from "./entriesByTag";
 import MyCalendar from "./myCalendar";
 import SearchBar from "./SearchBar";
 import TextEditor from "./TextEditor";
+import SearchResult from "./SearchResult";
 import DeleteEntry from "./DeleteEntry";
 
 export {
@@ -11,5 +12,6 @@ export {
   MyCalendar,
   SearchBar,
   TextEditor,
+  SearchResult,
   DeleteEntry
 };

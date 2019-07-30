@@ -16,14 +16,18 @@ const options = {
 };
 
 const SearchBar = () => {
-  const { state } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const [value, setValue] = useState("");
   // const [entry, setEntry] = useState(state.allEntries);
 
   const handleSubmit = event => {
     const fuse = new Fuse(state.allEntries, options); // "list" is the item array
     const result = fuse.search(value);
-    console.log(result);
+    dispatch({
+      type: "SEARCH",
+      payload: { searchResult: result }
+    });
+    setValue("");
     event.preventDefault();
   };
 
@@ -34,6 +38,7 @@ const SearchBar = () => {
           className="mt-2"
           placeholder="Search"
           type="text"
+          value={value}
           onChange={event => setValue(event.target.value)}
         ></Input>
       </form>
