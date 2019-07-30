@@ -39,9 +39,16 @@ function reducer(state, action) {
       };
     case "UPDATE_ENTRY":
       return {
-        date: action.payload.date,
-        allEntries: state.allEntries,
-        entry: state.entry
+        date: state.date,
+        allEntries: state.allEntries.map(item => {
+          if (item.id === action.payload.entry.id) {
+            item = action.payload.entry;
+            return item;
+          } else {
+            return item;
+          }
+        }),
+        entry: action.payload.entry
       };
     default:
       return state;

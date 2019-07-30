@@ -31,6 +31,9 @@ export default function App() {
               <TextEditor />
             ) : (
               <Button
+                outline
+                color="secondary"
+                className="m-2"
                 onClick={() =>
                   dispatch({
                     type: "GET_ENTRY",

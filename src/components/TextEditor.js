@@ -6,7 +6,8 @@ import createLinkPlugin from "draft-js-anchor-plugin";
 import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
 import React from "react";
 import { Button, Input } from "reactstrap";
-import { Store, Consumer } from "./Store";
+import { Store } from "./Store";
+import { DeleteEntry } from "./index";
 
 const { ipcRenderer } = window;
 const hashtagPlugin = createHashtagPlugin();
@@ -83,14 +84,10 @@ class TextEditor extends React.Component {
       tags: hashtags
     };
 
-    console.log("BOB");
-
-    // dispatch({ lolo: "lolol" })
-
-    dispatch({
+    this.context.dispatch({
       type: "UPDATE_ENTRY",
       payload: {
-        id: updatedEntry
+        entry: updatedEntry
       }
     });
 
@@ -111,49 +108,48 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <Consumer>
-        {value => {
-          console.log(value.state);
+      <section className="editor">
+        <div className="entry-header">
+          <span className="entry-date mt-2">
+            {new Date(this.state.entry.date).toDateString()}
+          </span>
+          <Input
+            onChange={this.onTitleChange}
+            value={this.state.entry.title}
+            className="title-input mt-2"
+            type="text"
+            maxLength="50"
+          ></Input>
+        </div>
 
-          return (
-            <div className="editor">
-              <Input
-                onChange={this.onTitleChange}
-                value={this.state.entry.title}
-                className="title-input mt-2"
-                type="text"
-              ></Input>
-              <Editor
-                editorState={this.state.editorState}
-                onChange={this.onChange}
-                plugins={plugins}
-                ref={element => {
-                  this.editor = element;
-                }}
-              />
-              <InlineToolbar>
-                {externalProps => (
-                  <React.Fragment>
-                    <BoldButton {...externalProps} />
-                    <ItalicButton {...externalProps} />
-                    <UnderlineButton {...externalProps} />
-                    <linkPlugin.LinkButton {...externalProps} />
-                  </React.Fragment>
-                )}
-              </InlineToolbar>
-              <Button
-                outline
-                color="secondary"
-                className="mt-2"
-                onClick={() => this.updateEntry(value)}
-              >
-                Save
-              </Button>
-              <Button onClick={this.deleteEntry}>Delete</Button>
-            </div>
-          );
-        }}
-      </Consumer>
+        <Editor
+          editorState={this.state.editorState}
+          onChange={this.onChange}
+          plugins={plugins}
+          ref={element => {
+            this.editor = element;
+          }}
+        />
+        <InlineToolbar>
+          {externalProps => (
+            <React.Fragment>
+              <BoldButton {...externalProps} />
+              <ItalicButton {...externalProps} />
+              <UnderlineButton {...externalProps} />
+              <linkPlugin.LinkButton {...externalProps} />
+            </React.Fragment>
+          )}
+        </InlineToolbar>
+        <Button
+          outline
+          color="secondary"
+          className="m-2"
+          onClick={this.updateEntry}
+        >
+          Save
+        </Button>
+        <DeleteEntry id={this.state.entry.id} />
+      </section>
     );
   }
 }

@@ -1,10 +1,14 @@
 import React, { useContext } from "react";
+import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
 
 const DeleteEntry = props => {
   const { dispatch } = useContext(Store);
   return (
-    <button
+    <Button
+      outline
+      color="secondary"
+      className="m-2"
       id={props.id}
       onClick={() => {
         dispatch({
@@ -15,8 +19,8 @@ const DeleteEntry = props => {
         });
       }}
     >
-      x
-    </button>
+      Delete
+    </Button>
   );
 };
 
