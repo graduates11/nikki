@@ -31,7 +31,7 @@ const EntriesByDate = () => {
               }}
             >
               {entry.title}
-              <DeleteEntry id={entry.id} />
+              <DeleteEntry id={entry.id} date={entry.date} />
             </li>
           ))}
         </ul>
