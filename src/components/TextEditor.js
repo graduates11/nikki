@@ -24,7 +24,8 @@ class TextEditor extends React.Component {
     entry: {
       id: "default_id",
       text: "Your text...",
-      title: "Your title..."
+      title: "Your title...",
+      date: new Date()
     },
     editorState: EditorState.createEmpty()
   };
@@ -40,6 +41,7 @@ class TextEditor extends React.Component {
     if (currentEntry.id !== this.state.entry.id) {
       this.setState({
         entry: currentEntry,
+        // if entry has editors state set it to that else:
         editorState: EditorState.createWithContent(
           ContentState.createFromText(currentEntry.text)
         )
@@ -140,12 +142,7 @@ class TextEditor extends React.Component {
             </React.Fragment>
           )}
         </InlineToolbar>
-        <Button
-          outline
-          color="secondary"
-          className="m-2"
-          onClick={this.updateEntry}
-        >
+        <Button outline color="secondary" className="m-2" onClick={this.onSave}>
           Save
         </Button>
         <DeleteEntry id={this.state.entry.id} />
