@@ -1,26 +1,18 @@
 import React, { useContext } from "react";
 import { Store } from "./Store";
-import { DeleteEntry } from "./index";
 
-const EntriesByDate = () => {
+const SearchResult = () => {
   const { state, dispatch } = useContext(Store);
-
-  let result = state.allEntries.filter(entry => {
-    const existing = new Date(entry.date).toDateString();
-    const requested = new Date(state.date).toDateString();
-    return existing === requested;
-  });
-
   return (
     <div>
-      {result.length === 0 ? null : (
+      {state.searchResult === undefined ? null : (
         <ul>
-          {result.map(entry => (
+          {state.searchResult.map(entry => (
             <li
               key={entry.id}
               onClick={() => {
                 dispatch({
-                  type: "GET_ENTRY",
+                  type: "GET_SEARCH_ENTRY",
                   payload: {
                     date: state.date,
                     entry
@@ -28,8 +20,8 @@ const EntriesByDate = () => {
                 });
               }}
             >
+              {entry.date}
               {entry.title}
-              <DeleteEntry id={entry.id} date={entry.date} />
             </li>
           ))}
         </ul>
@@ -38,4 +30,4 @@ const EntriesByDate = () => {
   );
 };
 
-export default EntriesByDate;
+export default SearchResult;

@@ -4,7 +4,8 @@ import {
   EntriesByDate,
   MyCalendar,
   SearchBar,
-  TextEditor
+  TextEditor,
+  SearchResult
 } from "../src/components";
 import { Store } from "./components/Store";
 import { defaultTitle } from "./components/utils/helpers";
@@ -38,7 +39,11 @@ export default function App() {
           <Col xs={4} className="border border-muted">
             <SearchBar />
             <MyCalendar />
-            <EntriesByDate />
+            {state.searchBoolean === true ? (
+              <SearchResult />
+            ) : (
+              <EntriesByDate />
+            )}
           </Col>
           <Col xs={8} className="border border-muted">
             {state.entry !== null ? (

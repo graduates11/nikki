@@ -5,35 +5,60 @@ export const Store = React.createContext();
 const initialState = {
   date: "",
   entry: null,
-  allEntries: []
+  allEntries: [],
+  searchBoolean: false
 };
 
 function reducer(state, action) {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
-    case "SET_DATE":
+    case "SET_DATE": {
+      const filteredEntry = state.allEntries.filter(
+        entry => entry.date === action.payload.date.toDateString()
+      )[0];
       return {
         date: action.payload.date,
         allEntries: state.allEntries,
-        entry: state.entry
+        entry: filteredEntry ? filteredEntry : null,
+        searchBoolean: false
       };
+    }
     case "GET_ENTRY":
       return {
         date: state.date,
         entry: action.payload.entry,
-        allEntries: state.allEntries
+        allEntries: state.allEntries,
+        searchBoolean: false
       };
     case "ADD_NEW_ENTRY":
       return {
         date: action.payload.entry.date,
         entry: action.payload.entry,
-        allEntries: [...state.allEntries].concat(action.payload.entry)
+        allEntries: [...state.allEntries].concat(action.payload.entry),
+        searchBoolean: false
       };
     case "GET_ALL_ENTRIES":
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry: state.entry
+        entry: state.entry,
+        searchBoolean: false
+      };
+    case "SEARCH":
+      return {
+        date: state.date,
+        allEntries: state.allEntries,
+        entry: state.entry,
+        searchResult: action.payload.searchResult,
+        searchBoolean: true
+      };
+    case "GET_SEARCH_ENTRY":
+      return {
+        date: state.date,
+        entry: action.payload.entry,
+        allEntries: state.allEntries,
+        searchResult: state.searchResult,
+        searchBoolean: true
       };
     case "DELETE_ENTRY":
       return {
@@ -41,7 +66,8 @@ function reducer(state, action) {
         allEntries: state.allEntries.filter(
           item => item.id !== action.payload.id
         ),
-        entry: null
+        entry: null,
+        searchBoolean: false
       };
     case "UPDATE_ENTRY":
       return {
@@ -54,7 +80,8 @@ function reducer(state, action) {
             return item;
           }
         }),
-        entry: action.payload.entry
+        entry: action.payload.entry,
+        searchBoolean: false
       };
     default:
       return state;
