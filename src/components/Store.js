@@ -41,7 +41,7 @@ function reducer(state, action) {
         allEntries: state.allEntries.filter(
           item => item.id !== action.payload.id
         ),
-        entry: state.entry
+        entry: null
       };
     case "UPDATE_ENTRY":
       return {
