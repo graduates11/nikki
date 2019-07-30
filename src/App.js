@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import {
   EntriesByDate,
   MyCalendar,
@@ -7,6 +7,7 @@ import {
   TextEditor
 } from "../src/components";
 import { Store } from "./components/Store";
+import { defaultTitle } from "./components/utils/helpers";
 const shortid = require("shortid");
 
 const styles = {
@@ -17,6 +18,19 @@ const styles = {
 
 export default function App() {
   const { state, dispatch } = useContext(Store);
+  const addEntry = () => {
+    dispatch({
+      type: "ADD_NEW_ENTRY",
+      payload: {
+        entry: {
+          id: shortid.generate(),
+          title: defaultTitle(),
+          text: "",
+          date: new Date()
+        }
+      }
+    });
+  };
   return (
     <div className="App mt-3 mb-3">
       <Container style={styles.fullHeight}>
@@ -28,28 +42,11 @@ export default function App() {
           </Col>
           <Col xs={8} className="border border-muted">
             {state.entry !== null ? (
-              <TextEditor />
+              <TextEditor addEntry={addEntry} />
             ) : (
-              <Button
-                outline
-                color="secondary"
-                className="m-2"
-                onClick={() =>
-                  dispatch({
-                    type: "GET_ENTRY",
-                    payload: {
-                      entry: {
-                        id: shortid.generate(),
-                        title: "My title...",
-                        text: "Your text...",
-                        date: new Date()
-                      }
-                    }
-                  })
-                }
-              >
-                Add entry
-              </Button>
+              <Container className="mt-2 w-100 add-entry" onClick={addEntry}>
+                <p>+ Add entry</p>
+              </Container>
             )}
           </Col>
         </Row>

@@ -72,8 +72,8 @@ class TextEditor extends React.Component {
     this.updateEntry();
   };
 
+
   updateEntry = store => {
-    // call ipc and save the entry from state + plus editorsState
     const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
     const text = this.getPlainText();
@@ -92,16 +92,6 @@ class TextEditor extends React.Component {
         entry: updatedEntry
       }
     });
-
-    // if (
-    //   this.context.state.allEntries.find(
-    //     entry => entry.id === updatedEntry.id
-    //   ) !== undefined
-    // ) {
-    //   // DISPATCH UPDATE ENTRY
-    // } else {
-    //   // DISPATCH ADD ENTRY
-    // }
   };
 
   deleteEntry = () => {
@@ -109,19 +99,37 @@ class TextEditor extends React.Component {
   };
 
   render() {
+    //move away from render?
+    const date = new Date(this.state.entry.date);
+    const month = date.toLocaleString("default", {
+      month: "long"
+    });
+    const year = date.getFullYear();
+    const day = date.getDate();
+
     return (
       <section className="editor">
         <div className="entry-header">
-          <span className="entry-date mt-2">
-            {new Date(this.state.entry.date).toDateString()}
-          </span>
           <Input
+            autoFocus
             onChange={this.onTitleChange}
             value={this.state.entry.title}
             className="title-input mt-2"
             type="text"
             maxLength="50"
           ></Input>
+          <span className="entry-date mt-2">
+            <span>
+              <p className="month-year">
+                {month}
+                <br></br>
+                {year}
+              </p>
+            </span>
+            <span>
+              <p className="day">{day}</p>
+            </span>
+          </span>
         </div>
 
         <Editor
@@ -144,6 +152,14 @@ class TextEditor extends React.Component {
         </InlineToolbar>
         <Button outline color="secondary" className="m-2" onClick={this.onSave}>
           Save
+        </Button>
+        <Button
+          outline
+          color="secondary"
+          className="m-2"
+          onClick={this.props.addEntry}
+        >
+          Add entry
         </Button>
         <DeleteEntry id={this.state.entry.id} />
       </section>
