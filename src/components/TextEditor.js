@@ -72,12 +72,10 @@ class TextEditor extends React.Component {
     this.updateEntry();
   };
 
-
   updateEntry = store => {
     const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
     const text = this.getPlainText();
-    const { dispatch } = store;
 
     const updatedEntry = {
       ...entry,
@@ -161,7 +159,7 @@ class TextEditor extends React.Component {
         >
           Add entry
         </Button>
-        <DeleteEntry id={this.state.entry.id} />
+        <DeleteEntry id={this.state.entry.id} date={this.state.entry.date} />
       </section>
     );
   }

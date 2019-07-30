@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Input } from "reactstrap";
+import { Button } from "reactstrap";
 import { Store } from "./Store";
 
 const DeleteEntry = props => {
@@ -14,7 +14,8 @@ const DeleteEntry = props => {
         dispatch({
           type: "DELETE_ENTRY",
           payload: {
-            id: props.id
+            id: props.id,
+            date: props.date
           }
         });
       }}
