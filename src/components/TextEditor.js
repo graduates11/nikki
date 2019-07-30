@@ -7,6 +7,7 @@ import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
+import { DeleteEntry } from "./index";
 
 const { ipcRenderer } = window;
 const hashtagPlugin = createHashtagPlugin();
@@ -71,10 +72,13 @@ class TextEditor extends React.Component {
     this.updateEntry();
   };
 
-  updateEntry = () => {
+
+  updateEntry = store => {
     const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
     const text = this.getPlainText();
+    const { dispatch } = store;
+
     const updatedEntry = {
       ...entry,
       editorState: editorState,
@@ -82,15 +86,12 @@ class TextEditor extends React.Component {
       tags: hashtags
     };
 
-    if (
-      this.context.state.allEntries.find(
-        entry => entry.id === updatedEntry.id
-      ) !== undefined
-    ) {
-      // DISPATCH UPDATE ENTRY
-    } else {
-      // DISPATCH ADD ENTRY
-    }
+    this.context.dispatch({
+      type: "UPDATE_ENTRY",
+      payload: {
+        entry: updatedEntry
+      }
+    });
   };
 
   deleteEntry = () => {
@@ -156,18 +157,11 @@ class TextEditor extends React.Component {
           outline
           color="secondary"
           className="m-2"
-          onClick={this.deleteEntry}
-        >
-          Delete
-        </Button>
-        <Button
-          outline
-          color="secondary"
-          className="m-2"
           onClick={this.props.addEntry}
         >
           Add entry
         </Button>
+        <DeleteEntry id={this.state.entry.id} />
       </section>
     );
   }
