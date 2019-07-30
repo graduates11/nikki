@@ -19,19 +19,15 @@ const EntriesByDate = () => {
           {result.map(entry => (
             <li
               key={entry.id}
-              id={entry.id}
-              onClick={
-                e => {
-                  dispatch({
-                    type: "GET_ENTRY",
-                    payload: {
-                      date: state.date,
-                      entry
-                    }
-                  });
-                }
-                //console.log(result.filter(x => x.id === e.target.id)[0].title)
-              }
+              onClick={e => {
+                dispatch({
+                  type: "GET_ENTRY",
+                  payload: {
+                    date: state.date,
+                    entry
+                  }
+                });
+              }}
             >
               {entry.title}
             </li>

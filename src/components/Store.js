@@ -22,6 +22,12 @@ function reducer(state, action) {
         entry: action.payload.entry,
         allEntries: state.allEntries
       };
+    case "ADD_NEW_ENTRY":
+      return {
+        date: state.date,
+        entry: action.payload.entry,
+        allEntries: [...state.allEntries].concat(action.payload.entry)
+      };
     case "GET_ALL_ENTRIES":
       return {
         date: action.payload.date,
