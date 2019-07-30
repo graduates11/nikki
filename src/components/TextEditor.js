@@ -68,11 +68,7 @@ class TextEditor extends React.Component {
     return hashtags;
   };
 
-  onSave = () => {
-    this.updateEntry();
-  };
-
-  updateEntry = store => {
+  updateEntry = () => {
     const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
     const text = this.getPlainText();
@@ -148,7 +144,12 @@ class TextEditor extends React.Component {
             </React.Fragment>
           )}
         </InlineToolbar>
-        <Button outline color="secondary" className="m-2" onClick={this.onSave}>
+        <Button
+          outline
+          color="secondary"
+          className="m-2"
+          onClick={this.updateEntry}
+        >
           Save
         </Button>
         <Button
