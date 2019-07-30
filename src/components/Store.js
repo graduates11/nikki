@@ -37,6 +37,19 @@ function reducer(state, action) {
         ),
         entry: state.entry
       };
+    case "UPDATE_ENTRY":
+      return {
+        date: state.date,
+        allEntries: state.allEntries.map(item => {
+          if (item.id === action.payload.entry.id) {
+            item = action.payload.entry;
+            return item;
+          } else {
+            return item;
+          }
+        }),
+        entry: action.payload.entry
+      };
     default:
       return state;
   }
@@ -47,3 +60,5 @@ export function StoreProvider(props) {
   const value = { state, dispatch };
   return <Store.Provider value={value}>{props.children}</Store.Provider>;
 }
+
+export const Consumer = Store.Consumer;
