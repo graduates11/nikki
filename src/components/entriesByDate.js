@@ -15,22 +15,22 @@ const EntriesByDate = () => {
     <div>
       {result.length === 0 ? null : (
         <ul>
-          {result.map(entry => (
-            <li
-              key={entry.id}
-              onClick={() => {
-                dispatch({
-                  type: "GET_ENTRY",
-                  payload: {
-                    date: state.date,
-                    entry
-                  }
-                });
-              }}
-            >
-              {entry.title}
-              <DeleteEntry id={entry.id} date={entry.date} />
-            </li>
+          {result.map((entry, i) => (
+            <div key={i}>
+              <li
+                onClick={() => {
+                  dispatch({
+                    type: "GET_ENTRY",
+                    payload: {
+                      entry
+                    }
+                  });
+                }}
+              >
+                {entry.title}
+              </li>
+              <DeleteEntry id={entry.id} />
+            </div>
           ))}
         </ul>
       )}

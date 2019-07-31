@@ -3,14 +3,17 @@ import React from "react";
 export const Store = React.createContext();
 
 const initialState = {
-  date: "",
+  date: new Date(),
   entry: null,
   allEntries: [],
   searchBoolean: false
 };
 
 function reducer(state, action) {
-  // console.log(action);
+  const { date } = state;
+  const allEntries = [...state.allEntries];
+  const { entry } = state;
+  const { searchResult } = state;
   switch (action.type) {
     case "SET_DATE": {
       const filteredEntry = state.allEntries.filter(
@@ -18,14 +21,14 @@ function reducer(state, action) {
       )[0];
       return {
         date: action.payload.date,
-        allEntries: state.allEntries,
+        allEntries,
         entry: filteredEntry ? filteredEntry : null,
         searchBoolean: false
       };
     }
     case "GET_ENTRY":
       return {
-        date: state.date,
+        date,
         entry: action.payload.entry,
         allEntries: state.allEntries,
         searchBoolean: false
@@ -41,23 +44,23 @@ function reducer(state, action) {
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry: state.entry,
+        entry,
         searchBoolean: false
       };
     case "SEARCH":
       return {
-        date: state.date,
-        allEntries: state.allEntries,
-        entry: state.entry,
+        date,
+        allEntries,
+        entry,
         searchResult: action.payload.searchResult,
         searchBoolean: true
       };
     case "GET_SEARCH_ENTRY":
       return {
-        date: state.date,
+        date,
         entry: action.payload.entry,
-        allEntries: state.allEntries,
-        searchResult: state.searchResult,
+        allEntries,
+        searchResult,
         searchBoolean: true
       };
     case "DELETE_ENTRY":
@@ -71,7 +74,7 @@ function reducer(state, action) {
       };
     case "UPDATE_ENTRY":
       return {
-        date: state.date,
+        date,
         allEntries: state.allEntries.map(item => {
           if (item.id === action.payload.entry.id) {
             item = action.payload.entry;
