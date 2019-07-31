@@ -33,6 +33,13 @@ function reducer(state, action) {
         allEntries: state.allEntries,
         searchBoolean: false
       };
+    case "CHANGE_DATE":
+      return {
+        date: action.payload.date,
+        entry: action.payload.entry,
+        allEntries,
+        searchBoolean: false
+      };
     case "ADD_NEW_ENTRY":
       return {
         date: action.payload.entry.date,
