@@ -8,6 +8,7 @@ import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
 import { DeleteEntry } from "./index";
+import AddFileModal from "./AddFileModal";
 
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
@@ -24,7 +25,8 @@ class TextEditor extends React.Component {
       id: "default_id",
       text: "Your text...",
       title: "Your title...",
-      date: new Date()
+      date: new Date(),
+      modal: false
     },
     editorState: EditorState.createEmpty()
   };
@@ -87,8 +89,8 @@ class TextEditor extends React.Component {
     });
   };
 
-  deleteEntry = () => {
-    // DISPATCH DELETE ENTRY
+  toggleModal = () => {
+    this.setState({ modal: !this.state.modal });
   };
 
   render() {
@@ -160,6 +162,15 @@ class TextEditor extends React.Component {
           Add entry
         </Button>
         <DeleteEntry id={this.state.entry.id} />
+        <Button
+          outline
+          color="secondary"
+          className="m-2"
+          onClick={this.toggleModal}
+        >
+          Create new file
+        </Button>
+        <AddFileModal toggleModal={this.toggleModal} modal={this.state.modal} />
       </section>
     );
   }

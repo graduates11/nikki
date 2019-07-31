@@ -1,21 +1,13 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const electron = require("electron");
 const path = require("path");
-const fs = require("fs");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const userDataPath = (electron.app || electron.remote.app).getPath("userData");
-// const { entries } = require("../src/lowdb/db.json");
-// const { tags } = require("../src/lowdb/db.json");
 const isDev = require("electron-is-dev");
 
-const adapter = new FileSync(path.join(userDataPath, "db.json"));
-const db = low(adapter);
-
-// db.defaults({ entries }).write();
-// db.defaults({ tags }).write();
-
 // require("./electron/menu.js")
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -62,7 +54,10 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.on("ready", () => {
+  // INITIALIZE THE MENU
+  createWindow();
+});
 
 // Quit when all windows are closed.
 app.on("window-all-closed", function() {
@@ -81,32 +76,76 @@ app.on("activate", function() {
   }
 });
 
-ipcMain.on("get-entry", async (event, entryId) => {
+const appDataAdapter = new FileSync(path.join(userDataPath, "app-data.json"));
+const appdb = low(appDataAdapter);
+
+ipcMain.on("get-app-data", async (event, arg) => {
+  let data = null;
   try {
-    const entry = await db
-      .get("entries")
-      .find({ id: entryId })
-      .value();
-    event.reply("get-entry-reply", entry);
+    appdb.defaults({ files: [] }).write();
+    data = await appdb.find;
   } catch (e) {
-    event.sender.send("get-entry-error", e.message);
+    console.error(e);
   }
 });
 
-ipcMain.on("get-all-entries", async (event, arg) => {
+ipcMain.on("create-file", async (event, fileName) => {
+  const fsp = require("fs").promises;
+  const entriesPath = path.join(userDataPath, "entries");
+
   try {
-    const entry = await db.get("entries").value();
-    event.reply("get-all-entries-reply", entry);
+    await fsp.mkdir(entriesPath, { recursive: true });
   } catch (e) {
-    event.sender.send("get-all-entries-error", e.message);
+    console.error(e);
+  } finally {
+    try {
+      const adapter = new FileSync(path.join(entriesPath, `${fileName}.json`));
+      const db = low(adapter);
+      db.defaults({ entries: [] }).write();
+      event.reply(
+        "create-file-reply",
+        `Successfully created new file: ${fileName}`
+      );
+    } catch (e) {
+      event.reply(
+        "create-file-error",
+        `Sorry, an error has occured: ${e.message}`
+      );
+    }
   }
 });
-//REFACTOR TO USE LOWDB:
-// ipcMain.on("add-entry", async (event, entry) => {
-//   try {
-//     await entries.push(entry);
-//     event.reply("add-entry-success", `successfully added ${entry.title}`);
-//   } catch (e) {
-//     event.reply("add-entry-error", e.message);
-//   }
-// });
+
+ipcMain.on("get-all-entries", async (event, fileName) => {
+  // REFACTOR TO ACCESS THE LATEST OPEN FILE FROM ENTRIES DIR
+  let adapter = new FileSync(path.join(userDataPath, `${fileName}.json`));
+  let db = low(adapter);
+  try {
+    const entries = await db.get("entries").value();
+    console.log(entries);
+    event.reply("get-all-entries-reply", entries);
+  } catch (e) {
+    event.sender.send(
+      "get-all-entries-error",
+      `Sorry, an error has occured: ${e.message}`
+    );
+  }
+});
+
+ipcMain.on("final-save", async (event, data) => {
+  const { file, entries } = data;
+  let adapter = new FileSync(path.join(userDataPath, `${file}.json`));
+  let db = low(adapter);
+  try {
+    await db.set("entries", entries).write();
+    event.reply("final-save-reply", `Successfully saved file: ${file}`);
+  } catch (e) {
+    event.sender.send(
+      "final-save-error",
+      `Sorry, an error has occured: ${e.message}`
+    );
+  }
+});
+
+// SAVE DATA ABOUT THE LAST OPENED FILE
+// ENABLE OR DISABLE SPACES IN THE FILENAMES?
+// CAN USER RENAME THE DB ?

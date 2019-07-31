@@ -6,7 +6,8 @@ const initialState = {
   date: new Date(),
   entry: null,
   allEntries: [],
-  searchBoolean: false
+  searchBoolean: false,
+  file: "db"
 };
 
 function reducer(state, action) {
@@ -14,6 +15,7 @@ function reducer(state, action) {
   const allEntries = [...state.allEntries];
   const { entry } = state;
   const { searchResult } = state;
+  const { file } = state;
   switch (action.type) {
     case "SET_DATE": {
       const filteredEntry = state.allEntries.filter(
@@ -23,7 +25,8 @@ function reducer(state, action) {
         date: action.payload.date,
         allEntries,
         entry: filteredEntry ? filteredEntry : null,
-        searchBoolean: false
+        searchBoolean: false,
+        file
       };
     }
     case "GET_ENTRY":
@@ -31,21 +34,24 @@ function reducer(state, action) {
         date,
         entry: action.payload.entry,
         allEntries: state.allEntries,
-        searchBoolean: false
+        searchBoolean: false,
+        file
       };
     case "ADD_NEW_ENTRY":
       return {
         date: action.payload.entry.date,
         entry: action.payload.entry,
         allEntries: [...state.allEntries].concat(action.payload.entry),
-        searchBoolean: false
+        searchBoolean: false,
+        file
       };
     case "GET_ALL_ENTRIES":
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
         entry,
-        searchBoolean: false
+        searchBoolean: false,
+        file
       };
     case "SEARCH":
       return {
@@ -53,7 +59,8 @@ function reducer(state, action) {
         allEntries,
         entry,
         searchResult: action.payload.searchResult,
-        searchBoolean: true
+        searchBoolean: true,
+        file
       };
     case "GET_SEARCH_ENTRY":
       return {
@@ -61,7 +68,8 @@ function reducer(state, action) {
         entry: action.payload.entry,
         allEntries,
         searchResult,
-        searchBoolean: true
+        searchBoolean: true,
+        file
       };
     case "DELETE_ENTRY":
       return {
@@ -70,7 +78,8 @@ function reducer(state, action) {
           item => item.id !== action.payload.id
         ),
         entry: null,
-        searchBoolean: false
+        searchBoolean: false,
+        file
       };
     case "UPDATE_ENTRY":
       return {
@@ -84,6 +93,15 @@ function reducer(state, action) {
           }
         }),
         entry: action.payload.entry,
+        searchBoolean: false,
+        file
+      };
+    case "CHANGE_FILE":
+      return {
+        date: new Date(),
+        file: action.payload.file,
+        allEntries: [],
+        entry: null,
         searchBoolean: false
       };
     default:

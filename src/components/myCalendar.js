@@ -19,14 +19,16 @@ const MyCalendar = () => {
   }
 
   const getEntries = () => {
-    ipcRenderer.send("get-all-entries");
+    ipcRenderer.send("get-all-entries", state.file);
     return new Promise((resolve, reject) => {
       ipcRenderer.once("get-all-entries-reply", (event, entries) => {
         resolve(entries);
+        console.log(entries);
+        const allEntries = [...entries];
         dispatch({
           type: "GET_ALL_ENTRIES",
           payload: {
-            allEntries: [...entries]
+            allEntries: allEntries.length > 0 ? allEntries : []
           }
         });
       });
