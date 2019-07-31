@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import TextEditor from "./TextEditor";
 import SearchResult from "./SearchResult";
 import DeleteEntry from "./DeleteEntry";
+import DateChanger from "./DateChanger";
 
 export {
   EntriesByDate,
@@ -13,5 +14,6 @@ export {
   SearchBar,
   TextEditor,
   SearchResult,
-  DeleteEntry
+  DeleteEntry,
+  DateChanger
 };
