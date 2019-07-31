@@ -1,13 +1,19 @@
 import { EditorState, ContentState } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHashtagPlugin from "draft-js-hashtag-plugin";
+import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
+import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
+import createLinkPlugin from "draft-js-anchor-plugin";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
 import { DeleteEntry, DateChanger } from "./index";
 
 const hashtagPlugin = createHashtagPlugin();
-const plugins = [hashtagPlugin];
+const inlineToolbarPlugin = createInlineToolbarPlugin();
+const linkPlugin = createLinkPlugin();
+const { InlineToolbar } = inlineToolbarPlugin;
+const plugins = [hashtagPlugin, inlineToolbarPlugin, linkPlugin];
 
 class TextEditor extends React.Component {
   // connect to the store:
