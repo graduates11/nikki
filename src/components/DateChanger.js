@@ -25,7 +25,6 @@ const DateChanger = () => {
     // setPickedDate(date);
     const changedEntry = state.entry;
     changedEntry.date = date.toDateString();
-    console.log(state.entry.date);
     dispatch({
       type: "CHANGE_DATE",
       payload: {
