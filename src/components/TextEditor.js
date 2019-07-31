@@ -4,30 +4,23 @@ import createHashtagPlugin from "draft-js-hashtag-plugin";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
-// Creates an Instance. At this step, a configuration object can be passed in
-// as an argument.
+import { DeleteEntry, DateChanger } from "./index";
+
 const hashtagPlugin = createHashtagPlugin();
 const plugins = [hashtagPlugin];
-
-const sampleEntry = {
-  id: "EfmidzPin",
-  title: "Necessitatibus eos in saepe eaque rerum inventore quidem.",
-  text:
-    "Et quo corporis illo laborum ullam voluptate blanditiis assumenda molestias. Inventore assumenda dolor et officiis. Aut aliquid temporibus enim qui hic dolor sed. Minus atque qui molestiae eius rerum in adipisci perspiciatis aliquam.",
-  date: "16.07.2019",
-  tags: [1, 3, 5],
-  attachments: ["http://lorempixel.com/640/480"]
-};
 
 class TextEditor extends React.Component {
   // connect to the store:
   static contextType = Store;
 
   state = {
-    entry: sampleEntry,
-    editorState: EditorState.createWithContent(
-      ContentState.createFromText(sampleEntry.text)
-    )
+    entry: {
+      id: "default_id",
+      text: "Your text...",
+      title: "Your title...",
+      date: new Date()
+    },
+    editorState: EditorState.createEmpty()
   };
 
   onChange = editorState => {
@@ -35,6 +28,19 @@ class TextEditor extends React.Component {
       editorState
     });
   };
+
+  componentDidUpdate() {
+    const currentEntry = this.context.state.entry;
+    if (currentEntry.id !== this.state.entry.id) {
+      this.setState({
+        entry: currentEntry,
+        // if entry has editors state set it to that else:
+        editorState: EditorState.createWithContent(
+          ContentState.createFromText(currentEntry.text)
+        )
+      });
+    }
+  }
 
   onTitleChange = e => {
     this.setState({
@@ -55,26 +61,41 @@ class TextEditor extends React.Component {
     return hashtags;
   };
 
-  // update the state and lowdb
-  onSave = () => {
-    const text = this.getPlainText();
+  updateEntry = () => {
+    const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
-    let entry = { ...this.state.entry };
-    entry.text = text;
-    entry.tags = hashtags;
-    this.setState({ entry });
-    // update lowdb with a new entry object
+    const text = this.getPlainText();
+
+    const updatedEntry = {
+      ...entry,
+      editorState: editorState,
+      text,
+      tags: hashtags
+    };
+
+    this.context.dispatch({
+      type: "UPDATE_ENTRY",
+      payload: {
+        entry: updatedEntry
+      }
+    });
   };
 
   render() {
     return (
-      <div className="editor">
-        <Input
-          onChange={this.onTitleChange}
-          value={this.state.entry.title}
-          className="title-input mt-2"
-          type="text"
-        ></Input>
+      <section className="editor">
+        <div className="entry-header">
+          <Input
+            autoFocus
+            onChange={this.onTitleChange}
+            value={this.state.entry.title}
+            className="title-input mt-2"
+            type="text"
+            maxLength="50"
+          ></Input>
+          <DateChanger />
+        </div>
+
         <Editor
           editorState={this.state.editorState}
           onChange={this.onChange}
@@ -83,15 +104,34 @@ class TextEditor extends React.Component {
             this.editor = element;
           }}
         />
+        <InlineToolbar>
+          {externalProps => (
+            <React.Fragment>
+              <BoldButton {...externalProps} />
+              <ItalicButton {...externalProps} />
+              <UnderlineButton {...externalProps} />
+              <linkPlugin.LinkButton {...externalProps} />
+            </React.Fragment>
+          )}
+        </InlineToolbar>
         <Button
           outline
           color="secondary"
-          className="mt-2"
-          onClick={this.onSave}
+          className="m-2"
+          onClick={this.updateEntry}
         >
           Save
         </Button>
-      </div>
+        <Button
+          outline
+          color="secondary"
+          className="m-2"
+          onClick={this.props.addEntry}
+        >
+          Add entry
+        </Button>
+        <DeleteEntry id={this.state.entry.id} />
+      </section>
     );
   }
 }

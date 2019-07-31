@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
-import "./App.css";
+import "./App.scss";
 import * as serviceWorker from "./serviceWorker";
 import { StoreProvider } from "./components/Store";
 import "./components/utils/hashtag.css";

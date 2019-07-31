@@ -1,7 +1,19 @@
-const { app, BrowserWindow } = require("electron");
-
+const { app, BrowserWindow, ipcMain } = require("electron");
+const electron = require("electron");
 const path = require("path");
+const fs = require("fs");
+const low = require("lowdb");
+const FileSync = require("lowdb/adapters/FileSync");
+const userDataPath = (electron.app || electron.remote.app).getPath("userData");
+// const { entries } = require("../src/lowdb/db.json");
+// const { tags } = require("../src/lowdb/db.json");
 const isDev = require("electron-is-dev");
+
+const adapter = new FileSync(path.join(userDataPath, "db.json"));
+const db = low(adapter);
+
+// db.defaults({ entries }).write();
+// db.defaults({ tags }).write();
 
 // require("./electron/menu.js")
 // Keep a global reference of the window object, if you don't, the window will
@@ -22,11 +34,11 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
-    // titleBarStyle: "hiddenInset",
-    // webPreferences: {
-    //   nodeIntegration: false,
-    //   preload: __dirname + "/preload.js"
-    // },
+    //titleBarStyle: "hiddenInset",
+    webPreferences: {
+      nodeIntegration: false,
+      preload: __dirname + "/preload.js"
+    },
     minHeight: 550,
     minWidth: 650
   });
@@ -68,3 +80,33 @@ app.on("activate", function() {
     createWindow();
   }
 });
+
+ipcMain.on("get-entry", async (event, entryId) => {
+  try {
+    const entry = await db
+      .get("entries")
+      .find({ id: entryId })
+      .value();
+    event.reply("get-entry-reply", entry);
+  } catch (e) {
+    event.sender.send("get-entry-error", e.message);
+  }
+});
+
+ipcMain.on("get-all-entries", async (event, arg) => {
+  try {
+    const entry = await db.get("entries").value();
+    event.reply("get-all-entries-reply", entry);
+  } catch (e) {
+    event.sender.send("get-all-entries-error", e.message);
+  }
+});
+//REFACTOR TO USE LOWDB:
+// ipcMain.on("add-entry", async (event, entry) => {
+//   try {
+//     await entries.push(entry);
+//     event.reply("add-entry-success", `successfully added ${entry.title}`);
+//   } catch (e) {
+//     event.reply("add-entry-error", e.message);
+//   }
+// });

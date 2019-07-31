@@ -52,7 +52,7 @@ for (let i = 0; i <= 10; i++) {
       id: shortid.generate(),
       title: faker.lorem.sentence(),
       text: faker.lorem.paragraph(),
-      date: new Date(faker.date.recent()).toString(),
+      date: new Date(faker.date.recent()).toDateString(),
       tags: arr,
       attachments: [faker.image.imageUrl()]
     })
