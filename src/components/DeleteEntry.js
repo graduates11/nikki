@@ -9,13 +9,11 @@ const DeleteEntry = props => {
       outline
       color="secondary"
       className="m-2"
-      id={props.id}
       onClick={() => {
         dispatch({
           type: "DELETE_ENTRY",
           payload: {
-            id: props.id,
-            date: props.date
+            id: props.id
           }
         });
       }}

@@ -26,7 +26,6 @@ const MyCalendar = () => {
         dispatch({
           type: "GET_ALL_ENTRIES",
           payload: {
-            date: new Date(),
             allEntries: [...entries]
           }
         });

@@ -9,7 +9,6 @@ import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
 import { DeleteEntry } from "./index";
 
-const { ipcRenderer } = window;
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const linkPlugin = createLinkPlugin();
@@ -160,7 +159,7 @@ class TextEditor extends React.Component {
         >
           Add entry
         </Button>
-        <DeleteEntry id={this.state.entry.id} date={this.state.entry.date} />
+        <DeleteEntry id={this.state.entry.id} />
       </section>
     );
   }
