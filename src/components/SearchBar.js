@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
-import { Input } from "reactstrap";
 import { Store } from "./Store";
-const Fuse = require("fuse.js");
+import { InputGroup, InputGroupAddon, Input, Button } from "reactstrap";
 
-// const { entries } = require("../lowdb/db.json");
+const Fuse = require("fuse.js");
 
 const options = {
   shouldSort: true,
@@ -18,14 +17,20 @@ const options = {
 const SearchBar = () => {
   const { state, dispatch } = useContext(Store);
   const [value, setValue] = useState("");
-  // const [entry, setEntry] = useState(state.allEntries);
 
   const handleSubmit = event => {
-    const fuse = new Fuse(state.allEntries, options); // "list" is the item array
+    const fuse = new Fuse(state.allEntries, options);
     const result = fuse.search(value);
     dispatch({
       type: "SEARCH",
       payload: { searchResult: result }
+    });
+    event.preventDefault();
+  };
+
+  const clearSearch = event => {
+    dispatch({
+      type: "CLEAR_SEARCH"
     });
     setValue("");
     event.preventDefault();
@@ -33,15 +38,22 @@ const SearchBar = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <Input
-          className="mt-2"
-          placeholder="Search"
-          type="text"
-          value={value}
-          onChange={event => setValue(event.target.value)}
-        ></Input>
-      </form>
+      <InputGroup>
+        <form onSubmit={handleSubmit}>
+          <Input
+            className="mt-2"
+            placeholder="Search"
+            type="text"
+            value={value}
+            onChange={event => setValue(event.target.value)}
+          />
+        </form>
+        <InputGroupAddon addonType="append">
+          <Button color="secondary" className="mt-2" onClick={clearSearch}>
+            x
+          </Button>
+        </InputGroupAddon>
+      </InputGroup>
     </div>
   );
 };

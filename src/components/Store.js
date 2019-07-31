@@ -63,6 +63,14 @@ function reducer(state, action) {
         searchResult,
         searchBoolean: true
       };
+    case "CLEAR_SEARCH":
+      return {
+        date,
+        entry: null,
+        allEntries,
+        searchResult,
+        searchBoolean: false
+      };
     case "DELETE_ENTRY":
       return {
         date,
