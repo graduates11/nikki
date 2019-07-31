@@ -65,7 +65,7 @@ function reducer(state, action) {
       };
     case "DELETE_ENTRY":
       return {
-        date: action.payload.date,
+        date,
         allEntries: state.allEntries.filter(
           item => item.id !== action.payload.id
         ),
