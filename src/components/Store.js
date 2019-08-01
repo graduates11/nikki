@@ -7,15 +7,13 @@ const initialState = {
   entry: null,
   allEntries: [],
   searchBoolean: false,
-  file: "WED2232"
+  currentFile: "",
+  allFiles: []
 };
 
 function reducer(state, action) {
-  const { date } = state;
+  const { date, entry, searchResult, currentFile, allFiles } = state;
   const allEntries = [...state.allEntries];
-  const { entry } = state;
-  const { searchResult } = state;
-  const { file } = state;
   switch (action.type) {
     case "SET_DATE": {
       const filteredEntry = state.allEntries.filter(
@@ -26,7 +24,8 @@ function reducer(state, action) {
         allEntries,
         entry: filteredEntry ? filteredEntry : null,
         searchBoolean: false,
-        file
+        currentFile,
+        allFiles
       };
     }
     case "GET_ENTRY":
@@ -35,7 +34,8 @@ function reducer(state, action) {
         entry: action.payload.entry,
         allEntries: state.allEntries,
         searchBoolean: false,
-        file
+        currentFile,
+        allFiles
       };
     case "ADD_NEW_ENTRY":
       return {
@@ -43,7 +43,8 @@ function reducer(state, action) {
         entry: action.payload.entry,
         allEntries: [...state.allEntries].concat(action.payload.entry),
         searchBoolean: false,
-        file
+        currentFile,
+        allFiles
       };
     case "GET_ALL_ENTRIES":
       return {
@@ -51,7 +52,8 @@ function reducer(state, action) {
         allEntries: action.payload.allEntries,
         entry,
         searchBoolean: false,
-        file
+        currentFile: action.payload.currentFile,
+        allFiles: action.payload.allFiles
       };
     case "SEARCH":
       return {
@@ -60,7 +62,8 @@ function reducer(state, action) {
         entry,
         searchResult: action.payload.searchResult,
         searchBoolean: true,
-        file
+        currentFile,
+        allFiles
       };
     case "GET_SEARCH_ENTRY":
       return {
@@ -69,7 +72,8 @@ function reducer(state, action) {
         allEntries,
         searchResult,
         searchBoolean: true,
-        file
+        currentFile,
+        allFiles
       };
     case "DELETE_ENTRY":
       return {
@@ -79,7 +83,8 @@ function reducer(state, action) {
         ),
         entry: null,
         searchBoolean: false,
-        file
+        currentFile,
+        allFiles
       };
     case "UPDATE_ENTRY":
       return {
@@ -94,23 +99,17 @@ function reducer(state, action) {
         }),
         entry: action.payload.entry,
         searchBoolean: false,
-        file
+        currentFile,
+        allFiles
       };
     case "CHANGE_FILE":
       return {
         date: new Date(),
-        file: action.payload.file,
+        currentFile: action.payload.file,
         allEntries: [],
         entry: null,
-        searchBoolean: false
-      };
-    case "GET_APP_DATA":
-      return {
-        date,
-        file: action.payload.currentFile,
-        allEntries,
-        entry,
-        searchBoolean: false
+        searchBoolean: false,
+        allFiles
       };
     default:
       return state;

@@ -19,16 +19,19 @@ const MyCalendar = () => {
   }
 
   const getEntries = () => {
-    ipcRenderer.send("get-all-entries", state.file);
+    // get all files, currentFile
+    ipcRenderer.send("get-all-entries", state.file); //refactor?
     return new Promise((resolve, reject) => {
-      ipcRenderer.once("get-all-entries-reply", (event, entries) => {
-        resolve(entries);
-        console.log(entries);
-        const allEntries = [...entries];
+      ipcRenderer.once("get-all-entries-reply", (event, data) => {
+        resolve(data);
+        console.log(data);
+        const { entries, files, currentFile } = data;
         dispatch({
           type: "GET_ALL_ENTRIES",
           payload: {
-            allEntries: allEntries.length > 0 ? allEntries : []
+            allEntries: entries.length > 0 ? entries : [],
+            allFiles: files,
+            currentFile: currentFile
           }
         });
       });

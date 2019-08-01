@@ -27,6 +27,8 @@ export default class AddFileModal extends React.Component {
             file: this.state.fileName
           }
         });
+
+        // dispatch new state
       });
       ipcRenderer.once("create-file-error", (event, args) => {
         reject(args);
@@ -52,28 +54,28 @@ export default class AddFileModal extends React.Component {
     });
   };
 
-  getAppData = () => {
-    const { dispatch } = this.context;
-    ipcRenderer.send("get-app-data");
-    return new Promise((resolve, reject) => {
-      ipcRenderer.once("get-app-data-reply", (event, response) => {
-        resolve(response);
-        console.log(response);
-        dispatch({
-          type: "GET_APP_DATA",
-          payload: {
-            currentFile: response.currentFile
-              ? response.currentFile
-              : "My Journal"
-          }
-        });
-      });
+  // getAppData = () => {
+  //   const { dispatch } = this.context;
+  //   ipcRenderer.send("get-app-data");
+  //   return new Promise((resolve, reject) => {
+  //     ipcRenderer.once("get-app-data-reply", (event, response) => {
+  //       resolve(response);
+  //       console.log(response);
+  //       dispatch({
+  //         type: "GET_APP_DATA",
+  //         payload: {
+  //           currentFile: response.currentFile
+  //             ? response.currentFile
+  //             : "My Journal"
+  //         }
+  //       });
+  //     });
 
-      ipcRenderer.once("get-app-data-error", (event, args) => {
-        reject(args);
-      });
-    });
-  };
+  //     ipcRenderer.once("get-app-data-error", (event, args) => {
+  //       reject(args);
+  //     });
+  //   });
+  // };
 
   render() {
     return (
@@ -102,14 +104,14 @@ export default class AddFileModal extends React.Component {
           >
             Close
           </Button>
-          <Button
+          {/* <Button
             onClick={this.getAppData}
             outline
             color="secondary"
             className="m-2"
           >
             Get app data
-          </Button>
+          </Button> */}
         </ModalBody>
       </Modal>
     );
