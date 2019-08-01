@@ -27,7 +27,7 @@ export default function App() {
           id: shortid.generate(),
           title: defaultTitle(),
           text: "",
-          date: new Date()
+          date: new Date().toDateString()
         }
       }
     });
