@@ -104,6 +104,14 @@ function reducer(state, action) {
         entry: null,
         searchBoolean: false
       };
+    case "GET_APP_DATA":
+      return {
+        date,
+        file: action.payload.currentFile,
+        allEntries,
+        entry,
+        searchBoolean: false
+      };
     default:
       return state;
   }

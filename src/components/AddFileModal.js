@@ -52,6 +52,29 @@ export default class AddFileModal extends React.Component {
     });
   };
 
+  getAppData = () => {
+    const { dispatch } = this.context;
+    ipcRenderer.send("get-app-data");
+    return new Promise((resolve, reject) => {
+      ipcRenderer.once("get-app-data-reply", (event, response) => {
+        resolve(response);
+        console.log(response);
+        dispatch({
+          type: "GET_APP_DATA",
+          payload: {
+            currentFile: response.currentFile
+              ? response.currentFile
+              : "My Journal"
+          }
+        });
+      });
+
+      ipcRenderer.once("get-app-data-error", (event, args) => {
+        reject(args);
+      });
+    });
+  };
+
   render() {
     return (
       <Modal isOpen={this.props.modal}>
@@ -78,6 +101,14 @@ export default class AddFileModal extends React.Component {
             className="m-2"
           >
             Close
+          </Button>
+          <Button
+            onClick={this.getAppData}
+            outline
+            color="secondary"
+            className="m-2"
+          >
+            Get app data
           </Button>
         </ModalBody>
       </Modal>

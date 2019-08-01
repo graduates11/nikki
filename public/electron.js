@@ -1,8 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const electron = require("electron");
 const path = require("path");
-const low = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
 const userDataPath = (electron.app || electron.remote.app).getPath("userData");
 const isDev = require("electron-is-dev");
 
@@ -76,16 +74,29 @@ app.on("activate", function() {
   }
 });
 
+// ======================================================================
+const low = require("lowdb");
+const FileSync = require("lowdb/adapters/FileSync");
+
+// APP-DATA DB
 const appDataAdapter = new FileSync(path.join(userDataPath, "app-data.json"));
 const appdb = low(appDataAdapter);
 
 ipcMain.on("get-app-data", async (event, arg) => {
   let data = null;
+
+  // delete await?
   try {
-    appdb.defaults({ files: [] }).write();
-    data = await appdb.find;
+    data = await appdb.get("data").value();
+    if (data === undefined) {
+      appdb.defaults({ data: {} }).write();
+      event.reply("get-app-data-reply", "No data");
+    } else {
+      event.reply("get-app-data-reply", data);
+    }
   } catch (e) {
     console.error(e);
+    event.reply("get-app-data-error", e.message);
   }
 });
 
@@ -102,6 +113,12 @@ ipcMain.on("create-file", async (event, fileName) => {
       const adapter = new FileSync(path.join(entriesPath, `${fileName}.json`));
       const db = low(adapter);
       db.defaults({ entries: [] }).write();
+      // Add new file to appData files list
+      appdb
+        .get("data.files")
+        .push({ fileName })
+        .write();
+
       event.reply(
         "create-file-reply",
         `Successfully created new file: ${fileName}`
@@ -117,11 +134,13 @@ ipcMain.on("create-file", async (event, fileName) => {
 
 ipcMain.on("get-all-entries", async (event, fileName) => {
   // REFACTOR TO ACCESS THE LATEST OPEN FILE FROM ENTRIES DIR
+  console.log(path);
   let adapter = new FileSync(path.join(userDataPath, `${fileName}.json`));
   let db = low(adapter);
+  console.log(db);
+  // delete await?
   try {
     const entries = await db.get("entries").value();
-    console.log(entries);
     event.reply("get-all-entries-reply", entries);
   } catch (e) {
     event.sender.send(
@@ -133,10 +152,15 @@ ipcMain.on("get-all-entries", async (event, fileName) => {
 
 ipcMain.on("final-save", async (event, data) => {
   const { file, entries } = data;
-  let adapter = new FileSync(path.join(userDataPath, `${file}.json`));
+  let adapter = new FileSync(
+    path.join(userDataPath, "entries", `${file}.json`)
+  );
   let db = low(adapter);
   try {
+    // delete await cause its FileSync?
     await db.set("entries", entries).write();
+    await appdb.set("data.currentFile", file).write();
+
     event.reply("final-save-reply", `Successfully saved file: ${file}`);
   } catch (e) {
     event.sender.send(
