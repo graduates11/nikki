@@ -7,7 +7,7 @@ const initialState = {
   entry: null,
   allEntries: [],
   searchBoolean: false,
-  file: "db"
+  file: "WED2232"
 };
 
 function reducer(state, action) {

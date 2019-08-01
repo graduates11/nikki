@@ -9,7 +9,7 @@ import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
 import { DeleteEntry } from "./index";
 import AddFileModal from "./AddFileModal";
-import { ipcRenderer } from "electron";
+const { ipcRenderer } = window;
 
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();

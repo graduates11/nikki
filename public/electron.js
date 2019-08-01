@@ -83,20 +83,48 @@ const appDataAdapter = new FileSync(path.join(userDataPath, "app-data.json"));
 const appdb = low(appDataAdapter);
 
 ipcMain.on("get-app-data", async (event, arg) => {
-  let data = null;
-
+  let data;
+  let currentFile;
+  let files;
   // delete await?
+  // move to get all entries?
   try {
-    data = await appdb.get("data").value();
-    if (data === undefined) {
-      appdb.defaults({ data: {} }).write();
-      event.reply("get-app-data-reply", "No data");
+    currentFile = await appdb.get("currentFile").value();
+    files = await appdb.get("files").value();
+    if (currentFile === undefined && files === undefined) {
+      appdb.defaults({ currentFile: "" }).write();
+      appdb.defaults({ files: [] }).write();
+      event.reply("get-app-data-reply", "No data"); //refactor the default to my journal?
     } else {
+      data = {
+        currentFile,
+        files
+      };
       event.reply("get-app-data-reply", data);
     }
   } catch (e) {
     console.error(e);
     event.reply("get-app-data-error", e.message);
+  }
+});
+
+ipcMain.on("get-all-entries", async (event, fileName) => {
+  // REFACTOR TO ACCESS THE LATEST OPEN FILE FROM ENTRIES DIR
+
+  let adapter = new FileSync(
+    path.join(userDataPath, "entries", `${fileName}.json`)
+  );
+  let db = low(adapter);
+
+  // delete await?
+  try {
+    const entries = await db.get("entries").value();
+    event.reply("get-all-entries-reply", entries);
+  } catch (e) {
+    event.sender.send(
+      "get-all-entries-error",
+      `Sorry, an error has occured: ${e.message}`
+    );
   }
 });
 
@@ -110,14 +138,16 @@ ipcMain.on("create-file", async (event, fileName) => {
     console.error(e);
   } finally {
     try {
+      await appdb.set("currentFile", fileName).write();
+      await appdb
+        .get("files")
+        .push(fileName)
+        .write();
       const adapter = new FileSync(path.join(entriesPath, `${fileName}.json`));
       const db = low(adapter);
       db.defaults({ entries: [] }).write();
       // Add new file to appData files list
-      appdb
-        .get("data.files")
-        .push({ fileName })
-        .write();
+      console.log(fileName);
 
       event.reply(
         "create-file-reply",
@@ -132,24 +162,6 @@ ipcMain.on("create-file", async (event, fileName) => {
   }
 });
 
-ipcMain.on("get-all-entries", async (event, fileName) => {
-  // REFACTOR TO ACCESS THE LATEST OPEN FILE FROM ENTRIES DIR
-  console.log(path);
-  let adapter = new FileSync(path.join(userDataPath, `${fileName}.json`));
-  let db = low(adapter);
-  console.log(db);
-  // delete await?
-  try {
-    const entries = await db.get("entries").value();
-    event.reply("get-all-entries-reply", entries);
-  } catch (e) {
-    event.sender.send(
-      "get-all-entries-error",
-      `Sorry, an error has occured: ${e.message}`
-    );
-  }
-});
-
 ipcMain.on("final-save", async (event, data) => {
   const { file, entries } = data;
   let adapter = new FileSync(
@@ -159,8 +171,7 @@ ipcMain.on("final-save", async (event, data) => {
   try {
     // delete await cause its FileSync?
     await db.set("entries", entries).write();
-    await appdb.set("data.currentFile", file).write();
-
+    await appdb.set("currentFile", file).write();
     event.reply("final-save-reply", `Successfully saved file: ${file}`);
   } catch (e) {
     event.sender.send(
