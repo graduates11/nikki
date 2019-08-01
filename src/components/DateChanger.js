@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import DatePicker from "react-date-picker";
 import { Store } from "./Store";
 
 const DateChanger = () => {
   const { state, dispatch } = useContext(Store);
-  // const [pickedDate, setPickedDate] = useState();
   const [isOpen, setIsOpen] = useState(false);
 
   const date = new Date(state.entry.date);
+  let changedDate;
 
   const month = date.toLocaleString("default", {
     month: "long"
@@ -16,23 +16,28 @@ const DateChanger = () => {
   const year = date.getFullYear();
   const day = date.getDate();
 
+  const submitChangedDate = e => {
+    if (e.target.id === "changeDate") {
+      const changedEntry = { ...state.entry };
+      changedEntry.date = changedDate;
+      dispatch({
+        type: "CHANGE_DATE",
+        payload: {
+          entry: changedEntry,
+          date: changedDate
+        }
+      });
+    }
+    toggleCalendar();
+  };
+
   const toggleCalendar = e => {
     e && e.preventDefault();
     setIsOpen(!isOpen);
   };
 
   const handleChange = date => {
-    // setPickedDate(date);
-    const changedEntry = state.entry;
-    changedEntry.date = date.toDateString();
-    dispatch({
-      type: "CHANGE_DATE",
-      payload: {
-        entry: changedEntry,
-        date: date
-      }
-    });
-    toggleCalendar();
+    changedDate = date;
   };
 
   return (
@@ -49,9 +54,24 @@ const DateChanger = () => {
           <p className="day">{day}</p>
         </span>
       </span>
-      {isOpen && (
-        <DatePicker selected={date} onChange={handleChange} withPortal inline />
-      )}
+      <Modal isOpen={isOpen}>
+        <ModalBody>
+          <DatePicker
+            onChange={handleChange}
+            value={date}
+            tileClassName="circle"
+            format="MM.dd.y"
+          ></DatePicker>
+        </ModalBody>
+        <ModalFooter>
+          <Button id="cancel" onClick={toggleCalendar}>
+            Cancel
+          </Button>{" "}
+          <Button id="changeDate" onClick={submitChangedDate}>
+            Change Date
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };
