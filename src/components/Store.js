@@ -10,6 +10,7 @@ const initialState = {
 };
 
 function reducer(state, action) {
+  // console.log(action);
   const { date } = state;
   const allEntries = [...state.allEntries];
   const { entry } = state;
@@ -33,13 +34,19 @@ function reducer(state, action) {
         allEntries: state.allEntries,
         searchBoolean: false
       };
-    case "CHANGE_DATE":
+    case "CHANGE_DATE": {
+      const allEntriesUpdated = state.allEntries.map(entry =>
+        entry.id === action.payload.entry.id
+          ? (entry = action.payload.entry)
+          : entry
+      );
       return {
         date: action.payload.date,
         entry: action.payload.entry,
-        allEntries,
+        allEntries: allEntriesUpdated,
         searchBoolean: false
       };
+    }
     case "ADD_NEW_ENTRY":
       return {
         date: action.payload.entry.date,

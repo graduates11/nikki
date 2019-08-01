@@ -80,3 +80,12 @@ label:focus,
 .hiddenCalendar {
     visibility: hidden;
 }
+
+.react-date-picker__clear-button {
+    // a bit hacky…
+    display: none;
+}
+
+.react-date-picker__wrapper {
+    border: none;
+}
