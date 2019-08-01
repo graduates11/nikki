@@ -82,32 +82,7 @@ const FileSync = require("lowdb/adapters/FileSync");
 const appDataAdapter = new FileSync(path.join(userDataPath, "app-data.json"));
 const appdb = low(appDataAdapter);
 
-// ipcMain.on("get-app-data", async (event, arg) => {
-//   let data;
-//   let currentFile;
-//   let files;
-//   // delete await?
-//   // move to get all entries?
-//   try {
-//     currentFile = await appdb.get("currentFile").value();
-//     files = await appdb.get("files").value();
-//     if (currentFile === undefined && files === undefined) {
-//       appdb.defaults({ currentFile: "" }).write();
-//       appdb.defaults({ files: [] }).write();
-//       event.reply("get-app-data-reply", "No data"); //refactor the default to my journal?
-//     } else {
-//       data = {
-//         currentFile,
-//         files
-//       };
-//       event.reply("get-app-data-reply", data);
-//     }
-//   } catch (e) {
-//     console.error(e);
-//     event.reply("get-app-data-error", e.message);
-//   }
-// });
-
+// HELPER
 const createFile = async fileName => {
   const fsp = require("fs").promises;
   const entriesPath = path.join(userDataPath, "entries");
@@ -130,7 +105,9 @@ const createFile = async fileName => {
     }
   }
 };
-ipcMain.on("get-all-entries", async (event, fileName) => {
+
+// ON APP LAUNCH
+ipcMain.on("get-all-entries", async (event, arg) => {
   let currentFile;
   let files;
   let adapter;
@@ -174,39 +151,23 @@ ipcMain.on("get-all-entries", async (event, fileName) => {
 });
 
 ipcMain.on("create-file", async (event, fileName) => {
-  const fsp = require("fs").promises;
-  const entriesPath = path.join(userDataPath, "entries");
-
   try {
-    await fsp.mkdir(entriesPath, { recursive: true });
+    await createFile(fileName);
+    event.reply(
+      "create-file-reply",
+      `Successfully created new file: ${fileName}`
+    );
   } catch (e) {
-    console.error(e);
-  } finally {
-    try {
-      await appdb.set("currentFile", fileName).write();
-      await appdb
-        .get("files")
-        .push(fileName)
-        .write();
-      const adapter = new FileSync(path.join(entriesPath, `${fileName}.json`));
-      const db = low(adapter);
-      db.defaults({ entries: [] }).write();
-
-      event.reply(
-        "create-file-reply",
-        `Successfully created new file: ${fileName}`
-      );
-    } catch (e) {
-      event.reply(
-        "create-file-error",
-        `Sorry, an error has occured: ${e.message}`
-      );
-    }
+    event.reply(
+      "create-file-error",
+      `Sorry, an error has occured: ${e.message}`
+    );
   }
 });
 
 ipcMain.on("final-save", async (event, data) => {
   const { file, entries } = data;
+  console.log(file, entries);
   let adapter = new FileSync(
     path.join(userDataPath, "entries", `${file}.json`)
   );
@@ -217,6 +178,7 @@ ipcMain.on("final-save", async (event, data) => {
     await appdb.set("currentFile", file).write();
     event.reply("final-save-reply", `Successfully saved file: ${file}`);
   } catch (e) {
+    console.log(e);
     event.sender.send(
       "final-save-error",
       `Sorry, an error has occured: ${e.message}`

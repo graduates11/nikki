@@ -20,7 +20,7 @@ const MyCalendar = () => {
 
   const getEntries = () => {
     // get all files, currentFile
-    ipcRenderer.send("get-all-entries", state.file); //refactor?
+    ipcRenderer.send("get-all-entries"); //refactor?
     return new Promise((resolve, reject) => {
       ipcRenderer.once("get-all-entries-reply", (event, data) => {
         resolve(data);
@@ -30,7 +30,7 @@ const MyCalendar = () => {
           type: "GET_ALL_ENTRIES",
           payload: {
             allEntries: entries.length > 0 ? entries : [],
-            allFiles: files,
+            allFiles: files ? files : [],
             currentFile: currentFile
           }
         });

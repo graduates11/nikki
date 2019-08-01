@@ -102,14 +102,14 @@ function reducer(state, action) {
         currentFile,
         allFiles
       };
-    case "CHANGE_FILE":
+    case "CREATE_FILE":
       return {
         date: new Date(),
         currentFile: action.payload.file,
         allEntries: [],
         entry: null,
         searchBoolean: false,
-        allFiles
+        allFiles: action.payload.allFiles
       };
     default:
       return state;

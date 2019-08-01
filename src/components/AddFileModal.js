@@ -14,7 +14,7 @@ export default class AddFileModal extends React.Component {
   };
 
   createFile = () => {
-    const { dispatch } = this.context;
+    const { state, dispatch } = this.context;
     this.props.toggleModal();
     this.onFinalSave();
     ipcRenderer.send("create-file", this.state.fileName);
@@ -22,9 +22,10 @@ export default class AddFileModal extends React.Component {
       ipcRenderer.once("create-file-reply", (event, response) => {
         resolve(response);
         dispatch({
-          type: "CHANGE_FILE",
+          type: "CREATE_FILE",
           payload: {
-            file: this.state.fileName
+            file: this.state.fileName,
+            allFiles: [...state.allFiles].concat(this.state.fileName)
           }
         });
 
@@ -38,15 +39,16 @@ export default class AddFileModal extends React.Component {
 
   onFinalSave = () => {
     const entries = [...this.context.state.allEntries];
-    const { file } = this.context.state;
+    const { currentFile } = this.context.state;
     const data = {
       entries,
-      file
+      file: currentFile
     };
     ipcRenderer.send("final-save", data);
     return new Promise((resolve, reject) => {
       ipcRenderer.once("final-save-reply", (event, response) => {
         resolve(response);
+        console.log(response);
       });
       ipcRenderer.once("final-save-error", (event, args) => {
         reject(args);
