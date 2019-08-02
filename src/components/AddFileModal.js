@@ -28,8 +28,6 @@ export default class AddFileModal extends React.Component {
             allFiles: [...state.allFiles].concat(this.state.fileName)
           }
         });
-
-        // dispatch new state
       });
       ipcRenderer.once("create-file-error", (event, args) => {
         reject(args);
@@ -56,28 +54,29 @@ export default class AddFileModal extends React.Component {
     });
   };
 
-  // getAppData = () => {
-  //   const { dispatch } = this.context;
-  //   ipcRenderer.send("get-app-data");
-  //   return new Promise((resolve, reject) => {
-  //     ipcRenderer.once("get-app-data-reply", (event, response) => {
-  //       resolve(response);
-  //       console.log(response);
-  //       dispatch({
-  //         type: "GET_APP_DATA",
-  //         payload: {
-  //           currentFile: response.currentFile
-  //             ? response.currentFile
-  //             : "My Journal"
-  //         }
-  //       });
-  //     });
-
-  //     ipcRenderer.once("get-app-data-error", (event, args) => {
-  //       reject(args);
-  //     });
-  //   });
-  // };
+  changeFile = file => {
+    this.props.toggleModal();
+    this.onFinalSave();
+    ipcRenderer.send("get-all-entries", file); // CHANGE MY CALENDRR
+    return new Promise((resolve, reject) => {
+      ipcRenderer.once("get-all-entries-reply", (event, data) => {
+        resolve(data);
+        const { entries, files, currentFile } = data;
+        console.log(data);
+        this.context.dispatch({
+          type: "GET_ALL_ENTRIES",
+          payload: {
+            allEntries: entries.length > 0 ? entries : [],
+            allFiles: files ? files : [],
+            currentFile: currentFile
+          }
+        });
+      });
+      ipcRenderer.once("get-all-entries-error", (event, args) => {
+        reject(args);
+      });
+    });
+  };
 
   render() {
     return (
@@ -106,14 +105,27 @@ export default class AddFileModal extends React.Component {
           >
             Close
           </Button>
-          {/* <Button
-            onClick={this.getAppData}
+          <Button
+            onClick={this.onFinalSave}
             outline
             color="secondary"
             className="m-2"
           >
-            Get app data
-          </Button> */}
+            Save
+          </Button>
+          {this.context.state.allFiles.map((file, i) => {
+            return (
+              <Button
+                onClick={() => this.changeFile(file)}
+                key={i}
+                outline
+                color="secondary"
+                className="m-2"
+              >
+                {file}
+              </Button>
+            );
+          })}
         </ModalBody>
       </Modal>
     );

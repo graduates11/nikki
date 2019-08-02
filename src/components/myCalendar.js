@@ -19,8 +19,8 @@ const MyCalendar = () => {
   }
 
   const getEntries = () => {
-    // get all files, currentFile
-    ipcRenderer.send("get-all-entries"); //refactor?
+    // add an optional parameter fileName for changing files?
+    ipcRenderer.send("get-all-entries", null); //refactor? move to App.js?
     return new Promise((resolve, reject) => {
       ipcRenderer.once("get-all-entries-reply", (event, data) => {
         resolve(data);

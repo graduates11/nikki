@@ -50,7 +50,7 @@ function reducer(state, action) {
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry,
+        entry: null,
         searchBoolean: false,
         currentFile: action.payload.currentFile,
         allFiles: action.payload.allFiles
@@ -111,6 +111,16 @@ function reducer(state, action) {
         searchBoolean: false,
         allFiles: action.payload.allFiles
       };
+    case "CHANGE_FILE": {
+      return {
+        date: new Date(),
+        currentFile: action.payload.file,
+        allEntries,
+        entry: null,
+        searchBoolean: false,
+        allFiles
+      };
+    }
     default:
       return state;
   }

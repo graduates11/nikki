@@ -9,7 +9,6 @@ import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
 import { DeleteEntry } from "./index";
 import AddFileModal from "./AddFileModal";
-const { ipcRenderer } = window;
 
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
@@ -88,15 +87,6 @@ class TextEditor extends React.Component {
         entry: updatedEntry
       }
     });
-
-    // const entries = [...this.context.state.allEntries];
-    // not working
-    // const { file } = this.context.state;
-    // const data = {
-    //   entries,
-    //   file
-    // };
-    // ipcRenderer.send("final-save", data);
   };
 
   toggleModal = () => {
