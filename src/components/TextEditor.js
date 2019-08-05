@@ -42,7 +42,6 @@ class TextEditor extends React.Component {
     if (currentEntry.id !== this.state.entry.id) {
       this.setState({
         entry: currentEntry,
-        // if entry has editors state set it to that else:
         editorState: EditorState.createWithContent(
           ContentState.createFromText(currentEntry.text)
         )
@@ -112,6 +111,7 @@ class TextEditor extends React.Component {
             className="title-input mt-2"
             type="text"
             maxLength="50"
+            onBlur={this.updateEntry}
           ></Input>
           <span className="entry-date mt-2">
             <span>
@@ -134,6 +134,7 @@ class TextEditor extends React.Component {
           ref={element => {
             this.editor = element;
           }}
+          onBlur={this.updateEntry}
         />
         <InlineToolbar>
           {externalProps => (

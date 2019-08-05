@@ -136,8 +136,8 @@ const getData = async fileName => {
 };
 
 // ON APP LAUNCH
-ipcMain.on("get-all-entries", async (event, arg) => {
-  let currentFile = arg === null ? null : arg;
+ipcMain.on("get-all-entries", async (event, currentFile = null) => {
+  console.log(currentFile);
   let firstLaunch;
   let isFile;
   let data;

@@ -46,7 +46,6 @@ export default class AddFileModal extends React.Component {
     return new Promise((resolve, reject) => {
       ipcRenderer.once("final-save-reply", (event, response) => {
         resolve(response);
-        console.log(response);
       });
       ipcRenderer.once("final-save-error", (event, args) => {
         reject(args);
@@ -62,7 +61,6 @@ export default class AddFileModal extends React.Component {
       ipcRenderer.once("get-all-entries-reply", (event, data) => {
         resolve(data);
         const { entries, files, currentFile } = data;
-        console.log(data);
         this.context.dispatch({
           type: "GET_ALL_ENTRIES",
           payload: {

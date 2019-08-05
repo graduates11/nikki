@@ -89,7 +89,7 @@ function reducer(state, action) {
     case "UPDATE_ENTRY":
       return {
         date,
-        allEntries: state.allEntries.map(item => {
+        allEntries: allEntries.map(item => {
           if (item.id === action.payload.entry.id) {
             item = action.payload.entry;
             return item;
