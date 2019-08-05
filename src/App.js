@@ -9,6 +9,7 @@ import {
 } from "../src/components";
 import { Store } from "./components/Store";
 import { defaultTitle } from "./components/utils/helpers";
+import { EditorState, convertToRaw } from "draft-js";
 const shortid = require("shortid");
 
 const styles = {
@@ -20,6 +21,7 @@ const styles = {
 export default function App() {
   const { state, dispatch } = useContext(Store);
   const addEntry = () => {
+    const content = EditorState.createEmpty();
     dispatch({
       type: "ADD_NEW_ENTRY",
       payload: {
@@ -27,7 +29,8 @@ export default function App() {
           id: shortid.generate(),
           title: defaultTitle(),
           text: "",
-          date: new Date().toDateString()
+          date: new Date().toDateString(),
+          editorState: convertToRaw(content.getCurrentContent())
         }
       }
     });

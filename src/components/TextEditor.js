@@ -1,4 +1,9 @@
-import { EditorState, ContentState } from "draft-js";
+import {
+  EditorState,
+  ContentState,
+  convertToRaw,
+  convertFromRaw
+} from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHashtagPlugin from "draft-js-hashtag-plugin";
 import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
@@ -41,11 +46,13 @@ class TextEditor extends React.Component {
   componentDidUpdate() {
     const currentEntry = this.context.state.entry;
     if (currentEntry.id !== this.state.entry.id) {
+      const content = convertFromRaw(currentEntry.editorState);
       this.setState({
         entry: currentEntry,
-        editorState: EditorState.createWithContent(
-          ContentState.createFromText(currentEntry.text)
-        )
+        // editorState: EditorState.createWithContent(
+        //   ContentState.createFromText(currentEntry.text)
+        // )
+        editorState: EditorState.createWithContent(content)
       });
     }
   }
@@ -73,10 +80,10 @@ class TextEditor extends React.Component {
     const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
     const text = this.getPlainText();
-
+    const content = convertToRaw(editorState.getCurrentContent());
     const updatedEntry = {
       ...entry,
-      editorState: editorState,
+      editorState: content,
       text,
       tags: hashtags
     };
