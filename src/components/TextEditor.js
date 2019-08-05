@@ -7,6 +7,8 @@ import createLinkPlugin from "draft-js-anchor-plugin";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
+
+import AddFileModal from "./AddFileModal";
 import { DeleteEntry, DateChanger } from "./index";
 
 const hashtagPlugin = createHashtagPlugin();
@@ -24,7 +26,8 @@ class TextEditor extends React.Component {
       id: "default_id",
       text: "Your text...",
       title: "Your title...",
-      date: new Date()
+      date: new Date(),
+      modal: false
     },
     editorState: EditorState.createEmpty()
   };
@@ -40,7 +43,6 @@ class TextEditor extends React.Component {
     if (currentEntry.id !== this.state.entry.id) {
       this.setState({
         entry: currentEntry,
-        // if entry has editors state set it to that else:
         editorState: EditorState.createWithContent(
           ContentState.createFromText(currentEntry.text)
         )
@@ -87,6 +89,10 @@ class TextEditor extends React.Component {
     });
   };
 
+  toggleModal = () => {
+    this.setState({ modal: !this.state.modal });
+  };
+
   render() {
     return (
       <section className="editor">
@@ -98,6 +104,7 @@ class TextEditor extends React.Component {
             className="title-input mt-2"
             type="text"
             maxLength="50"
+            onBlur={this.updateEntry}
           ></Input>
           <DateChanger />
         </div>
@@ -109,6 +116,7 @@ class TextEditor extends React.Component {
           ref={element => {
             this.editor = element;
           }}
+          onBlur={this.updateEntry}
         />
         <InlineToolbar>
           {externalProps => (
@@ -137,6 +145,15 @@ class TextEditor extends React.Component {
           Add entry
         </Button>
         <DeleteEntry id={this.state.entry.id} />
+        <Button
+          outline
+          color="secondary"
+          className="m-2"
+          onClick={this.toggleModal}
+        >
+          Create new file
+        </Button>
+        <AddFileModal toggleModal={this.toggleModal} modal={this.state.modal} />
       </section>
     );
   }

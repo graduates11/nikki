@@ -6,15 +6,15 @@ const initialState = {
   date: new Date(),
   entry: null,
   allEntries: [],
-  searchBoolean: false
+  searchBoolean: false,
+  currentFile: "",
+  allFiles: []
 };
 
 function reducer(state, action) {
-  // console.log(action);
-  const { date } = state;
+  const { date, entry, searchResult, currentFile, allFiles } = state;
+
   const allEntries = [...state.allEntries];
-  const { entry } = state;
-  const { searchResult } = state;
   switch (action.type) {
     case "SET_DATE": {
       const filteredEntry = state.allEntries.filter(
@@ -24,7 +24,9 @@ function reducer(state, action) {
         date: action.payload.date,
         allEntries,
         entry: filteredEntry ? filteredEntry : null,
-        searchBoolean: false
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
     }
     case "GET_ENTRY":
@@ -32,7 +34,9 @@ function reducer(state, action) {
         date,
         entry: action.payload.entry,
         allEntries: state.allEntries,
-        searchBoolean: false
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
     case "CHANGE_DATE": {
       const allEntriesUpdated = state.allEntries.map(entry =>
@@ -44,7 +48,9 @@ function reducer(state, action) {
         date: action.payload.date,
         entry: action.payload.entry,
         allEntries: allEntriesUpdated,
-        searchBoolean: false
+        searchBoolean: false,
+        allFiles,
+        currentFile
       };
     }
     case "ADD_NEW_ENTRY":
@@ -52,14 +58,18 @@ function reducer(state, action) {
         date,
         entry: action.payload.entry,
         allEntries: [...state.allEntries].concat(action.payload.entry),
-        searchBoolean: false
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
     case "GET_ALL_ENTRIES":
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry,
-        searchBoolean: false
+        entry: null,
+        searchBoolean: false,
+        currentFile: action.payload.currentFile,
+        allFiles: action.payload.allFiles
       };
     case "SEARCH":
       return {
@@ -67,7 +77,9 @@ function reducer(state, action) {
         allEntries,
         entry,
         searchResult: action.payload.searchResult,
-        searchBoolean: true
+        searchBoolean: true,
+        currentFile,
+        allFiles
       };
     case "GET_SEARCH_ENTRY":
       return {
@@ -75,7 +87,9 @@ function reducer(state, action) {
         entry: action.payload.entry,
         allEntries,
         searchResult,
-        searchBoolean: true
+        searchBoolean: true,
+        currentFile,
+        allFiles
       };
     case "CLEAR_SEARCH":
       return {
@@ -83,7 +97,8 @@ function reducer(state, action) {
         entry: null,
         allEntries,
         searchResult,
-        searchBoolean: false
+        searchBoolean: false,
+        allFiles
       };
     case "DELETE_ENTRY":
       return {
@@ -92,12 +107,14 @@ function reducer(state, action) {
           item => item.id !== action.payload.id
         ),
         entry: null,
-        searchBoolean: false
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
     case "UPDATE_ENTRY":
       return {
         date,
-        allEntries: state.allEntries.map(item => {
+        allEntries: allEntries.map(item => {
           if (item.id === action.payload.entry.id) {
             item = action.payload.entry;
             return item;
@@ -106,8 +123,29 @@ function reducer(state, action) {
           }
         }),
         entry: action.payload.entry,
-        searchBoolean: false
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
+    case "CREATE_FILE":
+      return {
+        date: new Date(),
+        currentFile: action.payload.file,
+        allEntries: [],
+        entry: null,
+        searchBoolean: false,
+        allFiles: action.payload.allFiles
+      };
+    case "CHANGE_FILE": {
+      return {
+        date: new Date(),
+        currentFile: action.payload.file,
+        allEntries,
+        entry: null,
+        searchBoolean: false,
+        allFiles
+      };
+    }
     default:
       return state;
   }
