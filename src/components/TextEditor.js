@@ -7,7 +7,7 @@ import createLinkPlugin from "draft-js-anchor-plugin";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
-import { DeleteEntry, DateChanger } from "./index";
+import { DateChanger } from "./index";
 
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
@@ -136,7 +136,6 @@ class TextEditor extends React.Component {
         >
           Add entry
         </Button>
-        <DeleteEntry id={this.state.entry.id} />
       </section>
     );
   }
