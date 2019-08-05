@@ -49,10 +49,8 @@ class TextEditor extends React.Component {
       const content = convertFromRaw(currentEntry.editorState);
       this.setState({
         entry: currentEntry,
-        // editorState: EditorState.createWithContent(
-        //   ContentState.createFromText(currentEntry.text)
-        // )
         editorState: EditorState.createWithContent(content)
+
       });
     }
   }
