@@ -9,7 +9,7 @@ import {
 } from "../src/components";
 import { Store } from "./components/Store";
 import { defaultTitle } from "./components/utils/helpers";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
 const shortid = require("shortid");
 
 const styles = {
@@ -20,8 +20,11 @@ const styles = {
 
 export default function App() {
   const { state, dispatch } = useContext(Store);
+
   const addEntry = () => {
-    const content = EditorState.createEmpty();
+    const content = EditorState.createWithContent(
+      ContentState.createFromText("Your text...")
+    );
     dispatch({
       type: "ADD_NEW_ENTRY",
       payload: {
