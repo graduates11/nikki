@@ -11,6 +11,7 @@ div.DraftEditor-root {
     font-size: 18px;
     font-family: 'calibri', sans-serif;
 }
+
 .add-entry {
     border-bottom: 1px solid rgb(197, 197, 197);
     cursor: pointer;
@@ -18,26 +19,30 @@ div.DraftEditor-root {
     p {
         color: rgb(197, 197, 197);
         margin-top: .7rem;
-    margin-bottom: .5rem;
+        margin-bottom: .5rem;
     }
 }
+
 .entry-header {
     display: grid;
     grid-template-columns: 8fr 2fr;
     align-items: self-start;
+
     .title-input {
         border: none;
     }
+
     .entry-date {
         display: flex;
         flex-direction: row;
         align-items: center;
-       
+
         .month-year {
             font-size: 12px;
             text-align: right;
             margin-right: 2px;
         }
+
         .day {
             font-size: 35px;
         }
@@ -70,4 +75,17 @@ label:focus,
 
 .circle {
     border-radius: 50%;
+}
+
+.hiddenCalendar {
+    visibility: hidden;
+}
+
+.react-date-picker__clear-button {
+    // a bit hacky…
+    display: none;
+}
+
+.react-date-picker__wrapper {
+    border: none;
 }

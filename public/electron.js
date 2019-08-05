@@ -132,15 +132,15 @@ const getData = async fileName => {
     currentFile: fileName,
     files
   };
-  return data;
+  return JSON.stringify(data);
 };
 
 // ON APP LAUNCH
 ipcMain.on("get-all-entries", async (event, currentFile = null) => {
-  console.log(currentFile);
   let firstLaunch;
   let isFile;
   let data;
+
   try {
     // see if app-data exists
     firstLaunch = !(await appDataExists());
@@ -223,7 +223,7 @@ ipcMain.on("create-file", async (event, fileName) => {
 });
 
 ipcMain.on("final-save", async (event, data) => {
-  const { file, entries } = data;
+  const { file, entries } = JSON.parse(data);
   let adapter = new FileSync(
     path.join(userDataPath, "entries", `${file}.json`)
   );

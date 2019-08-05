@@ -13,6 +13,7 @@ const initialState = {
 
 function reducer(state, action) {
   const { date, entry, searchResult, currentFile, allFiles } = state;
+
   const allEntries = [...state.allEntries];
   switch (action.type) {
     case "SET_DATE": {
@@ -37,9 +38,24 @@ function reducer(state, action) {
         currentFile,
         allFiles
       };
+    case "CHANGE_DATE": {
+      const allEntriesUpdated = state.allEntries.map(entry =>
+        entry.id === action.payload.entry.id
+          ? (entry = action.payload.entry)
+          : entry
+      );
+      return {
+        date: action.payload.date,
+        entry: action.payload.entry,
+        allEntries: allEntriesUpdated,
+        searchBoolean: false,
+        allFiles,
+        currentFile
+      };
+    }
     case "ADD_NEW_ENTRY":
       return {
-        date: action.payload.entry.date,
+        date,
         entry: action.payload.entry,
         allEntries: [...state.allEntries].concat(action.payload.entry),
         searchBoolean: false,
@@ -73,6 +89,15 @@ function reducer(state, action) {
         searchResult,
         searchBoolean: true,
         currentFile,
+        allFiles
+      };
+    case "CLEAR_SEARCH":
+      return {
+        date,
+        entry: null,
+        allEntries,
+        searchResult,
+        searchBoolean: false,
         allFiles
       };
     case "DELETE_ENTRY":

@@ -27,7 +27,7 @@ export default function App() {
           id: shortid.generate(),
           title: defaultTitle(),
           text: "",
-          date: new Date()
+          date: new Date().toDateString()
         }
       }
     });
@@ -38,12 +38,9 @@ export default function App() {
         <Row style={styles.fullHeight}>
           <Col xs={4} className="border border-muted">
             <SearchBar />
+            {state.searchBoolean === true ? <SearchResult /> : null}
             <MyCalendar />
-            {state.searchBoolean === true ? (
-              <SearchResult />
-            ) : (
-              <EntriesByDate />
-            )}
+            {state.searchBoolean === true ? null : <EntriesByDate />}
           </Col>
           <Col xs={8} className="border border-muted">
             {state.entry !== null ? (

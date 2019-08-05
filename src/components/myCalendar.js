@@ -20,13 +20,16 @@ const MyCalendar = () => {
 
   const getEntries = () => {
     ipcRenderer.send("get-all-entries");
+
     return new Promise((resolve, reject) => {
       ipcRenderer.once("get-all-entries-reply", (event, data) => {
         resolve(data);
-        const { entries, files, currentFile } = data;
+        const jsonData = JSON.parse(data);
+        const { entries, files, currentFile } = jsonData;
         dispatch({
           type: "GET_ALL_ENTRIES",
           payload: {
+            date: new Date(),
             allEntries: entries.length > 0 ? entries : [],
             allFiles: files ? files : [],
             currentFile: currentFile
@@ -35,6 +38,7 @@ const MyCalendar = () => {
       });
       ipcRenderer.once("get-all-entries-error", (event, args) => {
         reject(args);
+        console.log(args);
       });
     });
   };
@@ -60,6 +64,7 @@ const MyCalendar = () => {
           });
         }}
         value={state.date}
+        className={state.searchBoolean === true ? "hiddenCalendar" : "null"}
         tileClassName={tileClassName}
       />
     </div>

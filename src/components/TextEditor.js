@@ -1,14 +1,15 @@
 import { EditorState, ContentState } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHashtagPlugin from "draft-js-hashtag-plugin";
+import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
 import createLinkPlugin from "draft-js-anchor-plugin";
-import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
-import { DeleteEntry } from "./index";
+
 import AddFileModal from "./AddFileModal";
+import { DeleteEntry, DateChanger } from "./index";
 
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
@@ -93,14 +94,6 @@ class TextEditor extends React.Component {
   };
 
   render() {
-    //move away from render?
-    const date = new Date(this.state.entry.date);
-    const month = date.toLocaleString("default", {
-      month: "long"
-    });
-    const year = date.getFullYear();
-    const day = date.getDate();
-
     return (
       <section className="editor">
         <div className="entry-header">
@@ -113,18 +106,7 @@ class TextEditor extends React.Component {
             maxLength="50"
             onBlur={this.updateEntry}
           ></Input>
-          <span className="entry-date mt-2">
-            <span>
-              <p className="month-year">
-                {month}
-                <br></br>
-                {year}
-              </p>
-            </span>
-            <span>
-              <p className="day">{day}</p>
-            </span>
-          </span>
+          <DateChanger />
         </div>
 
         <Editor

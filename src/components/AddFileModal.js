@@ -42,7 +42,7 @@ export default class AddFileModal extends React.Component {
       entries,
       file: currentFile
     };
-    ipcRenderer.send("final-save", data);
+    ipcRenderer.send("final-save", JSON.stringify(data));
     return new Promise((resolve, reject) => {
       ipcRenderer.once("final-save-reply", (event, response) => {
         resolve(response);
@@ -53,14 +53,15 @@ export default class AddFileModal extends React.Component {
     });
   };
 
-  changeFile = file => {
+  changeFile = async file => {
     this.props.toggleModal();
     this.onFinalSave();
-    ipcRenderer.send("get-all-entries", file); // CHANGE MY CALENDRR
+    ipcRenderer.send("get-all-entries", file);
     return new Promise((resolve, reject) => {
       ipcRenderer.once("get-all-entries-reply", (event, data) => {
         resolve(data);
-        const { entries, files, currentFile } = data;
+        const { entries, files, currentFile } = JSON.parse(data);
+
         this.context.dispatch({
           type: "GET_ALL_ENTRIES",
           payload: {
@@ -109,7 +110,7 @@ export default class AddFileModal extends React.Component {
             color="secondary"
             className="m-2"
           >
-            Save
+            Final Save
           </Button>
           {this.context.state.allFiles.map((file, i) => {
             return (
