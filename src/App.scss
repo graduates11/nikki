@@ -134,3 +134,25 @@ label:focus,
     color: darkgray;
     transition: all 0.3s ease-in-out;
 }
+
+.react-date-picker__inputGroup__month {
+    pointer-events: none;
+    width: 1.7rem !important;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 2px 30px 2px 2px;
+    /*border: none; - if you want the border removed*/
+}
+
+.openDatePicker {
+    display: flex;
+    justify-content: center;
+}

@@ -62,15 +62,19 @@ function reducer(state, action) {
         currentFile,
         allFiles
       };
-    case "GET_ALL_ENTRIES":
+    case "GET_ALL_ENTRIES": {
+      const filteredEntry = action.payload.allEntries.filter(
+        entry => entry.date === action.payload.date.toDateString()
+      )[0];
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry: null,
+        entry: filteredEntry,
         searchBoolean: false,
         currentFile: action.payload.currentFile,
         allFiles: action.payload.allFiles
       };
+    }
     case "SEARCH":
       return {
         date,
