@@ -98,7 +98,7 @@ function reducer(state, action) {
     case "CLEAR_SEARCH":
       return {
         date,
-        entry: null,
+        entry,
         allEntries,
         searchResult,
         searchBoolean: false,

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import DatePicker from "react-date-picker";
 import { Store } from "./Store";
 
