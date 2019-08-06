@@ -18,6 +18,7 @@ const DateChanger = () => {
 
   const submitChangedDate = e => {
     if (e.target.id === "changeDate") {
+      console.log(e.target.id);
       const changedEntry = { ...state.entry };
       changedEntry.date = changedDate.toDateString();
       dispatch({
@@ -64,10 +65,20 @@ const DateChanger = () => {
           ></DatePicker>
         </ModalBody>
         <ModalFooter className="openDatePicker">
-          <Button id="cancel" onClick={toggleCalendar}>
+          <Button
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
+            id="cancel"
+            onClick={toggleCalendar}
+          >
             Cancel
           </Button>{" "}
-          <Button id="changeDate" onClick={submitChangedDate}>
+          <Button
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
+            id="changeDate"
+            onClick={submitChangedDate}
+          >
             Change Date
           </Button>
         </ModalFooter>
