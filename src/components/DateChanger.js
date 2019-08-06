@@ -55,6 +55,9 @@ const DateChanger = () => {
         </span>
       </span>
       <Modal isOpen={isOpen}>
+        <ModalHeader>
+          <h5>Change the date of this entry</h5>
+        </ModalHeader>
         <ModalBody>
           <DatePicker
             onChange={handleChange}
