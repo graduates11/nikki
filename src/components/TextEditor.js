@@ -1,4 +1,4 @@
-import { EditorState, ContentState } from "draft-js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHashtagPlugin from "draft-js-hashtag-plugin";
 import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
@@ -7,6 +7,7 @@ import createLinkPlugin from "draft-js-anchor-plugin";
 import React from "react";
 import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
+import AddFileModal from "./AddFileModal";
 import { DateChanger } from "./index";
 
 const hashtagPlugin = createHashtagPlugin();
@@ -24,7 +25,8 @@ class TextEditor extends React.Component {
       id: "default_id",
       text: "Your text...",
       title: "Your title...",
-      date: new Date()
+      date: new Date(),
+      modal: false
     },
     editorState: EditorState.createEmpty()
   };
@@ -38,12 +40,10 @@ class TextEditor extends React.Component {
   componentDidUpdate() {
     const currentEntry = this.context.state.entry;
     if (currentEntry.id !== this.state.entry.id) {
+      const content = convertFromRaw(currentEntry.editorState);
       this.setState({
         entry: currentEntry,
-        // if entry has editors state set it to that else:
-        editorState: EditorState.createWithContent(
-          ContentState.createFromText(currentEntry.text)
-        )
+        editorState: EditorState.createWithContent(content)
       });
     }
   }
@@ -71,10 +71,10 @@ class TextEditor extends React.Component {
     const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
     const text = this.getPlainText();
-
+    const content = convertToRaw(editorState.getCurrentContent());
     const updatedEntry = {
       ...entry,
-      editorState: editorState,
+      editorState: content,
       text,
       tags: hashtags
     };
@@ -85,6 +85,10 @@ class TextEditor extends React.Component {
         entry: updatedEntry
       }
     });
+  };
+
+  toggleModal = () => {
+    this.setState({ modal: !this.state.modal });
   };
 
   render() {
@@ -98,6 +102,7 @@ class TextEditor extends React.Component {
             className="title-input mt-2"
             type="text"
             maxLength="50"
+            onBlur={this.updateEntry}
           ></Input>
           <DateChanger />
         </div>
@@ -109,6 +114,7 @@ class TextEditor extends React.Component {
           ref={element => {
             this.editor = element;
           }}
+          onBlur={this.updateEntry}
         />
         <InlineToolbar>
           {externalProps => (
@@ -136,6 +142,15 @@ class TextEditor extends React.Component {
         >
           Add entry
         </Button>
+        <Button
+          outline
+          color="secondary"
+          className="m-2"
+          onClick={this.toggleModal}
+        >
+          Create new file
+        </Button>
+        <AddFileModal toggleModal={this.toggleModal} modal={this.state.modal} />
       </section>
     );
   }

@@ -20,18 +20,25 @@ const MyCalendar = () => {
 
   const getEntries = () => {
     ipcRenderer.send("get-all-entries");
+
     return new Promise((resolve, reject) => {
-      ipcRenderer.once("get-all-entries-reply", (event, entries) => {
-        resolve(entries);
+      ipcRenderer.once("get-all-entries-reply", (event, data) => {
+        resolve(data);
+        const jsonData = JSON.parse(data);
+        const { entries, files, currentFile } = jsonData;
         dispatch({
           type: "GET_ALL_ENTRIES",
           payload: {
-            allEntries: [...entries]
+            date: new Date(),
+            allEntries: entries.length > 0 ? entries : [],
+            allFiles: files ? files : [],
+            currentFile: currentFile
           }
         });
       });
       ipcRenderer.once("get-all-entries-error", (event, args) => {
         reject(args);
+        console.log(args);
       });
     });
   };
@@ -39,7 +46,7 @@ const MyCalendar = () => {
   useEffect(() => {
     getEntries();
     // eslint-disable-next-line
-  }, []);
+	}, [])
 
   const tileClassName = ({ date, view }) => {
     return view === "month" && datesWithEntries.includes(date.toDateString())
