@@ -1,8 +1,9 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const electron = require("electron");
 const path = require("path");
 const userDataPath = (electron.app || electron.remote.app).getPath("userData");
 const isDev = require("electron-is-dev");
+const menu = require("./menu");
 
 // require("./electron/menu.js")
 
@@ -55,6 +56,7 @@ function createWindow() {
 app.on("ready", () => {
   // INITIALIZE THE MENU
   createWindow();
+  Menu.setApplicationMenu(menu);
 });
 
 // Quit when all windows are closed.

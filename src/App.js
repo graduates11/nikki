@@ -21,7 +21,6 @@ const styles = {
 
 export default function App() {
   const { state, dispatch } = useContext(Store);
-
   const addEntry = () => {
     const content = EditorState.createWithContent(
       ContentState.createFromText("Your text...")
