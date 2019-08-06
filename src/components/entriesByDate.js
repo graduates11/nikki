@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Store } from "./Store";
 import { DeleteEntry } from "./index";
+import { ListGroup, ListGroupItem } from "reactstrap";
 
 const EntriesByDate = () => {
   const { state, dispatch } = useContext(Store);
@@ -14,25 +15,28 @@ const EntriesByDate = () => {
   return (
     <div>
       {result.length === 0 ? null : (
-        <ul>
+        <ListGroup flush>
           {result.map((entry, i) => (
-            <div key={i}>
-              <li
-                onClick={() => {
-                  dispatch({
-                    type: "GET_ENTRY",
-                    payload: {
-                      entry
-                    }
-                  });
-                }}
-              >
-                {entry.title}
-              </li>
-              <DeleteEntry id={entry.id} />
-            </div>
+            <ListGroupItem className="resultListPadding" key={i}>
+              <div className="resultList">
+                <div
+                  className="resultListText"
+                  onClick={() => {
+                    dispatch({
+                      type: "GET_ENTRY",
+                      payload: {
+                        entry
+                      }
+                    });
+                  }}
+                >
+                  {entry.title}
+                </div>
+                <DeleteEntry id={entry.id} />
+              </div>
+            </ListGroupItem>
           ))}
-        </ul>
+        </ListGroup>
       )}
     </div>
   );

@@ -89,3 +89,48 @@ label:focus,
     display: flex;
     justify-content: center;
 }
+
+.resultList {
+    display: flex;
+    justify-content: space-between;
+    justify-self: flex-start;
+    align-items: flex-start;
+}
+
+.resultTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 10rem;
+    font-size: 88%;
+    margin: 0;
+}
+
+.resultDate {
+    color: lightgray;
+    font-size: 85%;
+    margin: 0;
+}
+
+.resultListText {
+    font-size: 85%;
+    line-height: 1rem;
+    color: #3d3d3d;
+}
+
+.resultListPadding {
+    padding: 0.4rem;
+}
+
+.deleteButtonSpan {
+    width: 3rem;
+    font-size: 1.5rem;
+    color: lightgray;
+    // border: 1px solid red;
+    text-align: right;
+}
+
+.hover :hover {
+    color: darkgray;
+    transition: all 0.3s ease-in-out;
+}
