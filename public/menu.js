@@ -1,5 +1,13 @@
 const { app, Menu } = require("electron");
-
+const { getAllFiles, getData } = require("./electron.js");
+console.log(getAllFiles);
+// const files = appdb.get("files").value();
+// const filesSubmenu = files.map((file, i) => {
+//   return {
+//     label: file,
+//     click: () => console.log(file)
+//   };
+// });
 const template = [
   {
     label: "Edit",
@@ -46,15 +54,8 @@ const template = [
         type: "separator"
       },
       {
-        label: "Your files...",
-        submenu: [
-          {
-            label: "DB"
-          },
-          {
-            label: "My file"
-          }
-        ]
+        label: "Your files..."
+        //submenu: filesSubmenu
       }
     ]
   },
