@@ -4,8 +4,6 @@ const path = require("path");
 const isDev = require("electron-is-dev");
 const menu = require("./menu");
 
-// require("./electron/menu.js")
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -54,7 +52,6 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on("ready", async () => {
   // INITIALIZE THE MENU
-
   createWindow();
   Menu.setApplicationMenu(menu);
 });
@@ -114,9 +111,7 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
     if (currentFile === null) {
       try {
         currentFile = await getCurrentFile();
-        console.log(currentFile);
         data = await getData(currentFile);
-        console.log(data);
         event.reply("get-all-entries-reply", data);
       } catch (e) {
         console.error(e);
@@ -183,7 +178,7 @@ ipcMain.on("final-save", async (event, data) => {
     await setCurrentFile(file);
     event.reply("final-save-reply", `Successfully saved file: ${file}`);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     event.sender.send(
       "final-save-error",
       `Sorry, an error has occured: ${e.message}`

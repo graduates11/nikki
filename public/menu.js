@@ -1,6 +1,6 @@
 const { app, Menu } = require("electron");
 const { getAllFiles, getData } = require("./electron.js");
-console.log(getAllFiles);
+//console.log(getAllFiles);
 // const files = appdb.get("files").value();
 // const filesSubmenu = files.map((file, i) => {
 //   return {

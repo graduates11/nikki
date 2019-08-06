@@ -64,8 +64,6 @@ module.exports = {
     return currentFile;
   },
   setCurrentFile: async file => {
-    //const { file } = data;
-    console.log("set current", file);
     await appdb.set("currentFile", file).write();
   },
   updateEntries: async data => {
