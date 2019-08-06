@@ -46,11 +46,13 @@ export default function App() {
             <SearchBar />
             {state.searchBoolean === true ? <SearchResult /> : null}
             <MyCalendar />
-            {state.searchBoolean === true ? null : <EntriesByDate />}
+            {state.searchBoolean === true ? null : (
+              <EntriesByDate addEntry={addEntry} />
+            )}
           </Col>
           <Col xs={8} className="border border-muted">
             {state.entry !== null ? (
-              <TextEditor addEntry={addEntry} />
+              <TextEditor />
             ) : (
               <Container className="mt-2 w-100 add-entry" onClick={addEntry}>
                 <p>+ Add entry</p>
