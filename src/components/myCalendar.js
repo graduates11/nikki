@@ -38,7 +38,6 @@ const MyCalendar = () => {
       });
       ipcRenderer.once("get-all-entries-error", (event, args) => {
         reject(args);
-        console.log(args);
       });
     });
   };
@@ -46,7 +45,7 @@ const MyCalendar = () => {
   useEffect(() => {
     getEntries();
     // eslint-disable-next-line
-	}, [])
+  }, []);
 
   const tileClassName = ({ date, view }) => {
     return view === "month" && datesWithEntries.includes(date.toDateString())

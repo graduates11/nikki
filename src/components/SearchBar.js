@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Store } from "./Store";
-import { InputGroup, InputGroupAddon, Input, Button } from "reactstrap";
+import { Input } from "reactstrap";
 
 const Fuse = require("fuse.js");
 
@@ -28,33 +28,23 @@ const SearchBar = () => {
     event.preventDefault();
   };
 
-  const clearSearch = event => {
-    dispatch({
-      type: "CLEAR_SEARCH"
-    });
-    setValue("");
-    event.preventDefault();
-  };
-
   return (
-    <div>
-      <InputGroup>
-        <form onSubmit={handleSubmit}>
-          <Input
-            className="mt-2"
-            placeholder="Search"
-            type="text"
-            value={value}
-            onChange={event => setValue(event.target.value)}
-          />
-        </form>
-        <InputGroupAddon addonType="append">
-          <Button color="secondary" className="mt-2" onClick={clearSearch}>
-            x
-          </Button>
-        </InputGroupAddon>
-      </InputGroup>
-    </div>
+    <form onSubmit={handleSubmit} className="searchBar">
+      <Input
+        className="mt-2"
+        placeholder="Search"
+        type="search"
+        value={value}
+        onChange={event => {
+          setValue(event.target.value);
+          if (event.target.value === "") {
+            dispatch({
+              type: "CLEAR_SEARCH"
+            });
+          }
+        }}
+      ></Input>
+    </form>
   );
 };
 
