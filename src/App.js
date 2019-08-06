@@ -8,8 +8,9 @@ import {
   SearchResult
 } from "../src/components";
 import { Store } from "./components/Store";
-import { defaultTitle } from "./components/utils/helpers";
+import { defaultTitle } from "./utils/helpers";
 import { EditorState, convertToRaw } from "draft-js";
+
 const shortid = require("shortid");
 
 const styles = {

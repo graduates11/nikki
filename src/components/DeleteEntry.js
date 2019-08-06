@@ -1,14 +1,12 @@
 import React, { useContext } from "react";
-import { Button } from "reactstrap";
 import { Store } from "./Store";
 
 const DeleteEntry = props => {
   const { dispatch } = useContext(Store);
   return (
-    <Button
-      outline
-      color="secondary"
-      className="m-2"
+    <span
+      className="hover deleteButtonSpan"
+      style={{ margin: 0 }}
       onClick={() => {
         dispatch({
           type: "DELETE_ENTRY",
@@ -18,8 +16,8 @@ const DeleteEntry = props => {
         });
       }}
     >
-      Delete
-    </Button>
+      <i className="far fa-times-circle fa-sm"></i>
+    </span>
   );
 };
 
