@@ -6,9 +6,9 @@ import { Store } from "./Store";
 const DateChanger = () => {
   const { state, dispatch } = useContext(Store);
   const [isOpen, setIsOpen] = useState(false);
+  const [changedDate, setChangedDate] = useState();
 
   const date = new Date(state.entry.date);
-  let changedDate;
 
   const month = date.toLocaleString("default", {
     month: "long"
@@ -19,7 +19,7 @@ const DateChanger = () => {
   const submitChangedDate = e => {
     if (e.target.id === "changeDate") {
       const changedEntry = { ...state.entry };
-      changedEntry.date = changedDate;
+      changedEntry.date = changedDate.toDateString();
       dispatch({
         type: "CHANGE_DATE",
         payload: {
@@ -37,7 +37,7 @@ const DateChanger = () => {
   };
 
   const handleChange = date => {
-    changedDate = date;
+    setChangedDate(date);
   };
 
   return (
@@ -55,18 +55,15 @@ const DateChanger = () => {
         </span>
       </span>
       <Modal isOpen={isOpen}>
-        <ModalHeader>
-          <h5>Change the date of this entry</h5>
-        </ModalHeader>
-        <ModalBody>
+        <ModalBody className="openDatePicker">
           <DatePicker
             onChange={handleChange}
-            value={date}
+            value={changedDate === undefined ? date : changedDate}
             tileClassName="circle"
-            format="MM.dd.y"
+            format="dd MMM y"
           ></DatePicker>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter className="openDatePicker">
           <Button id="cancel" onClick={toggleCalendar}>
             Cancel
           </Button>{" "}
