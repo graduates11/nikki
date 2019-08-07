@@ -53,7 +53,7 @@ export default class AddFileModal extends React.Component {
     });
   };
 
-  changeFile = async file => {
+  changeFile = file => {
     this.props.toggleModal();
     this.onFinalSave();
     ipcRenderer.send("get-all-entries", file);
@@ -61,7 +61,6 @@ export default class AddFileModal extends React.Component {
       ipcRenderer.once("get-all-entries-reply", (event, data) => {
         resolve(data);
         const { entries, files, currentFile } = JSON.parse(data);
-
         this.context.dispatch({
           type: "GET_ALL_ENTRIES",
           payload: {

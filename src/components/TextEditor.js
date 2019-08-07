@@ -9,7 +9,6 @@ import { Button, Input } from "reactstrap";
 import { Store } from "./Store";
 import AddFileModal from "./AddFileModal";
 import { DateChanger } from "./index";
-
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const linkPlugin = createLinkPlugin();

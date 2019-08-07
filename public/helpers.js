@@ -59,6 +59,10 @@ module.exports = {
     const files = await appdb.get("files").value();
     return files;
   },
+  getAllFilesSync: () => {
+    const files = appdb.get("files").value();
+    return files;
+  },
   getCurrentFile: async () => {
     const currentFile = await appdb.get("currentFile").value();
     return currentFile;

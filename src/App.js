@@ -10,7 +10,7 @@ import {
 import { Store } from "./components/Store";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
 import { defaultTitle } from "./utils/helpers";
-
+const { ipcRenderer } = window;
 const shortid = require("shortid");
 
 const styles = {
@@ -21,6 +21,55 @@ const styles = {
 
 export default function App() {
   const { state, dispatch } = useContext(Store);
+  const onFinalSave = () => {
+    const entries = [...state.allEntries];
+    const { currentFile } = state;
+    const data = {
+      entries,
+      file: currentFile
+    };
+    ipcRenderer.send("final-save", JSON.stringify(data));
+    return new Promise((resolve, reject) => {
+      ipcRenderer.once("final-save-reply", (event, response) => {
+        resolve(response);
+      });
+      ipcRenderer.once("final-save-error", (event, args) => {
+        reject(args);
+      });
+    });
+  };
+  ipcRenderer.on("change-file", async (event, file) => {
+    console.log(file);
+    onFinalSave();
+    ipcRenderer.send("get-all-entries", file);
+    return new Promise((resolve, reject) => {
+      ipcRenderer.once("get-all-entries-reply", (event, data) => {
+        resolve(data);
+        const { entries, files, currentFile } = JSON.parse(data);
+        dispatch({
+          type: "GET_ALL_ENTRIES",
+          payload: {
+            allEntries: entries.length > 0 ? entries : [],
+            allFiles: files ? files : [],
+            currentFile: currentFile
+          }
+        });
+      });
+      ipcRenderer.once("get-all-entries-error", (event, args) => {
+        reject(args);
+      });
+    });
+    // 1. SAVE CURRENT FILE (const onSave = () => { data: { currentFile, entries }})
+    // 2. send "get-all-entries" event to access the picked file
+    // 3. dispatch new entries to the store
+  });
+
+  // ipcRenderer.on("create-file", async (event, arg) => {
+
+  // })
+  // ipcRenderer.on("save-file", async (event, arg) => {
+
+  // })
   const addEntry = () => {
     const content = EditorState.createWithContent(
       ContentState.createFromText("Your text...")

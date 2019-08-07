@@ -1,5 +1,5 @@
 import React from "react";
-
+const { ipcRenderer } = window;
 export const Store = React.createContext();
 
 const initialState = {
@@ -69,7 +69,7 @@ function reducer(state, action) {
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry: filteredEntry,
+        entry: null,
         searchBoolean: false,
         currentFile: action.payload.currentFile,
         allFiles: action.payload.allFiles
@@ -158,6 +158,7 @@ function reducer(state, action) {
 export function StoreProvider(props) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const value = { state, dispatch };
+
   return <Store.Provider value={value}>{props.children}</Store.Provider>;
 }
 
