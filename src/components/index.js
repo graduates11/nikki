@@ -5,7 +5,7 @@ import TextEditor from "./TextEditor";
 import SearchResult from "./SearchResult";
 import DeleteEntry from "./DeleteEntry";
 import DateChanger from "./DateChanger";
-import EntriesByDate from "./entriesByDate";
+import EntriesByDate from "./EntriesByDate";
 
 export {
   EntriesByDate,
