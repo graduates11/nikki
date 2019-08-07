@@ -3,6 +3,11 @@
 @import "../src/css/hashtag";
 @import "../src/css/link";
 @import "../src/css/toolbar";
+@import "../src/css/calendar";
+@import "../src/css/result";
+@import "../src/css/buttonsCustom";
+@import "../src/css/searchBar";
+@import "../src/css/datePicker";
 
 div.DraftEditor-root {
     background-color: #ffffff8c;
@@ -72,98 +77,6 @@ label:focus,
     box-shadow: none !important;
 }
 
-.highlight {
-    border-radius: 50%;
-    background-color: #F2F2F2;
-}
-
-.circle {
-    border-radius: 50%;
-}
-
-.hiddenCalendar {
-    visibility: hidden;
-}
-
-.react-date-picker__clear-button {
-    // a bit hacky…
-    display: none;
-}
-
-.react-date-picker__wrapper {
-    border: none;
-    display: flex;
-    justify-content: center;
-}
-
-.resultList {
-    display: flex;
-    justify-content: space-between;
-    justify-self: flex-start;
-    align-items: flex-start;
-}
-
-.resultTitle {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 10rem;
-    font-size: 88%;
-    margin: 0;
-}
-
-.resultDate {
-    color: lightgray;
-    font-size: 85%;
-    margin: 0;
-}
-
-.resultListText {
-    font-size: 85%;
-    line-height: 1rem;
-    color: #3d3d3d;
-}
-
-.resultListPadding {
-    padding: 0.4rem;
-}
-
-.resultListSize {
-    min-height: 9rem;
-    max-height: 9rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.searchResultListSize {
-    min-height: 25rem;
-    max-height: 30rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.deleteButtonSpan {
-    width: 3rem;
-    font-size: 1.5rem;
-    color: lightgray;
-    // border: 1px solid red;
-    text-align: right;
-}
-
-.addButton {
-    color: lightgray;
-}
-
-.hover :hover {
-    color: darkgray;
-    transition: all 0.3s ease-in-out;
-}
-
-.react-date-picker__inputGroup__month {
-    pointer-events: none;
-    width: 1.9rem !important;
-}
-
 select::-ms-expand {
     display: none;
 }
@@ -174,22 +87,4 @@ select {
     appearance: none;
     padding: 2px 30px 2px 2px;
     /*border: none; - if you want the border removed*/
-}
-
-.openDatePicker {
-    display: flex;
-    justify-content: space-around;
-}
-
-.searchBar {
-    display: flex;
-    width: 100%;
-    justify-content: flex-start;
-    justify-self: flex-start;
-    align-items: flex-start;
-}
-
-#addButtonDiv {
-    display: flex;
-    justify-content: flex-end;
 }

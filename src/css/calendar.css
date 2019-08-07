@@ -1,0 +1,12 @@
+.highlight {
+  border-radius: 50%;
+  background-color: #F2F2F2;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.hiddenCalendar {
+  visibility: hidden;
+}

@@ -1,0 +1,20 @@
+.openDatePicker {
+  display: flex;
+  justify-content: space-around;
+}
+
+.react-date-picker__clear-button {
+  // a bit hacky…
+  display: none;
+}
+
+.react-date-picker__wrapper {
+  border: none;
+  display: flex;
+  justify-content: center;
+}
+
+.react-date-picker__inputGroup__month {
+  pointer-events: none;
+  width: 1.9rem !important;
+}
