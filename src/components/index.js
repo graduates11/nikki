@@ -6,6 +6,7 @@ import SearchResult from "./SearchResult";
 import DeleteEntry from "./DeleteEntry";
 import DateChanger from "./DateChanger";
 import EntriesByDate from "./EntriesByDate";
+import CurrentFileName from "./CurrentFileName";
 
 export {
   EntriesByDate,
@@ -15,5 +16,6 @@ export {
   TextEditor,
   SearchResult,
   DeleteEntry,
-  DateChanger
+  DateChanger,
+  CurrentFileName
 };
