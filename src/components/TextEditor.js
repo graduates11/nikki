@@ -5,9 +5,8 @@ import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
 import createLinkPlugin from "draft-js-anchor-plugin";
 import React from "react";
-import { Button, Input } from "reactstrap";
+import { Input } from "reactstrap";
 import { Store } from "./Store";
-import AddFileModal from "./AddFileModal";
 import { DateChanger } from "./index";
 
 const hashtagPlugin = createHashtagPlugin();
@@ -93,7 +92,7 @@ class TextEditor extends React.Component {
 
   render() {
     return (
-      <section className="editor">
+      <section className="editor rightColumn">
         <div className="entry-header">
           <Input
             autoFocus
@@ -126,23 +125,6 @@ class TextEditor extends React.Component {
             </React.Fragment>
           )}
         </InlineToolbar>
-        <Button
-          outline
-          color="secondary"
-          className="m-2"
-          onClick={this.updateEntry}
-        >
-          Save
-        </Button>
-        <Button
-          outline
-          color="secondary"
-          className="m-2"
-          onClick={this.toggleModal}
-        >
-          Create new file
-        </Button>
-        <AddFileModal toggleModal={this.toggleModal} modal={this.state.modal} />
       </section>
     );
   }

@@ -10,3 +10,12 @@
 .hiddenCalendar {
   visibility: hidden;
 }
+
+.fullWidth {
+  width: 100%;
+  height: auto;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  border-radius: 1%;
+  border-color: rgb(206, 212, 218);
+}

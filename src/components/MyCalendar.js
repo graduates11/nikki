@@ -63,7 +63,9 @@ const MyCalendar = () => {
           });
         }}
         value={state.date}
-        className={state.searchBoolean === true ? "hiddenCalendar" : "null"}
+        className={
+          state.searchBoolean === true ? "hiddenCalendar" : "fullWidth"
+        }
         tileClassName={tileClassName}
       />
     </div>
