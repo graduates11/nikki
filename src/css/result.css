@@ -1,0 +1,45 @@
+.resultList {
+  display: flex;
+  justify-content: space-between;
+  justify-self: flex-start;
+  align-items: flex-start;
+}
+
+.resultTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10rem;
+  font-size: 88%;
+  margin: 0;
+}
+
+.resultDate {
+  color: lightgray;
+  font-size: 85%;
+  margin: 0;
+}
+
+.resultListText {
+  font-size: 85%;
+  line-height: 1rem;
+  color: #3d3d3d;
+}
+
+.resultListPadding {
+  padding: 0.4rem;
+}
+
+.resultListSize {
+  min-height: 9rem;
+  max-height: 9rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.searchResultListSize {
+  min-height: 25rem;
+  max-height: 30rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

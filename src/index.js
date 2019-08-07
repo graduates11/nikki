@@ -5,9 +5,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.scss";
 import * as serviceWorker from "./serviceWorker";
 import { StoreProvider } from "./components/Store";
-import "./utils/hashtag.css";
-import "./utils/toolbar.css";
-import "./utils/link.css";
 
 ReactDOM.render(
   <StoreProvider>

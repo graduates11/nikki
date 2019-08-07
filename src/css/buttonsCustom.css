@@ -1,0 +1,21 @@
+.deleteButtonSpan {
+  width: 3rem;
+  font-size: 1.5rem;
+  color: lightgray;
+  // border: 1px solid red;
+  text-align: right;
+}
+
+.addButton {
+  color: lightgray;
+}
+
+.hover :hover {
+  color: darkgray;
+  transition: all 0.3s ease-in-out;
+}
+
+#addButtonDiv {
+  display: flex;
+  justify-content: flex-end;
+}
