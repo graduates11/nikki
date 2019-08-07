@@ -18,7 +18,6 @@ const DateChanger = () => {
 
   const submitChangedDate = e => {
     if (e.target.id === "changeDate") {
-      console.log(e.target.id);
       const changedEntry = { ...state.entry };
       changedEntry.date = changedDate.toDateString();
       dispatch({

@@ -13,7 +13,6 @@ const initialState = {
 
 function reducer(state, action) {
   const { date, entry, searchResult, currentFile, allFiles } = state;
-
   const allEntries = [...state.allEntries];
   switch (action.type) {
     case "SET_DATE": {
@@ -63,13 +62,16 @@ function reducer(state, action) {
         allFiles
       };
     case "GET_ALL_ENTRIES": {
-      const filteredEntry = action.payload.allEntries.filter(
-        entry => entry.date === action.payload.date.toDateString()
-      )[0];
+      const filteredEntry =
+        action.payload.allEntries === undefined
+          ? null
+          : action.payload.allEntries.filter(
+              entry => entry.date === action.payload.date.toDateString()
+            )[0];
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry: filteredEntry,
+        entry: filteredEntry === undefined ? null : filteredEntry,
         searchBoolean: false,
         currentFile: action.payload.currentFile,
         allFiles: action.payload.allFiles
