@@ -5,7 +5,8 @@ import {
   MyCalendar,
   SearchBar,
   TextEditor,
-  SearchResult
+  SearchResult,
+  CurrentFileName
 } from "../src/components";
 import { Store } from "./components/Store";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
@@ -40,6 +41,7 @@ export default function App() {
   };
   return (
     <div className="App mt-3 mb-3">
+      <CurrentFileName />
       <Container style={styles.fullHeight}>
         <Row style={styles.fullHeight}>
           <Col xs={4} className="border border-muted">
