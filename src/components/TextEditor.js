@@ -137,14 +137,6 @@ class TextEditor extends React.Component {
           outline
           color="secondary"
           className="m-2"
-          onClick={this.props.addEntry}
-        >
-          Add entry
-        </Button>
-        <Button
-          outline
-          color="secondary"
-          className="m-2"
           onClick={this.toggleModal}
         >
           Create new file

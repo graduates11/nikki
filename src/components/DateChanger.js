@@ -64,10 +64,20 @@ const DateChanger = () => {
           ></DatePicker>
         </ModalBody>
         <ModalFooter className="openDatePicker">
-          <Button id="cancel" onClick={toggleCalendar}>
+          <Button
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
+            id="cancel"
+            onClick={toggleCalendar}
+          >
             Cancel
           </Button>{" "}
-          <Button id="changeDate" onClick={submitChangedDate}>
+          <Button
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
+            id="changeDate"
+            onClick={submitChangedDate}
+          >
             Change Date
           </Button>
         </ModalFooter>

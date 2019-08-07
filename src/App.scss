@@ -1,3 +1,5 @@
+@import "../src/utils/buttons";
+
 div.DraftEditor-root {
     background-color: #ffffff8c;
     width: 100%;
@@ -122,12 +124,30 @@ label:focus,
     padding: 0.4rem;
 }
 
+.resultListSize {
+    min-height: 9rem;
+    max-height: 9rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.searchResultListSize {
+    min-height: 25rem;
+    max-height: 30rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .deleteButtonSpan {
     width: 3rem;
     font-size: 1.5rem;
     color: lightgray;
     // border: 1px solid red;
     text-align: right;
+}
+
+.addButton {
+    color: lightgray;
 }
 
 .hover :hover {
@@ -137,7 +157,7 @@ label:focus,
 
 .react-date-picker__inputGroup__month {
     pointer-events: none;
-    width: 1.7rem !important;
+    width: 1.9rem !important;
 }
 
 select::-ms-expand {
@@ -154,7 +174,7 @@ select {
 
 .openDatePicker {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .searchBar {
@@ -163,4 +183,9 @@ select {
     justify-content: flex-start;
     justify-self: flex-start;
     align-items: flex-start;
+}
+
+#addButtonDiv {
+    display: flex;
+    justify-content: flex-end;
 }

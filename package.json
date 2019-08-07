@@ -25,6 +25,7 @@
     "react-calendar": "^2.19.0",
     "react-date-picker": "^7.8.0",
     "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
     "react-scripts": "3.0.1",
     "reactstrap": "^8.0.1",
     "shortid": "^2.2.14"

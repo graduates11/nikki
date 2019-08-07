@@ -66,7 +66,9 @@ export default class AddFileModal extends React.Component {
           payload: {
             allEntries: entries.length > 0 ? entries : [],
             allFiles: files ? files : [],
-            currentFile: currentFile
+            currentFile: currentFile,
+            date: this.context.state.date,
+            entry: this.context.state.entry
           }
         });
       });

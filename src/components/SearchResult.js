@@ -6,7 +6,7 @@ import Moment from "moment";
 const SearchResult = () => {
   const { state, dispatch } = useContext(Store);
   return (
-    <div>
+    <div className="searchResultListSize">
       {state.searchResult === undefined ? null : (
         <ListGroup flush>
           {state.searchResult.length === 0 ? (
