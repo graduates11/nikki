@@ -8,27 +8,44 @@
 @import "../src/css/buttonsCustom";
 @import "../src/css/searchBar";
 @import "../src/css/datePicker";
+@import "../src/css/mainView";
+@import "../src/css/entryList";
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#root {
+    flex: 1 100%;
+}
 
 div.DraftEditor-root {
     background-color: #ffffff8c;
     width: 100%;
-    margin: auto;
-    -webkit-box-shadow: 10px 10px 26px -19px rgba(0, 0, 0, 0.49);
-    -moz-box-shadow: 10px 10px 26px -19px rgba(0, 0, 0, 0.49);
-    box-shadow: 10px 10px 26px -19px rgba(0, 0, 0, 0.49);
-    height: 80vh;
-    overflow-y: scroll;
+    margin: 0;
+    height: calc(100vh - 78px);
+    overflow-y: auto;
     padding: 20px;
     font-size: 18px;
     font-family: 'calibri', sans-serif;
 }
 
 .add-entry {
-    border-bottom: 1px solid rgb(197, 197, 197);
+    margin-top: 0.3rem;
+    border-bottom: 1px solid rgb(206, 212, 218);
     cursor: pointer;
 
     p {
-        color: rgb(197, 197, 197);
+        color: rgb(206, 212, 218);
         margin-top: .7rem;
         margin-bottom: .5rem;
     }

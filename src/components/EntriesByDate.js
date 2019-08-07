@@ -13,7 +13,7 @@ const EntriesByDate = props => {
   });
 
   return (
-    <div>
+    <div className="entryList">
       <div className="resultListSize">
         {result.length === 0 ? null : (
           <ListGroup flush>

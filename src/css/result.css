@@ -31,8 +31,9 @@
 }
 
 .resultListSize {
-  min-height: 9rem;
-  max-height: 9rem;
+  min-height: 3rem;
+  max-height: calc(100vh - 23.75rem);
+  /* height: auto; */
   overflow-y: auto;
   overflow-x: hidden;
 }
