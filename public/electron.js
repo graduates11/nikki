@@ -174,7 +174,6 @@ ipcMain.on("create-file", async (event, fileName) => {
 
 ipcMain.on("final-save", async (event, data) => {
   const { file } = JSON.parse(data);
-  console.log(file);
   try {
     await updateEntries(data);
     await setCurrentFile(file);
