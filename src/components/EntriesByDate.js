@@ -11,10 +11,9 @@ const EntriesByDate = props => {
     const requested = new Date(state.date).toDateString();
     return existing === requested;
   });
-
   return (
     <div className="entryList">
-      <div className="resultListSize">
+      <div className={result.length === 0 ? "noEntries" : "resultListSize"}>
         {result.length === 0 ? null : (
           <ListGroup flush>
             {result.map((entry, i) => (
