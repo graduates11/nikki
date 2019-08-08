@@ -105,3 +105,9 @@ select {
     padding: 2px 30px 2px 2px;
     /*border: none; - if you want the border removed*/
 }
+
+#underlinedEntryHeader {
+    margin-top: 0.1rem;
+    border-bottom: 1px solid #ced4da;
+    border-radius: 0;
+}
