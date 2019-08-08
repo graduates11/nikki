@@ -1,5 +1,4 @@
 import React from "react";
-
 export const Store = React.createContext();
 
 const initialState = {
@@ -104,7 +103,8 @@ function reducer(state, action) {
         allEntries,
         searchResult,
         searchBoolean: false,
-        allFiles
+        allFiles,
+        currentFile
       };
     case "DELETE_ENTRY":
       return {
@@ -136,7 +136,7 @@ function reducer(state, action) {
     case "CREATE_FILE":
       return {
         date: new Date(),
-        currentFile: action.payload.file,
+        currentFile: action.payload.currentFile,
         allEntries: [],
         entry: null,
         searchBoolean: false,
@@ -160,6 +160,7 @@ function reducer(state, action) {
 export function StoreProvider(props) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const value = { state, dispatch };
+
   return <Store.Provider value={value}>{props.children}</Store.Provider>;
 }
 

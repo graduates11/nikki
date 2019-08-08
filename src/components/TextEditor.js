@@ -8,7 +8,6 @@ import React from "react";
 import { Input } from "reactstrap";
 import { Store } from "./Store";
 import { DateChanger } from "./index";
-
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const linkPlugin = createLinkPlugin();
@@ -53,12 +52,10 @@ class TextEditor extends React.Component {
     });
   };
 
-  // retrieve plain text from editor's state
   getPlainText = () => {
     return this.state.editorState.getCurrentContent().getPlainText("\u0001");
   };
 
-  // retrieve all hashtags from the entry
   getHashtags = () => {
     const text = this.getPlainText();
     const regex = /\B#\w\w+\b/g;

@@ -1,11 +1,6 @@
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
-const electron = require("electron");
 const path = require("path");
-const userDataPath = (electron.app || electron.remote.app).getPath("userData");
 const isDev = require("electron-is-dev");
-const menu = require("./menu");
-
-// require("./electron/menu.js")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -53,9 +48,14 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", () => {
-  // INITIALIZE THE MENU
+app.on("ready", async () => {
   createWindow();
+  const createMenu = require("./menu");
+  const menu = createMenu(mainWindow);
+  // set the menu again after creating a new file
+  //
+  //
+  //
   Menu.setApplicationMenu(menu);
 });
 
@@ -76,73 +76,21 @@ app.on("activate", function() {
   }
 });
 
-// ======================================================================
-const low = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
+const {
+  createFile,
+  initAppData,
+  appDataExists,
+  fileExists,
+  getData,
+  getCurrentFile,
+  setCurrentFile,
+  updateEntries
+} = require("./helpers.js");
 
-// APP-DATA DB
-const appDataAdapter = new FileSync(path.join(userDataPath, "app-data.json"));
-const appdb = low(appDataAdapter);
-
-// HELPERS
-const createFile = async fileName => {
-  const entriesPath = path.join(userDataPath, "entries");
-  try {
-    // SET THE CURRENT FILE
-    await appdb.set("currentFile", fileName).write();
-    // PUSH TO THE APPDB ARRAY
-    await appdb
-      .get("files")
-      .push(fileName)
-      .write();
-    // INITIALIZE FILE IN ENTRIES
-    const adapter = new FileSync(path.join(entriesPath, `${fileName}.json`));
-    const db = low(adapter);
-    await db.defaults({ entries: [] }).write();
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-const initAppData = async () => {
-  const fsp = require("fs").promises;
-  await appdb.defaults({ currentFile: "" }).write();
-  await appdb.defaults({ files: [] }).write();
-  const entriesPath = path.join(userDataPath, "entries");
-  await fsp.mkdir(entriesPath, { recursive: true });
-};
-
-const appDataExists = async () => {
-  const files = await appdb.get("files").value();
-  return files !== undefined;
-};
-
-const fileExists = async fileName => {
-  const files = await appdb.get("files").value();
-  return files.includes(fileName);
-};
-
-const getData = async fileName => {
-  const adapter = new FileSync(
-    path.join(userDataPath, "entries", `${fileName}.json`)
-  );
-  const db = low(adapter);
-  const entries = await db.get("entries").value();
-  const files = await appdb.get("files").value();
-  const data = {
-    entries,
-    currentFile: fileName,
-    files
-  };
-  return JSON.stringify(data);
-};
-
-// ON APP LAUNCH
 ipcMain.on("get-all-entries", async (event, currentFile = null) => {
   let firstLaunch;
   let isFile;
   let data;
-
   try {
     // see if app-data exists
     firstLaunch = !(await appDataExists());
@@ -164,7 +112,7 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
     }
     if (currentFile === null) {
       try {
-        currentFile = await appdb.get("currentFile").value();
+        currentFile = await getCurrentFile();
         data = await getData(currentFile);
         event.reply("get-all-entries-reply", data);
       } catch (e) {
@@ -179,6 +127,7 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
         try {
           await createFile(currentFile);
           data = await getData(currentFile);
+          // add file to the menu bar
           event.reply("get-all-entries-reply", data);
         } catch (e) {
           console.error(e);
@@ -190,6 +139,7 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
       } else if (fileExists) {
         try {
           data = await getData(currentFile);
+          await setCurrentFile(currentFile);
           event.reply("get-all-entries-reply", data);
         } catch (e) {
           console.error(e);
@@ -212,10 +162,7 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
 ipcMain.on("create-file", async (event, fileName) => {
   try {
     await createFile(fileName);
-    event.reply(
-      "create-file-reply",
-      `Successfully created new file: ${fileName}`
-    );
+    event.reply("create-file-reply", fileName);
   } catch (e) {
     event.reply(
       "create-file-error",
@@ -225,20 +172,18 @@ ipcMain.on("create-file", async (event, fileName) => {
 });
 
 ipcMain.on("final-save", async (event, data) => {
-  const { file, entries } = JSON.parse(data);
-  let adapter = new FileSync(
-    path.join(userDataPath, "entries", `${file}.json`)
-  );
-  let db = low(adapter);
+  const { file } = JSON.parse(data);
   try {
-    await db.set("entries", entries).write();
-    await appdb.set("currentFile", file).write();
+    await updateEntries(data);
+    await setCurrentFile(file);
     event.reply("final-save-reply", `Successfully saved file: ${file}`);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     event.sender.send(
       "final-save-error",
       `Sorry, an error has occured: ${e.message}`
     );
   }
 });
+
+module.exports = mainWindow;
