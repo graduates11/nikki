@@ -30,7 +30,6 @@ const DateChanger = () => {
     }
     toggleCalendar();
   };
-
   const toggleCalendar = e => {
     e && e.preventDefault();
     setIsOpen(!isOpen);
