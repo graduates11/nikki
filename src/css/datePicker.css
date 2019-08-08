@@ -18,3 +18,8 @@
   pointer-events: none;
   width: 1.9rem !important;
 }
+
+#entryDate {
+  display: flex;
+  justify-content: flex-end;
+}

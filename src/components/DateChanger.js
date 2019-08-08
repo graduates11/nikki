@@ -41,7 +41,7 @@ const DateChanger = () => {
   };
 
   return (
-    <div>
+    <div id="entryDate">
       <span className="entry-date mt-2" onClick={toggleCalendar}>
         <span>
           <p className="month-year">

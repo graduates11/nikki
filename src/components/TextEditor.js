@@ -94,15 +94,17 @@ class TextEditor extends React.Component {
     return (
       <section className="editor rightColumn">
         <div className="entry-header">
-          <Input
-            autoFocus
-            onChange={this.onTitleChange}
-            value={this.state.entry.title}
-            className="title-input mt-2"
-            type="text"
-            maxLength="75"
-            onBlur={this.updateEntry}
-          ></Input>
+          <div id="underlinedEntryHeader">
+            <Input
+              autoFocus
+              onChange={this.onTitleChange}
+              value={this.state.entry.title}
+              className="title-input mt-2"
+              type="text"
+              maxLength="75"
+              onBlur={this.updateEntry}
+            ></Input>
+          </div>
           <DateChanger />
         </div>
 
