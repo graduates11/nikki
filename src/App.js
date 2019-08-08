@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Container, Col } from "reactstrap";
+import Moment from "moment";
 import {
   EntriesByDate,
   MyCalendar,
@@ -10,15 +11,8 @@ import {
 } from "../src/components";
 import { Store } from "./components/Store";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
-import { defaultTitle } from "./utils/helpers";
 
 const shortid = require("shortid");
-
-// const styles = {
-//   fullHeight: {
-//     height: "100vh"
-//   }
-// };
 
 export default function App() {
   const { state, dispatch } = useContext(Store);
@@ -31,9 +25,9 @@ export default function App() {
       payload: {
         entry: {
           id: shortid.generate(),
-          title: defaultTitle(),
+          title: Moment(new Date(state.date)).format("Do MMMM YYYY, h:mm"),
           text: "",
-          date: new Date().toDateString(),
+          date: state.date.toDateString(),
           editorState: convertToRaw(content.getCurrentContent())
         }
       }
