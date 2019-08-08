@@ -67,6 +67,10 @@ module.exports = {
     const currentFile = await appdb.get("currentFile").value();
     return currentFile;
   },
+  getCurrentFileSync: () => {
+    const currentFile = appdb.get("currentFile").value();
+    return currentFile;
+  },
   setCurrentFile: async file => {
     await appdb.set("currentFile", file).write();
   },

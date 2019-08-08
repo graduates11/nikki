@@ -1,26 +1,49 @@
 const { app } = require("electron");
-const { getAllFilesSync } = require("./helpers.js");
-const files = getAllFilesSync();
+const { getAllFilesSync, getCurrentFileSync } = require("./helpers.js");
 
 const createTemplate = mainWindow => {
-  const filesSubmenu = files.map((file, i) => {
-    return {
-      label: file,
-      click: () => changeFile(mainWindow, file)
-    };
-  });
-  const changeFile = (mainWindow, file) => {
+  const files = getAllFilesSync();
+
+  let filesSubmenu;
+  if (files) {
+    filesSubmenu = files.map((file, i) => {
+      return {
+        label: file,
+        click: () => changeFile(file)
+      };
+    });
+  } else {
+    filesSubmenu = [
+      {
+        label: "My journal",
+        click: () => changeFile("My journal")
+      }
+    ];
+  }
+
+  const changeFile = async file => {
     mainWindow.webContents.send("change-file", file);
+  };
+
+  const saveFile = () => {
+    const currentFile = getCurrentFileSync();
+    mainWindow.webContents.send("menu-save-file", currentFile);
+  };
+
+  const createFile = () => {
+    mainWindow.webContents.send("menu-create-file");
   };
 
   const fileMenu = {
     label: "File",
     submenu: [
       {
-        label: "Save"
+        label: "Save",
+        click: saveFile
       },
       {
-        label: "Create new file..."
+        label: "Create new file...",
+        click: createFile
       },
       {
         type: "separator"

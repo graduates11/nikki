@@ -53,6 +53,10 @@ app.on("ready", async () => {
   createWindow();
   const createMenu = require("./menu");
   const menu = createMenu(mainWindow);
+  // set the menu again after creating a new file
+  //
+  //
+  //
   Menu.setApplicationMenu(menu);
 });
 
@@ -159,11 +163,7 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
 ipcMain.on("create-file", async (event, fileName) => {
   try {
     await createFile(fileName);
-
-    event.reply(
-      "create-file-reply",
-      `Successfully created new file: ${fileName}`
-    );
+    event.reply("create-file-reply", fileName);
   } catch (e) {
     event.reply(
       "create-file-error",
@@ -173,7 +173,8 @@ ipcMain.on("create-file", async (event, fileName) => {
 });
 
 ipcMain.on("final-save", async (event, data) => {
-  const { file } = data;
+  const { file } = JSON.parse(data);
+  console.log(file);
   try {
     await updateEntries(data);
     await setCurrentFile(file);

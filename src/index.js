@@ -8,7 +8,6 @@ import { StoreProvider } from "./components/Store";
 import "./utils/hashtag.css";
 import "./utils/toolbar.css";
 import "./utils/link.css";
-const { ipcRenderer } = window;
 
 ReactDOM.render(
   <StoreProvider>

@@ -53,12 +53,10 @@ class TextEditor extends React.Component {
     });
   };
 
-  // retrieve plain text from editor's state
   getPlainText = () => {
     return this.state.editorState.getCurrentContent().getPlainText("\u0001");
   };
 
-  // retrieve all hashtags from the entry
   getHashtags = () => {
     const text = this.getPlainText();
     const regex = /\B#\w\w+\b/g;
@@ -133,15 +131,6 @@ class TextEditor extends React.Component {
         >
           Save
         </Button>
-        <Button
-          outline
-          color="secondary"
-          className="m-2"
-          onClick={this.toggleModal}
-        >
-          Create new file
-        </Button>
-        <AddFileModal toggleModal={this.toggleModal} modal={this.state.modal} />
       </section>
     );
   }

@@ -103,7 +103,8 @@ function reducer(state, action) {
         allEntries,
         searchResult,
         searchBoolean: false,
-        allFiles
+        allFiles,
+        currentFile
       };
     case "DELETE_ENTRY":
       return {
@@ -135,7 +136,7 @@ function reducer(state, action) {
     case "CREATE_FILE":
       return {
         date: new Date(),
-        currentFile: action.payload.file,
+        currentFile: action.payload.currentFile,
         allEntries: [],
         entry: null,
         searchBoolean: false,
