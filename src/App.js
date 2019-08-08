@@ -20,12 +20,20 @@ export default function App() {
     const content = EditorState.createWithContent(
       ContentState.createFromText("Your text...")
     );
+    const time = ` – ${Moment(new Date()).format("LT")}`;
+    const dateWithTime = Moment(new Date(state.date))
+      .format("Do MMMM YYYY")
+      .concat(time);
+    const dateWithoutTime = Moment(new Date(state.date)).format("Do MMMM YYYY");
     dispatch({
       type: "ADD_NEW_ENTRY",
       payload: {
         entry: {
           id: shortid.generate(),
-          title: Moment(new Date(state.date)).format("Do MMMM YYYY, h:mm"),
+          title:
+            new Date().toDateString() === state.date.toDateString()
+              ? dateWithTime
+              : dateWithoutTime,
           text: "",
           date: state.date.toDateString(),
           editorState: convertToRaw(content.getCurrentContent())
