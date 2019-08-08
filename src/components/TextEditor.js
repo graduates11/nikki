@@ -100,7 +100,7 @@ class TextEditor extends React.Component {
             value={this.state.entry.title}
             className="title-input mt-2"
             type="text"
-            maxLength="50"
+            maxLength="75"
             onBlur={this.updateEntry}
           ></Input>
           <DateChanger />
