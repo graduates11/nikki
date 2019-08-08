@@ -44,3 +44,9 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+#noResultDiv {
+  margin: auto;
+  padding-top: 0.5rem;
+  color: rgb(73, 80, 87);
+}
