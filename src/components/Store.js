@@ -54,7 +54,7 @@ function reducer(state, action) {
     }
     case "ADD_NEW_ENTRY":
       return {
-        date,
+        date: action.payload.date,
         entry: action.payload.entry,
         allEntries: [...state.allEntries].concat(action.payload.entry),
         searchBoolean: false,
