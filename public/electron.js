@@ -1,5 +1,4 @@
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
-const electron = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 
@@ -20,13 +19,13 @@ function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1000,
-    height: 600,
+    height: 707,
     //titleBarStyle: "hiddenInset",
     webPreferences: {
       nodeIntegration: false,
       preload: __dirname + "/preload.js"
     },
-    minHeight: 550,
+    minHeight: 459,
     minWidth: 650
   });
 

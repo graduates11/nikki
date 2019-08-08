@@ -1,0 +1,21 @@
+.highlight {
+  border-radius: 50%;
+  background-color: #F2F2F2;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.hiddenCalendar {
+  visibility: hidden;
+}
+
+.fullWidth {
+  width: 100%;
+  height: auto;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  border-radius: 0.25rem;
+  border-color: rgb(206, 212, 218);
+}

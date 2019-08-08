@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
+import Moment from "moment";
 import {
   EntriesByDate,
   MyCalendar,
@@ -10,7 +11,6 @@ import {
 } from "../src/components";
 import { Store } from "./components/Store";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
-import { defaultTitle } from "./utils/helpers";
 import AddFileModal from "./components/AddFileModal";
 
 const { ipcRenderer } = window;
@@ -127,18 +127,26 @@ export default class App extends React.Component {
   }
 
   addEntry = () => {
-    const { dispatch } = this.context;
+    const { dispatch, state } = this.context;
     const content = EditorState.createWithContent(
       ContentState.createFromText("Your text...")
     );
+    const time = ` – ${Moment(new Date()).format("LT")}`;
+    const dateWithTime = Moment(new Date(state.date))
+      .format("Do MMMM YYYY")
+      .concat(time);
+    const dateWithoutTime = Moment(new Date(state.date)).format("Do MMMM YYYY");
     dispatch({
       type: "ADD_NEW_ENTRY",
       payload: {
         entry: {
           id: shortid.generate(),
-          title: defaultTitle(),
+          title:
+            new Date().toDateString() === state.date.toDateString()
+              ? dateWithTime
+              : dateWithoutTime,
           text: "",
-          date: new Date().toDateString(),
+          date: state.date.toDateString(),
           editorState: convertToRaw(content.getCurrentContent())
         }
       }

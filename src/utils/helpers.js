@@ -3,7 +3,8 @@ export const defaultTitle = () => {
   const day = date.getUTCDate();
   const month = date.toLocaleString("default", { month: "long" });
   const hours = date.getHours();
-  const minutes = date.getUTCMinutes();
+  let minutes = date.getUTCMinutes();
+  minutes = minutes < 10 ? `0${minutes}` : minutes;
   return `${day}. ${month} at ${hours}:${minutes}`;
 };
 
