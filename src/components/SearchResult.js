@@ -10,7 +10,9 @@ const SearchResult = () => {
       {state.searchResult === undefined ? null : (
         <ListGroup flush>
           {state.searchResult.length === 0 ? (
-            <p>no entries found</p>
+            <div id="noResultDiv">
+              <p>no entries found</p>
+            </div>
           ) : (
             state.searchResult.map(entry => (
               <ListGroupItem
