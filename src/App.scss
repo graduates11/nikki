@@ -32,7 +32,7 @@ div.DraftEditor-root {
     background-color: #ffffff8c;
     width: 100%;
     margin: 0;
-    height: calc(100vh - 85px);
+    height: calc(100vh - 89px);
     overflow-y: auto;
     padding: 20px;
     font-size: 17px;
@@ -55,7 +55,10 @@ div.DraftEditor-root {
 }
 
 .add-entry {
-    margin-top: 0.3rem;
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    align-items: self-start;
+    margin-top: 1.05rem !important;
     border-bottom: 1px solid rgb(206, 212, 218);
     cursor: pointer;
 
@@ -73,6 +76,10 @@ div.DraftEditor-root {
 
     .title-input {
         border: none;
+        font-size: 1.5rem;
+        padding-left: 1.25rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .entry-date {
@@ -87,7 +94,7 @@ div.DraftEditor-root {
         }
 
         .day {
-            font-size: 35px;
+            font-size: 2.5rem;
         }
     }
 }
