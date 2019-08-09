@@ -5,6 +5,7 @@
 .mainViewFlex {
   display: flex;
   height: 100%;
+  border-collapse: collapse;
 }
 
 .leftColumn {

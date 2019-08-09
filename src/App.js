@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Col } from "reactstrap";
 import Moment from "moment";
 import {
   EntriesByDate,
@@ -11,16 +11,9 @@ import {
 } from "../src/components";
 import { Store } from "./components/Store";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
-import AddFileModal from "./components/AddFileModal";
 
 const { ipcRenderer } = window;
 const shortid = require("shortid");
-
-const styles = {
-  fullHeight: {
-    height: "100vh"
-  }
-};
 
 export default class App extends React.Component {
   static contextType = Store;
@@ -155,37 +148,25 @@ export default class App extends React.Component {
   render() {
     const { state } = this.context;
     return (
-      <div className="App mt-3 mb-3">
+      <div className="App mainViewFlex">
         <CurrentFileName />
-        <Container style={styles.fullHeight}>
-          <Row style={styles.fullHeight}>
-            <Col xs={4} className="border border-muted">
-              <SearchBar />
-              {state.searchBoolean === true ? <SearchResult /> : null}
-              <MyCalendar />
-              {state.searchBoolean === true ? null : (
-                <EntriesByDate addEntry={this.addEntry} />
-              )}
-            </Col>
-            <Col xs={8} className="border border-muted">
-              {state.entry !== null ? (
-                <TextEditor />
-              ) : (
-                <Container
-                  className="mt-2 w-100 add-entry"
-                  onClick={this.addEntry}
-                >
-                  <p>+ Add entry</p>
-                </Container>
-              )}
-            </Col>
-          </Row>
-          <AddFileModal
-            isModalOpen={this.state.isModalOpen}
-            toggleModal={this.toggleModal}
-            onFinalSave={this.onFinalSave}
-          />
-        </Container>
+        <Col className="border border-muted leftColumn">
+          <SearchBar />
+          {state.searchBoolean === true ? <SearchResult /> : null}
+          <MyCalendar />
+          {state.searchBoolean === true ? null : (
+            <EntriesByDate addEntry={this.addEntry} />
+          )}
+        </Col>
+        <Col className="border border-muted rightColumn">
+          {state.entry !== null ? (
+            <TextEditor />
+          ) : (
+            <Container className="mt-2 w-100 add-entry" onClick={this.addEntry}>
+              <p>+ Add entry</p>
+            </Container>
+          )}
+        </Col>
       </div>
     );
   }
