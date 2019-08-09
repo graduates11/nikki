@@ -6,7 +6,7 @@ const createTemplate = mainWindow => {
 
   let filesSubmenu;
   if (files) {
-    filesSubmenu = files.map((file, i) => {
+    filesSubmenu = files.map(file => {
       return {
         label: file,
         click: () => changeFile(file)

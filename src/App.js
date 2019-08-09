@@ -59,7 +59,7 @@ export default class App extends React.Component {
     // handle error?
     return arg;
   };
-  handleMenuSaveFile = (event, arg) => {
+  handleMenuSaveFile = () => {
     this.onFinalSave();
   };
 
@@ -78,7 +78,7 @@ export default class App extends React.Component {
     ipcRenderer.send("get-all-entries", file);
   };
 
-  handleMenuCreateFile = (event, arg) => {
+  handleMenuCreateFile = () => {
     this.toggleModal();
   };
 
