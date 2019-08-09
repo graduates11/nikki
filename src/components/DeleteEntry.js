@@ -20,7 +20,7 @@ const DeleteEntry = props => {
       >
         <i className="far fa-times-circle fa-sm"></i>
       </span>
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={isOpen} toggle={toggleDeleteModal}>
         <ModalHeader className="modalHeaderCentered">
           Are you sure you want to delete this entry?
         </ModalHeader>
