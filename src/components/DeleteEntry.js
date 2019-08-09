@@ -21,7 +21,9 @@ const DeleteEntry = props => {
         <i className="far fa-times-circle fa-sm"></i>
       </span>
       <Modal isOpen={isOpen}>
-        <ModalHeader>Are you sure you want to delete this entry?</ModalHeader>
+        <ModalHeader className="modalHeaderCentered">
+          Are you sure you want to delete this entry?
+        </ModalHeader>
         <ModalBody className="openDatePicker">
           <Button
             color="white"

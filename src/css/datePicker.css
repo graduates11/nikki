@@ -1,6 +1,7 @@
 .openDatePicker {
   display: flex;
   justify-content: space-around;
+  margin: auto;
 }
 
 .react-date-picker__clear-button {
