@@ -53,7 +53,7 @@ const DateChanger = () => {
           <p className="day">{day}</p>
         </span>
       </span>
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={isOpen} toggle={toggleCalendar}>
         <ModalBody className="openDatePicker">
           <DatePicker
             onChange={handleChange}
