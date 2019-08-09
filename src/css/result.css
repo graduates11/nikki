@@ -32,7 +32,7 @@
 
 .resultListSize {
   min-height: 3rem;
-  max-height: calc(100vh - 25rem);
+  max-height: calc(100vh - 26.5rem);
   /* height: auto; */
   overflow-y: auto;
   overflow-x: hidden;

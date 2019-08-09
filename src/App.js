@@ -162,9 +162,14 @@ export default class App extends React.Component {
           {state.entry !== null ? (
             <TextEditor />
           ) : (
-            <Container className="mt-2 w-100 add-entry" onClick={this.addEntry}>
-              <p>+ Add entry</p>
-            </Container>
+            <div className="entry-header">
+              <Container
+                className="mt-2 w-100 add-entry"
+                onClick={this.addEntry}
+              >
+                <p>+ Add entry</p>
+              </Container>
+            </div>
           )}
         </Col>
       </div>

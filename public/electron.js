@@ -25,7 +25,7 @@ function createWindow() {
       nodeIntegration: false,
       preload: __dirname + "/preload.js"
     },
-    minHeight: 459,
+    minHeight: 515,
     minWidth: 650
   });
 
