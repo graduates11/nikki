@@ -70,6 +70,7 @@
   max-width: 250px;
   display: block;
   margin: 1em;
+  padding: 1em 2em;
   border: none;
   background: none;
   color: inherit;
@@ -114,9 +115,7 @@
 }
 
 .button--text-medium {
-  font-weight: 300;
-  font-size: 0.9rem;
-  padding-bottom: 1.6rem
+  font-weight: 500;
 }
 
 .button--text-thick {
@@ -132,7 +131,7 @@
 }
 
 .button--round-l {
-  border-radius: 0.25rem;
+  border-radius: 40px;
 }
 
 /* Borders */
@@ -154,7 +153,7 @@
 .button--antiman {
   background: none;
   border: none;
-  height: 20px;
+  height: 60px;
 }
 
 .button--antiman.button--inverted,

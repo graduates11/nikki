@@ -2,6 +2,7 @@
   width: 3rem;
   font-size: 1.5rem;
   color: lightgray;
+  // border: 1px solid red;
   text-align: right;
 }
 
@@ -17,9 +18,4 @@
 #addButtonDiv {
   display: flex;
   justify-content: flex-end;
-}
-
-#changeDate #cancel {
-  color: red !important;
-  background-color: pink;
 }
