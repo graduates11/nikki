@@ -1,18 +1,90 @@
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHashtagPlugin from "draft-js-hashtag-plugin";
-import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
+import {
+  ItalicButton,
+  BoldButton,
+  UnderlineButton,
+  CodeButton,
+  HeadlineOneButton,
+  HeadlineTwoButton,
+  HeadlineThreeButton,
+  UnorderedListButton,
+  OrderedListButton
+} from "draft-js-buttons";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
 import createLinkPlugin from "draft-js-anchor-plugin";
 import React from "react";
 import { Input } from "reactstrap";
 import { Store } from "./Store";
 import { DateChanger } from "./index";
+import editorStyles from "../css/editorStyles.css";
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const linkPlugin = createLinkPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
 const plugins = [hashtagPlugin, inlineToolbarPlugin, linkPlugin];
+
+class HeadlinesPicker extends React.Component {
+  componentDidMount() {
+    setTimeout(() => {
+      window.addEventListener("click", this.onWindowClick);
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("click", this.onWindowClick);
+  }
+
+  onWindowClick = () =>
+    // Call `onOverrideContent` again with `undefined`
+    // so the toolbar can show its regular content again.
+    this.props.onOverrideContent(undefined);
+
+  render() {
+    const buttons = [HeadlineOneButton, HeadlineTwoButton, HeadlineThreeButton];
+    return (
+      <div>
+        {buttons.map((
+          Button,
+          i // eslint-disable-next-line
+        ) => (
+          <Button key={i} {...this.props} />
+        ))}
+      </div>
+    );
+  }
+}
+
+class HeadlinesButton extends React.Component {
+  // When using a click event inside overridden content, mouse down
+  // events needs to be prevented so the focus stays in the editor
+  // and the toolbar remains visible  onMouseDown = (event) => event.preventDefault()
+  onMouseDown = event => event.preventDefault();
+
+  onClick = () =>
+    // A button can call `onOverrideContent` to replace the content
+    // of the toolbar. This can be useful for displaying sub
+    // menus or requesting additional information from the user.
+    this.props.onOverrideContent(HeadlinesPicker);
+
+  render() {
+    return (
+      <div
+        onMouseDown={this.onMouseDown}
+        className={editorStyles.headlineButtonWrapper}
+      >
+        <button
+          onClick={this.onClick}
+          id="styledHeadlinesButton"
+          className={editorStyles.headlineButton}
+        >
+          H
+        </button>
+      </div>
+    );
+  }
+}
 
 class TextEditor extends React.Component {
   // connect to the store:
@@ -116,12 +188,15 @@ class TextEditor extends React.Component {
         />
         <InlineToolbar>
           {externalProps => (
-            <React.Fragment>
+            <div id="inlineToolbar">
               <BoldButton {...externalProps} />
               <ItalicButton {...externalProps} />
               <UnderlineButton {...externalProps} />
-              <linkPlugin.LinkButton {...externalProps} />
-            </React.Fragment>
+              <HeadlinesButton {...externalProps} />
+              <UnorderedListButton {...externalProps} />
+              <OrderedListButton {...externalProps} />
+              <CodeButton {...externalProps} />
+            </div>
           )}
         </InlineToolbar>
       </section>
