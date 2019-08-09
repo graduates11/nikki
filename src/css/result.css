@@ -3,6 +3,7 @@
   justify-content: space-between;
   justify-self: flex-start;
   align-items: flex-start;
+  cursor: pointer;
 }
 
 .resultTitle {
