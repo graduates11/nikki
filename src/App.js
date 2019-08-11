@@ -7,7 +7,8 @@ import {
   SearchBar,
   TextEditor,
   SearchResult,
-  CurrentFileName
+  CurrentFileName,
+  AddFileModal
 } from "../src/components";
 import { Store } from "./components/Store";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
@@ -172,6 +173,11 @@ export default class App extends React.Component {
             </div>
           )}
         </Col>
+        <AddFileModal
+          isModalOpen={this.state.isModalOpen}
+          toggleModal={this.toggleModal}
+          onFinalSave={this.onFinalSave}
+        />
       </div>
     );
   }
