@@ -18,20 +18,18 @@ const EntriesByDate = props => {
           <ListGroup flush>
             {result.map((entry, i) => (
               <ListGroupItem className="resultListPadding" key={i}>
-                <div className="resultList">
-                  <div
-                    className="resultListText"
-                    onClick={() => {
-                      dispatch({
-                        type: "GET_ENTRY",
-                        payload: {
-                          entry
-                        }
-                      });
-                    }}
-                  >
-                    {entry.title}
-                  </div>
+                <div
+                  className="resultList"
+                  onClick={() => {
+                    dispatch({
+                      type: "GET_ENTRY",
+                      payload: {
+                        entry
+                      }
+                    });
+                  }}
+                >
+                  <div className="resultListText">{entry.title}</div>
                   <DeleteEntry id={entry.id} />
                 </div>
               </ListGroupItem>

@@ -8,6 +8,7 @@ const DeleteEntry = props => {
 
   const toggleDeleteModal = e => {
     e && e.preventDefault();
+    e && e.stopPropagation();
     setIsOpen(!isOpen);
   };
 
@@ -36,6 +37,7 @@ const DeleteEntry = props => {
             color="white"
             className="button button--antiman button--round-l button--text-medium"
             onClick={() => {
+              toggleDeleteModal();
               dispatch({
                 type: "DELETE_ENTRY",
                 payload: {
