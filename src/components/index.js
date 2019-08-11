@@ -7,6 +7,7 @@ import DeleteEntry from "./DeleteEntry";
 import DateChanger from "./DateChanger";
 import EntriesByDate from "./EntriesByDate";
 import CurrentFileName from "./CurrentFileName";
+import AddFileModal from "./AddFileModal";
 
 export {
   EntriesByDate,
@@ -17,5 +18,6 @@ export {
   SearchResult,
   DeleteEntry,
   DateChanger,
-  CurrentFileName
+  CurrentFileName,
+  AddFileModal
 };
