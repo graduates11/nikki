@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
-
+const createMenu = require("./menu");
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -50,12 +50,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on("ready", async () => {
   createWindow();
-  const createMenu = require("./menu");
   const menu = createMenu(mainWindow);
-  // set the menu again after creating a new file
-  //
-  //
-  //
   Menu.setApplicationMenu(menu);
 });
 
@@ -92,9 +87,7 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
   let isFile;
   let data;
   try {
-    // see if app-data exists
     firstLaunch = !(await appDataExists());
-    // see if the file exists
     isFile = currentFile !== null ? await fileExists(currentFile) : false;
     if (firstLaunch) {
       try {
@@ -162,6 +155,8 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
 ipcMain.on("create-file", async (event, fileName) => {
   try {
     await createFile(fileName);
+    const menu = createMenu(mainWindow);
+    Menu.setApplicationMenu(menu);
     event.reply("create-file-reply", fileName);
   } catch (e) {
     event.reply(
