@@ -106,17 +106,19 @@ function reducer(state, action) {
         allFiles,
         currentFile
       };
-    case "DELETE_ENTRY":
+    case "DELETE_ENTRY": {
+      const entry = action.payload.id === state.entry.id ? null : state.entry;
       return {
         date,
         allEntries: state.allEntries.filter(
           item => item.id !== action.payload.id
         ),
-        entry: null,
+        entry,
         searchBoolean: false,
         currentFile,
         allFiles
       };
+    }
     case "UPDATE_ENTRY":
       return {
         date,
