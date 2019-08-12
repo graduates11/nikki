@@ -181,6 +181,7 @@ class TextEditor extends React.Component {
           editorState={this.state.editorState}
           onChange={this.onChange}
           plugins={plugins}
+          placeholder="Type here…"
           ref={element => {
             this.editor = element;
           }}

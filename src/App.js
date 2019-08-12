@@ -123,7 +123,7 @@ export default class App extends React.Component {
   addEntry = () => {
     const { dispatch, state } = this.context;
     const content = EditorState.createWithContent(
-      ContentState.createFromText("Your text...")
+      ContentState.createFromText("")
     );
     const time = ` – ${Moment(new Date()).format("LT")}`;
     const dateWithTime = Moment(new Date(state.date))
