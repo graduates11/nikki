@@ -1,9 +1,14 @@
 .deleteButtonSpan {
-  width: 3rem;
-  font-size: 1.5rem;
+  width: fit-content;
+  height: fit-content;
+  font-size: 1.1rem;
   color: lightgray;
-  // border: 1px solid red;
   text-align: right;
+}
+
+.deleteButtonDiv {
+  height: fit-content;
+  width: fit-content;
 }
 
 .addButton {

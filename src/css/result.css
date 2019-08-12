@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   justify-self: flex-start;
-  align-items: flex-start;
+  align-items: center;
   cursor: pointer;
 }
 
@@ -10,9 +10,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 10rem;
+  max-width: 13rem;
   font-size: 88%;
   margin: 0;
+  color: rgb(73, 80, 87);
 }
 
 .resultDate {
@@ -29,6 +30,7 @@
 
 .resultListPadding {
   padding: 0.4rem;
+  font-size: 92%;
 }
 
 .resultListSize {
@@ -37,16 +39,17 @@
   /* height: auto; */
   overflow-y: auto;
   overflow-x: hidden;
-  border: 1px solid;
+  /* border: 1px solid; */
   border-color: rgb(206, 212, 218);
-  border-radius: 0.25rem;
+  /* border-radius: 0.25rem;
   padding-top: 0.2rem;
-  padding-bottom: 0.2rem;
+  padding-bottom: 0.2rem; */
 }
 
 .searchResultListSize {
+  margin-top: 0.5rem;
   min-height: 25rem;
-  max-height: 30rem;
+  max-height: calc(100vh - 5rem);
   overflow-y: auto;
   overflow-x: hidden;
 }

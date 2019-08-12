@@ -1,4 +1,3 @@
-import EntriesByTag from "./EntriesByTag";
 import MyCalendar from "./MyCalendar";
 import SearchBar from "./SearchBar";
 import TextEditor from "./TextEditor";
@@ -11,7 +10,6 @@ import AddFileModal from "./AddFileModal";
 
 export {
   EntriesByDate,
-  EntriesByTag,
   MyCalendar,
   SearchBar,
   TextEditor,

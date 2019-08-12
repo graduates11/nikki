@@ -29,7 +29,7 @@ const EntriesByDate = props => {
                     });
                   }}
                 >
-                  <div className="resultListText">{entry.title}</div>
+                  <p className="resultTitle">{entry.title}</p>
                   <DeleteEntry id={entry.id} />
                 </div>
               </ListGroupItem>
