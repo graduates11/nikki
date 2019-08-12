@@ -70,10 +70,22 @@
     "yarn-or-npm": "^2.0.4"
   },
   "build": {
-    "productName": "electra",
-    "appId": "com.dci.electra",
-    "files": [
-      "build/**/*"
-    ]
+    "productName": "Journal-App",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "dmg": {
+      "icon": "app.icns"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "squirrel",
+      "icon": "assets/images/app.ico"
+    }
   }
 }
