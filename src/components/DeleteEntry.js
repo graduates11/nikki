@@ -13,7 +13,7 @@ const DeleteEntry = props => {
   };
 
   return (
-    <div>
+    <div className="deleteButtonDiv">
       <span
         className="hover deleteButtonSpan"
         style={{ margin: 0 }}
