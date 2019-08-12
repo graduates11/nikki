@@ -18,6 +18,9 @@ const DateChanger = () => {
 
   const submitChangedDate = e => {
     if (e.target.id === "changeDate") {
+      if (changedDate === undefined) {
+        return toggleCalendar();
+      }
       const changedEntry = { ...state.entry };
       changedEntry.date = changedDate.toDateString();
       dispatch({
@@ -28,6 +31,7 @@ const DateChanger = () => {
         }
       });
     }
+
     toggleCalendar();
   };
   const toggleCalendar = e => {
