@@ -1,6 +1,7 @@
 const electron = require("electron");
 const path = require("path");
 const userDataPath = (electron.app || electron.remote.app).getPath("userData");
+const fs = require("fs");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 // APP-DATA DB
@@ -81,5 +82,21 @@ module.exports = {
     );
     let db = low(adapter);
     await db.set("entries", entries).write();
+  },
+  deleteFile: async fileName => {
+    await appdb
+      .get("files")
+      .pull(fileName)
+      .write();
+    await fs.unlink(
+      path.join(userDataPath, "entries", `${fileName}.json`),
+      err => {
+        if (err) {
+          return err.message;
+        } else {
+          return `Notebook ${fileName} was successfully deleted.`;
+        }
+      }
+    );
   }
 };

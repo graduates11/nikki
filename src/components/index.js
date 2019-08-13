@@ -7,6 +7,7 @@ import DateChanger from "./DateChanger";
 import EntriesByDate from "./EntriesByDate";
 import CurrentFileName from "./CurrentFileName";
 import AddFileModal from "./AddFileModal";
+import DeleteFileModal from "./DeleteFileModal";
 
 export {
   EntriesByDate,
@@ -17,5 +18,6 @@ export {
   DeleteEntry,
   DateChanger,
   CurrentFileName,
-  AddFileModal
+  AddFileModal,
+  DeleteFileModal
 };
