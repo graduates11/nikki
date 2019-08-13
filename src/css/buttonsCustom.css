@@ -12,11 +12,12 @@
 }
 
 .addButton {
-  color: lightgray;
+  color: var(--secondary-style-color);
+  cursor: pointer;
 }
 
 .hover :hover {
-  color: darkgray;
+  color: rgb(95, 95, 95);
   transition: all 0.3s ease-in-out;
 }
 

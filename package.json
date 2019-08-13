@@ -12,7 +12,7 @@
     "draft-js-hashtag-plugin": "^2.0.3",
     "draft-js-inline-toolbar-plugin": "^3.0.0",
     "draft-js-plugins-editor": "^2.1.1",
-    "electron": "^6.0.0",
+    "electron": "^6.0.2",
     "electron-is-dev": "^1.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.14.2",

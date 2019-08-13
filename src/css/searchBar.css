@@ -6,3 +6,12 @@
   align-items: flex-start;
   margin-top: 0.45rem;
 }
+
+/* .form-control:focus {
+  background-color: var(--secondary-style-color);
+} */
+
+.searchBarBorder {
+  border: 1px solid var(--border-color);
+  background-color: var(--secondary-style-color);
+}

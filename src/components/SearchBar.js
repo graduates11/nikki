@@ -31,7 +31,7 @@ const SearchBar = () => {
   return (
     <form onSubmit={handleSubmit} className="searchBar">
       <Input
-        className="mt-2"
+        className="mt-2 searchBarBorder"
         placeholder="Search"
         type="search"
         value={value}

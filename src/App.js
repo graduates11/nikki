@@ -191,7 +191,7 @@ export default class App extends React.Component {
     return (
       <div className="App mainViewFlex">
         <CurrentFileName />
-        <Col className="border border-muted leftColumn">
+        <Col className="leftColumn">
           <SearchBar />
           {state.searchBoolean === true ? <SearchResult /> : null}
           <MyCalendar />
@@ -199,7 +199,7 @@ export default class App extends React.Component {
             <EntriesByDate addEntry={this.addEntry} />
           )}
         </Col>
-        <Col className="border border-muted rightColumn">
+        <Col className="rightColumn">
           {state.entry !== null ? (
             <TextEditor />
           ) : (
