@@ -19,7 +19,7 @@ const DeleteFileModal = props => {
     return (
       <Modal isOpen={props.isModalOpen} toggle={props.toggleModal}>
         <ModalHeader className="modalHeaderCentered">
-          Are you sure you want to delete this notebook?
+          {`Are you sure you want to delete notebook: ${props.fileToDelete}?`}
         </ModalHeader>
         <ModalBody className="openDatePicker">
           <Button

@@ -19,13 +19,11 @@ import {
 } from "draft-js-buttons";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
 import createLinkPlugin from "draft-js-anchor-plugin";
-import createImagePlugin from "draft-js-image-plugin";
-const imagePlugin = createImagePlugin();
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const linkPlugin = createLinkPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
-const plugins = [hashtagPlugin, inlineToolbarPlugin, linkPlugin, imagePlugin];
+const plugins = [hashtagPlugin, inlineToolbarPlugin, linkPlugin];
 
 class HeadlinesPicker extends React.Component {
   componentDidMount() {
