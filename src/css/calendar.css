@@ -11,22 +11,22 @@
   display: none;
 }
 
-.react-calendar__month-view__days__day--weekend {
-  color: #850000;
-}
-
 .react-calendar__tile--active {
   background-color: var(--calendar-active-color) !important;
-  color: rgb(37, 38, 39);
+  color: var(secondary-style-color) !important;
+}
+
+.react-calendar__tile--now {
+  font-weight: bold;
 }
 
 .fullWidth {
   width: 100%;
-  height: auto;
   margin-top: 0.8rem;
   margin-bottom: 0.8rem;
   border-radius: 0.25rem;
   color: rgb(33, 37, 41);
-  border-color: var(--border-color);
+  padding: 0.1rem;
+  border-color: var(--calendar-border-color);
   background-color: var(--secondary-style-color);
 }

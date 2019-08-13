@@ -35,7 +35,7 @@
 
 .resultListSize {
   min-height: 3rem;
-  max-height: calc(100vh - 26.5rem);
+  max-height: calc(100vh - 28.9rem);
   /* height: auto; */
   overflow-y: auto;
   overflow-x: hidden;
@@ -54,16 +54,11 @@
   overflow-x: hidden;
 }
 
-.list-group {
-  border: 1px solid var(--border-color);
-  border-radius: 0.25rem;
-}
-
 .list-group-item {
   background-color: var(--secondary-style-color) !important;
-  border: 1px solid var(--border-color);
-  border-radius: 0.25rem;
-  border-collapse: collapse;
+  border: 1px solid var(--calendar-border-color) !important;
+  border-radius: 0.25rem !important;
+  margin-bottom: 1px;
 }
 
 .noEntries {
