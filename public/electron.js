@@ -37,7 +37,7 @@ function createWindow() {
   );
 
   // Open the DevTools.
-  if (true) {
+  if (isDev) {
     mainWindow.webContents.openDevTools();
   }
 
