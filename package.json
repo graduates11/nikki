@@ -2,6 +2,11 @@
   "name": "electron-test-cra",
   "version": "0.1.0",
   "main": "public/electron.js",
+  "author": {
+    "name": "placeholder",
+    "email": "placeholder@some.com",
+    "url": "http://placeholder.com/"
+  },
   "homepage": "./",
   "private": true,
   "dependencies": {
