@@ -1,6 +1,6 @@
 .highlight {
   border-radius: 50%;
-  background-color: #F2F2F2;
+  background-color: var(--calendar-highlight-color);
 }
 
 .circle {
@@ -11,11 +11,17 @@
   display: none;
 }
 
+.react-calendar__tile--active {
+  background-color: var(--calendar-active-color) !important;
+}
+
 .fullWidth {
   width: 100%;
   height: auto;
   margin-top: 0.8rem;
   margin-bottom: 0.8rem;
   border-radius: 0.25rem;
-  border-color: rgb(206, 212, 218);
+  color: rgb(33, 37, 41);
+  border-color: var(--border-color);
+  background-color: var(--secondary-style-color);
 }

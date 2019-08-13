@@ -40,7 +40,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   /* border: 1px solid; */
-  border-color: rgb(206, 212, 218);
+  border-color: var(--border-color);
   /* border-radius: 0.25rem;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem; */
@@ -52,6 +52,17 @@
   max-height: calc(100vh - 5rem);
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.list-group {
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+}
+
+.list-group-item {
+  background-color: var(--secondary-style-color) !important;
+  border: 1px solid var(--border-color);
+  border-collapse: collapse;
 }
 
 .noEntries {
