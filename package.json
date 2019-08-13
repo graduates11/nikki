@@ -44,7 +44,8 @@
     "lint": "eslint --fix --quiet ./src/**/*.js ./public/**/*.js",
     "dev": "concurrently \"BROWSER=none yarn-or-npm run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "electron-builder",
-    "build": "rm -rf ./dist && yarn-or-npm run cra-build && yarn yarn-or-npm electron-build"
+    "build": "rm -rf ./dist && yarn-or-npm run cra-build && yarn yarn-or-npm electron-build",
+    "build-all": "rm -rf ./dist && yarn-or-npm run cra-build && yarn yarn-or-npm electron-build -mwl"
   },
   "eslintConfig": {
     "extends": "react-app"
