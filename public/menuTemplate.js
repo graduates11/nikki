@@ -9,7 +9,16 @@ const createTemplate = mainWindow => {
     filesSubmenu = files.map(file => {
       return {
         label: file,
-        click: () => changeFile(file)
+        submenu: [
+          {
+            label: "Open",
+            click: () => changeFile(file)
+          },
+          {
+            label: "Delete",
+            click: () => deleteFile(file)
+          }
+        ]
       };
     });
   } else {
@@ -21,17 +30,21 @@ const createTemplate = mainWindow => {
     ];
   }
 
+  const currentFile = getCurrentFileSync();
   const changeFile = async file => {
     mainWindow.webContents.send("change-file", file);
   };
 
   const saveFile = () => {
-    const currentFile = getCurrentFileSync();
     mainWindow.webContents.send("menu-save-file", currentFile);
   };
 
   const createFile = () => {
     mainWindow.webContents.send("menu-create-file");
+  };
+
+  const deleteFile = file => {
+    mainWindow.webContents.send("menu-delete-file", file);
   };
 
   const fileMenu = {
@@ -42,14 +55,14 @@ const createTemplate = mainWindow => {
         click: saveFile
       },
       {
-        label: "Create new file...",
+        label: "Create a new notebook...",
         click: createFile
       },
       {
         type: "separator"
       },
       {
-        label: "Your files...",
+        label: "Your notebooks...",
         submenu: filesSubmenu
       }
     ]
