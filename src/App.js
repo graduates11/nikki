@@ -43,8 +43,6 @@ export default class App extends React.Component {
     });
   };
 
-  createFile = () => {};
-
   onFinalSave = () => {
     const { state } = this.context;
     const entries = [...state.allEntries];
@@ -121,6 +119,10 @@ export default class App extends React.Component {
     this.setState({
       deleteFileResponse: response
     });
+
+    setTimeout(() => {
+      this.setState({ isFileDeleteModalOpen: false });
+    }, 1000);
   };
 
   deleteFile = () => {
