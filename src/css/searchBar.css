@@ -7,9 +7,9 @@
   margin-top: 0.45rem;
 }
 
-.form-control:focus {
+/* .form-control:focus {
   background-color: var(--secondary-style-color);
-}
+} */
 
 .searchBarBorder {
   border: 1px solid var(--border-color);
