@@ -1,6 +1,6 @@
 {
-  "name": "electron-test-cra",
-  "version": "0.1.0",
+  "name": "nikki",
+  "version": "1.0.0",
   "main": "public/electron.js",
   "author": {
     "name": "Martyna Khanh Stefan",
