@@ -24,13 +24,13 @@ export default class AddFileModal extends React.Component {
       <Modal isOpen={this.props.isModalOpen}>
         <ModalBody className="modalHeaderCentered">
           <ModalHeader className="modalHeaderCentered">
-            <h6>How would you like to name your notebook?</h6>
+            <h6>How would you like to name your journal?</h6>
           </ModalHeader>
           <Input
             maxLength="20"
             type="text"
             autoFocus
-            placeholder="My notebook..."
+            placeholder="My journal..."
             onChange={this.onFileNameChange}
           ></Input>
           <Button

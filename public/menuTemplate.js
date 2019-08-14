@@ -55,14 +55,14 @@ const createTemplate = mainWindow => {
         click: saveFile
       },
       {
-        label: "Create a new notebook...",
+        label: "Create a new journal...",
         click: createFile
       },
       {
         type: "separator"
       },
       {
-        label: "Your notebooks...",
+        label: "Your journals...",
         submenu: filesSubmenu
       }
     ]

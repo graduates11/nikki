@@ -12,6 +12,6 @@
 } */
 
 .searchBarBorder {
-  border: 1px solid var(--border-color);
-  background-color: var(--secondary-style-color);
+  border: 1px solid #0000002f;
+  background-color: white;
 }

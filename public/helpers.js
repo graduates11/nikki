@@ -94,7 +94,7 @@ module.exports = {
         if (err) {
           return err.message;
         } else {
-          return `Notebook ${fileName} was successfully deleted.`;
+          return `Journal ${fileName} was successfully deleted.`;
         }
       }
     );

@@ -3,7 +3,7 @@ import { Button, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { Store } from "./Store";
 
 const DeleteEntry = props => {
-  const { state, dispatch } = useContext(Store);
+  const { dispatch } = useContext(Store);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDeleteModal = e => {
@@ -41,8 +41,7 @@ const DeleteEntry = props => {
               dispatch({
                 type: "DELETE_ENTRY",
                 payload: {
-                  id: props.id,
-                  entry: state.entry
+                  id: props.id
                 }
               });
             }}
