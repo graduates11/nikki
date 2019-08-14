@@ -8,7 +8,7 @@ const DeleteFileModal = props => {
     return (
       <Modal isOpen={props.isModalOpen} toggle={props.toggleModal}>
         <ModalBody className="modalHeaderCentered">
-          You can't delete a notebook that is currently open.
+          You can't delete a journal that is currently open.
         </ModalBody>
       </Modal>
     );
@@ -19,7 +19,7 @@ const DeleteFileModal = props => {
     return (
       <Modal isOpen={props.isModalOpen} toggle={props.toggleModal}>
         <ModalHeader className="modalHeaderCentered">
-          {`Are you sure you want to delete notebook: ${props.fileToDelete}?`}
+          {`Are you sure you want to delete journal: ${props.fileToDelete}?`}
         </ModalHeader>
         <ModalBody className="openDatePicker">
           <Button

@@ -114,7 +114,10 @@ function reducer(state, action) {
         currentFile
       };
     case "DELETE_ENTRY": {
-      const entry = action.payload.id === state.entry.id ? null : state.entry;
+      const entry =
+        state.entry !== null && action.payload.id === state.entry.id
+          ? null
+          : state.entry;
       return {
         date,
         allEntries: state.allEntries.filter(

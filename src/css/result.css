@@ -55,10 +55,9 @@
 }
 
 .list-group-item {
-  background-color: var(--secondary-style-color) !important;
   border: 1px solid var(--calendar-border-color) !important;
   border-radius: 0.25rem !important;
-  margin-bottom: 1px;
+  margin-bottom: 3px;
 }
 
 .noEntries {

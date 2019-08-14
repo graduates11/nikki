@@ -189,7 +189,7 @@ ipcMain.on("delete-file", async (event, fileName) => {
     Menu.setApplicationMenu(menu);
     event.reply(
       "delete-file-reply",
-      `Successfully deleted notebook: ${fileName}`
+      `Successfully deleted journal: ${fileName}`
     );
   } catch (e) {
     console.error(e);
