@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "main": "public/electron.js",
   "author": {
-    "name": "placeholder",
+    "name": "Martyna Khanh Stefan",
     "email": "placeholder@some.com",
-    "url": "http://placeholder.com/"
+    "url": "https://github.com/graduates11/nikki"
   },
   "homepage": "./",
   "private": true,
@@ -77,10 +77,10 @@
     "yarn-or-npm": "^2.0.4"
   },
   "build": {
-    "productName": "Journal-App",
+    "productName": "Nikki",
     "asar": true,
     "artifactName": "${productName}-${version}.${ext}",
-    "appId": "com.graduates11.journal-app",
+    "appId": "com.graduates11.nikki",
     "dmg": {
       "background": "build/assets/background.png"
     },
