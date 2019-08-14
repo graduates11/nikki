@@ -12,13 +12,13 @@
 }
 
 .addButton {
-  color: var(--secondary-style-color);
+  color: var(--primary-style-color);
   cursor: pointer;
 }
 
 .hover :hover {
   color: rgb(95, 95, 95);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
 #addButtonDiv {
