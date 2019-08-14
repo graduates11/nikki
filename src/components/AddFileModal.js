@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Input, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { Store } from "./Store";
-
 const { ipcRenderer } = window;
+
 export default class AddFileModal extends React.Component {
   static contextType = Store;
   state = {
@@ -22,27 +22,28 @@ export default class AddFileModal extends React.Component {
   render() {
     return (
       <Modal isOpen={this.props.isModalOpen}>
-        <ModalBody>
-          <ModalHeader>How would you like to name your file?</ModalHeader>
+        <ModalBody className="modalHeaderCentered">
+          <ModalHeader className="modalHeaderCentered">
+            <h6>How would you like to name your notebook?</h6>
+          </ModalHeader>
           <Input
             maxLength="20"
             type="text"
             autoFocus
+            placeholder="My notebook..."
             onChange={this.onFileNameChange}
           ></Input>
           <Button
             onClick={this.createFile}
-            outline
-            color="secondary"
-            className="m-2"
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
           >
             Submit
           </Button>
           <Button
             onClick={this.props.toggleModal}
-            outline
-            color="secondary"
-            className="m-2"
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
           >
             Close
           </Button>

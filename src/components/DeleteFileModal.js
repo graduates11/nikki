@@ -8,7 +8,7 @@ const DeleteFileModal = props => {
     return (
       <Modal isOpen={props.isModalOpen} toggle={props.toggleModal}>
         <ModalBody className="modalHeaderCentered">
-          You can't delete a notebook that you're currently using
+          You can't delete a notebook that is currently open.
         </ModalBody>
       </Modal>
     );
