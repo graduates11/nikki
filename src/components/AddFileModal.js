@@ -24,7 +24,7 @@ export default class AddFileModal extends React.Component {
       <Modal isOpen={this.props.isModalOpen}>
         <ModalBody className="modalHeaderCentered">
           <ModalHeader className="modalHeaderCentered">
-            <h6>How would you like to name your journal?</h6>
+            How would you like to name your journal?
           </ModalHeader>
           <Input
             maxLength="20"
