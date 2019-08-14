@@ -4,9 +4,10 @@
   "main": "public/electron.js",
   "author": {
     "name": "Martyna Khanh Stefan",
-    "email": "placeholder@some.com",
+    "email": "stefan.tolksdorf@gmail.com",
     "url": "https://github.com/graduates11/nikki"
   },
+  "description": "Type notes in an organised journal.",
   "homepage": "./",
   "private": true,
   "dependencies": {
@@ -20,7 +21,6 @@
     "electron-is-dev": "^1.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.14.2",
-    "faker": "^4.1.0",
     "fuse.js": "^3.4.5",
     "jquery": "^3.4.1",
     "lowdb": "^1.0.0",
