@@ -35,12 +35,12 @@
 
 .resultListSize {
   min-height: 3rem;
-  max-height: calc(100vh - 26.5rem);
+  max-height: calc(100vh - 28.9rem);
   /* height: auto; */
   overflow-y: auto;
   overflow-x: hidden;
   /* border: 1px solid; */
-  border-color: rgb(206, 212, 218);
+  border-color: var(--border-color);
   /* border-radius: 0.25rem;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem; */
@@ -52,6 +52,12 @@
   max-height: calc(100vh - 5rem);
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.list-group-item {
+  border: 1px solid var(--calendar-border-color) !important;
+  border-radius: 0.25rem !important;
+  margin-bottom: 3px;
 }
 
 .noEntries {

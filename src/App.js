@@ -8,7 +8,8 @@ import {
   TextEditor,
   SearchResult,
   CurrentFileName,
-  AddFileModal
+  AddFileModal,
+  DeleteFileModal
 } from "../src/components";
 import { Store } from "./components/Store";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
@@ -20,14 +21,34 @@ export default class App extends React.Component {
   static contextType = Store;
 
   state = {
-    isModalOpen: false
+    isModalOpen: false,
+    isFileDeleteModalOpen: false,
+    fileToDelete: null,
+    deleteFileResponse: null,
+    fileOnClose: false
   };
 
   toggleModal = () => {
     this.setState({ isModalOpen: !this.state.isModalOpen });
   };
 
-  createFile = () => {};
+  toggleDeleteModal = () => {
+    this.setState({
+      isFileDeleteModalOpen: !this.state.isFileDeleteModalOpen
+    });
+  };
+
+  toggleFileOnClose = () => {
+    this.setState({
+      fileOnClose: !this.state.fileOnClose
+    });
+  };
+
+  resetResponse = () => {
+    this.setState({
+      deleteFileResponse: null
+    });
+  };
 
   onFinalSave = () => {
     const { state } = this.context;
@@ -37,6 +58,9 @@ export default class App extends React.Component {
       entries,
       file: currentFile
     };
+    this.setState({
+      fileOnClose: false
+    });
     ipcRenderer.send("final-save", JSON.stringify(data));
   };
 
@@ -75,6 +99,9 @@ export default class App extends React.Component {
   };
 
   handleChangeFile = (event, file) => {
+    this.setState({
+      fileOnClose: true
+    });
     this.onFinalSave();
     ipcRenderer.send("get-all-entries", file);
   };
@@ -94,6 +121,28 @@ export default class App extends React.Component {
     });
   };
 
+  handleMenuDeleteFile = (event, fileName) => {
+    this.toggleDeleteModal();
+    this.setState({
+      fileToDelete: fileName
+    });
+  };
+
+  handleDeleteFileReply = (event, response) => {
+    this.setState({
+      deleteFileResponse: response
+    });
+
+    setTimeout(() => {
+      this.setState({ isFileDeleteModalOpen: false });
+    }, 1000);
+  };
+
+  deleteFile = () => {
+    const { fileToDelete } = this.state;
+    ipcRenderer.send("delete-file", fileToDelete);
+  };
+
   componentDidMount() {
     ipcRenderer.on("get-all-entries-reply", this.handleGetAllEntries);
     ipcRenderer.on("menu-save-file", this.handleMenuSaveFile);
@@ -102,6 +151,8 @@ export default class App extends React.Component {
     ipcRenderer.on("menu-create-file", this.handleMenuCreateFile);
     ipcRenderer.on("change-file", this.handleChangeFile);
     ipcRenderer.on("create-file-reply", this.handleCreateFileReply);
+    ipcRenderer.on("menu-delete-file", this.handleMenuDeleteFile);
+    ipcRenderer.on("delete-file-reply", this.handleDeleteFileReply);
   }
 
   componentWillUnmount() {
@@ -118,12 +169,14 @@ export default class App extends React.Component {
     ipcRenderer.removeListener("change-file", this.handleChangeFile);
     ipcRenderer.removeListener("menu-create-file", this.handleMenuCreateFile);
     ipcRenderer.removeListener("create-file-reply", this.handleCreateFileReply);
+    ipcRenderer.removeListener("menu-delete-file", this.handleMenuDeleteFile);
+    ipcRenderer.removeListener("delete-file-reply", this.handleDeleteFileReply);
   }
 
   addEntry = () => {
     const { dispatch, state } = this.context;
     const content = EditorState.createWithContent(
-      ContentState.createFromText("Your text...")
+      ContentState.createFromText("")
     );
     const time = ` – ${Moment(new Date()).format("LT")}`;
     const dateWithTime = Moment(new Date(state.date))
@@ -151,7 +204,7 @@ export default class App extends React.Component {
     return (
       <div className="App mainViewFlex">
         <CurrentFileName />
-        <Col className="border border-muted leftColumn">
+        <Col className="leftColumn">
           <SearchBar />
           {state.searchBoolean === true ? <SearchResult /> : null}
           <MyCalendar />
@@ -159,9 +212,12 @@ export default class App extends React.Component {
             <EntriesByDate addEntry={this.addEntry} />
           )}
         </Col>
-        <Col className="border border-muted rightColumn">
+        <Col className="rightColumn">
           {state.entry !== null ? (
-            <TextEditor />
+            <TextEditor
+              fileOnClose={this.state.fileOnClose}
+              toggleFileOnClose={this.toggleFileOnClose}
+            />
           ) : (
             <div className="entry-header">
               <Container
@@ -177,6 +233,14 @@ export default class App extends React.Component {
           isModalOpen={this.state.isModalOpen}
           toggleModal={this.toggleModal}
           onFinalSave={this.onFinalSave}
+        />
+        <DeleteFileModal
+          toggleModal={this.toggleDeleteModal}
+          isModalOpen={this.state.isFileDeleteModalOpen}
+          deleteFile={this.deleteFile}
+          response={this.state.deleteFileResponse}
+          fileToDelete={this.state.fileToDelete}
+          resetResponse={this.resetResponse}
         />
       </div>
     );

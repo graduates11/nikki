@@ -79,7 +79,8 @@ const {
   getData,
   getCurrentFile,
   setCurrentFile,
-  updateEntries
+  updateEntries,
+  deleteFile
 } = require("./helpers.js");
 
 ipcMain.on("get-all-entries", async (event, currentFile = null) => {
@@ -176,6 +177,24 @@ ipcMain.on("final-save", async (event, data) => {
     console.error(e);
     event.sender.send(
       "final-save-error",
+      `Sorry, an error has occured: ${e.message}`
+    );
+  }
+});
+
+ipcMain.on("delete-file", async (event, fileName) => {
+  try {
+    await deleteFile(fileName);
+    const menu = createMenu(mainWindow);
+    Menu.setApplicationMenu(menu);
+    event.reply(
+      "delete-file-reply",
+      `Successfully deleted journal: ${fileName}`
+    );
+  } catch (e) {
+    console.error(e);
+    event.sender.send(
+      "delete-file-error",
       `Sorry, an error has occured: ${e.message}`
     );
   }

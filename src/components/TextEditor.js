@@ -1,4 +1,9 @@
+import React from "react";
+import { Store } from "./Store";
+import { Input } from "reactstrap";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import { DateChanger } from "./index";
+import editorStyles from "../css/editorStyles.css";
 import Editor from "draft-js-plugins-editor";
 import createHashtagPlugin from "draft-js-hashtag-plugin";
 import {
@@ -14,11 +19,6 @@ import {
 } from "draft-js-buttons";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
 import createLinkPlugin from "draft-js-anchor-plugin";
-import React from "react";
-import { Input } from "reactstrap";
-import { Store } from "./Store";
-import { DateChanger } from "./index";
-import editorStyles from "../css/editorStyles.css";
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const linkPlugin = createLinkPlugin();
@@ -48,7 +48,7 @@ class HeadlinesPicker extends React.Component {
         {buttons.map((
           Button,
           i // eslint-disable-next-line
-        ) => (
+				) => (
           <Button key={i} {...this.props} />
         ))}
       </div>
@@ -109,6 +109,9 @@ class TextEditor extends React.Component {
 
   componentDidUpdate() {
     const currentEntry = this.context.state.entry;
+    if (this.props.fileOnClose) {
+      this.updateEntry();
+    }
     if (currentEntry.id !== this.state.entry.id) {
       const content = convertFromRaw(currentEntry.editorState);
       this.setState({
@@ -153,6 +156,8 @@ class TextEditor extends React.Component {
         entry: updatedEntry
       }
     });
+
+    this.props.toggleFileOnClose();
   };
 
   toggleModal = () => {
@@ -181,6 +186,7 @@ class TextEditor extends React.Component {
           editorState={this.state.editorState}
           onChange={this.onChange}
           plugins={plugins}
+          placeholder="Type here…"
           ref={element => {
             this.editor = element;
           }}

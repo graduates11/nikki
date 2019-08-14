@@ -15,6 +15,13 @@
 html,
 body {
     min-height: 100%;
+    --primary-style-color: rgb(174, 189, 206);
+    --secondary-style-color: #F0F7FF;
+    --border-color: rgba(66, 72, 79, 0.39);
+    --calendar-border-color: #0000002f;
+    --placeholder-color: rgb(108, 117, 125);
+    --calendar-highlight-color: #CFC3AE;
+    --calendar-active-color: #606F82;
 }
 
 body {
@@ -41,17 +48,17 @@ div.DraftEditor-root {
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 0.5rem;
+    left: -10px;
 }
 
 ::-webkit-scrollbar-track {
-    // background-color: rgb(206, 212, 218);
-    border: 1px solid rgb(206, 212, 218);
+    border: 1px solid var(--border-color);
     border-radius: 0.25rem;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(33, 37, 41);
+    background: var(--calendar-active-color);
     border-radius: 0.25rem;
 }
 
@@ -60,11 +67,11 @@ div.DraftEditor-root {
     grid-template-columns: 8fr 2fr;
     align-items: self-start;
     margin-top: 1.05rem !important;
-    border-bottom: 1px solid rgb(206, 212, 218);
+    border-bottom: 1px solid var(--border-color);
     cursor: pointer;
 
     p {
-        color: rgb(206, 212, 218);
+        color: var(--placeholder-color);
         margin-top: .7rem;
         margin-bottom: .5rem;
     }
@@ -81,6 +88,7 @@ div.DraftEditor-root {
         padding-left: 1.25rem;
         text-overflow: ellipsis;
         overflow: hidden;
+        color: #212529;
     }
 
     .entry-date {
@@ -132,6 +140,6 @@ select {
 
 #underlinedEntryHeader {
     margin-top: 0.1rem;
-    border-bottom: 1px solid #ced4da;
+    border-bottom: 1px solid var(--border-color);
     border-radius: 0;
 }

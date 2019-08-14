@@ -16,6 +16,11 @@
   background: none;
 }
 
+.public-DraftEditorPlaceholder-inner {
+  position: absolute;
+  color: #aaaaaa;
+}
+
 #inlineToolbar {
   display: flex;
   background: rgb(251, 251, 251);

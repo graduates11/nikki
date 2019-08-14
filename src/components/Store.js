@@ -11,7 +11,14 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  const { date, entry, searchResult, currentFile, allFiles } = state;
+  const {
+    date,
+    entry,
+    searchResult,
+    currentFile,
+    allFiles,
+    searchBoolean
+  } = state;
   const allEntries = [...state.allEntries];
   switch (action.type) {
     case "SET_DATE": {
@@ -107,7 +114,10 @@ function reducer(state, action) {
         currentFile
       };
     case "DELETE_ENTRY": {
-      const entry = action.payload.id === state.entry.id ? null : state.entry;
+      const entry =
+        state.entry !== null && action.payload.id === state.entry.id
+          ? null
+          : state.entry;
       return {
         date,
         allEntries: state.allEntries.filter(
@@ -152,6 +162,16 @@ function reducer(state, action) {
         entry: null,
         searchBoolean: false,
         allFiles
+      };
+    }
+    case "DELETE_FILE": {
+      return {
+        date,
+        currentFile,
+        allEntries,
+        entry,
+        searchBoolean,
+        allFiles: allFiles.filter(file => file !== action.payload.deletedFile)
       };
     }
     default:
