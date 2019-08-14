@@ -11,6 +11,10 @@
   display: none;
 }
 
+.react-calendar button {
+  /* border: 1px solid transparent; */
+}
+
 .react-calendar__tile--active {
   background-color: var(--calendar-active-color) !important;
   color: var(secondary-style-color) !important;
@@ -27,6 +31,10 @@
   border-radius: 0.25rem;
   color: rgb(33, 37, 41);
   padding: 0.1rem;
-  border-color: var(--calendar-border-color);  
+  border-color: var(--calendar-border-color);
   background: white;
+}
+
+.react-date-picker__calendar {
+  width: 302px !important;
 }

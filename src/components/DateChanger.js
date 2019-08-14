@@ -44,7 +44,7 @@ const DateChanger = () => {
   };
 
   return (
-    <div id="entryDate">
+    <div id="entryDate datePickerfullWidth">
       <span className="entry-date mt-2" onClick={toggleCalendar}>
         <span>
           <p className="month-year">

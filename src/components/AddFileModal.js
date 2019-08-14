@@ -21,7 +21,7 @@ export default class AddFileModal extends React.Component {
 
   render() {
     return (
-      <Modal isOpen={this.props.isModalOpen}>
+      <Modal isOpen={this.props.isModalOpen} toggle={this.props.toggleModal}>
         <ModalBody className="modalHeaderCentered">
           <ModalHeader className="modalHeaderCentered">
             How would you like to name your journal?
@@ -34,18 +34,18 @@ export default class AddFileModal extends React.Component {
             onChange={this.onFileNameChange}
           ></Input>
           <Button
+            onClick={this.props.toggleModal}
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
+          >
+            Cancel
+          </Button>
+          <Button
             onClick={this.createFile}
             color="white"
             className="button button--antiman button--round-l button--text-medium"
           >
             Submit
-          </Button>
-          <Button
-            onClick={this.props.toggleModal}
-            color="white"
-            className="button button--antiman button--round-l button--text-medium"
-          >
-            Close
           </Button>
         </ModalBody>
       </Modal>
