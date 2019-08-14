@@ -24,7 +24,8 @@ export default class App extends React.Component {
     isModalOpen: false,
     isFileDeleteModalOpen: false,
     fileToDelete: null,
-    deleteFileResponse: null
+    deleteFileResponse: null,
+    fileOnClose: false
   };
 
   toggleModal = () => {
@@ -34,6 +35,12 @@ export default class App extends React.Component {
   toggleDeleteModal = () => {
     this.setState({
       isFileDeleteModalOpen: !this.state.isFileDeleteModalOpen
+    });
+  };
+
+  toggleFileOnClose = () => {
+    this.setState({
+      fileOnClose: !this.state.fileOnClose
     });
   };
 
@@ -51,6 +58,9 @@ export default class App extends React.Component {
       entries,
       file: currentFile
     };
+    this.setState({
+      fileOnClose: false
+    });
     ipcRenderer.send("final-save", JSON.stringify(data));
   };
 
@@ -89,6 +99,9 @@ export default class App extends React.Component {
   };
 
   handleChangeFile = (event, file) => {
+    this.setState({
+      fileOnClose: true
+    });
     this.onFinalSave();
     ipcRenderer.send("get-all-entries", file);
   };
@@ -201,7 +214,10 @@ export default class App extends React.Component {
         </Col>
         <Col className="rightColumn">
           {state.entry !== null ? (
-            <TextEditor />
+            <TextEditor
+              fileOnClose={this.state.fileOnClose}
+              toggleFileOnClose={this.toggleFileOnClose}
+            />
           ) : (
             <div className="entry-header">
               <Container

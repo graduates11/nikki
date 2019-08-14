@@ -109,6 +109,9 @@ class TextEditor extends React.Component {
 
   componentDidUpdate() {
     const currentEntry = this.context.state.entry;
+    if (this.props.fileOnClose) {
+      this.updateEntry();
+    }
     if (currentEntry.id !== this.state.entry.id) {
       const content = convertFromRaw(currentEntry.editorState);
       this.setState({
@@ -153,6 +156,8 @@ class TextEditor extends React.Component {
         entry: updatedEntry
       }
     });
+
+    this.props.toggleFileOnClose();
   };
 
   toggleModal = () => {
