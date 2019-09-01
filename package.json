@@ -1,7 +1,13 @@
 {
-  "name": "electron-test-cra",
-  "version": "0.1.0",
+  "name": "nikki",
+  "version": "1.0.0",
   "main": "public/electron.js",
+  "author": {
+    "name": "Martyna Khanh Stefan",
+    "email": "stefan.tolksdorf@gmail.com",
+    "url": "https://github.com/graduates11/nikki"
+  },
+  "description": "Type notes in an organised journal.",
   "homepage": "./",
   "private": true,
   "dependencies": {
@@ -15,15 +21,16 @@
     "electron-is-dev": "^1.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.14.2",
-    "faker": "^4.1.0",
     "fuse.js": "^3.4.5",
+    "jquery": "^3.4.1",
     "lowdb": "^1.0.0",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-calendar": "^2.19.0",
-    "react-datepicker": "^2.8.0",
+    "react-date-picker": "^7.8.0",
     "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
     "react-scripts": "3.0.1",
     "reactstrap": "^8.0.1",
     "shortid": "^2.2.14"
@@ -39,10 +46,11 @@
     "cra-test": "react-scripts test",
     "cra-eject": "react-scripts eject",
     "upgrade-dep": "yarn-or-npm upgrade-interactive --latest",
-    "lint": "eslint --fix .",
+    "lint": "eslint --fix --quiet ./src/**/*.js ./public/**/*.js",
     "dev": "concurrently \"BROWSER=none yarn-or-npm run cra-start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-build": "electron-builder",
-    "build": "rm -rf ./dist && yarn-or-npm run cra-build && yarn yarn-or-npm electron-build"
+    "build": "rm -rf ./dist && yarn-or-npm run cra-build && yarn yarn-or-npm electron-build",
+    "build-all": "rm -rf ./dist && yarn-or-npm run cra-build && yarn yarn-or-npm electron-build -mwl"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,10 +77,26 @@
     "yarn-or-npm": "^2.0.4"
   },
   "build": {
-    "productName": "electra",
-    "appId": "com.dci.electra",
-    "files": [
-      "build/**/*"
-    ]
+    "productName": "Nikki",
+    "asar": true,
+    "artifactName": "${productName}-${version}.${ext}",
+    "appId": "com.graduates11.nikki",
+    "dmg": {
+      "background": "build/assets/background.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/assets/app.icns"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/assets/app.ico"
+    }
   }
 }

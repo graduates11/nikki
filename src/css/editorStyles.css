@@ -1,0 +1,42 @@
+.headlineButtonWrapper {
+  display: flex;
+}
+
+.headlineButton {
+  background: none;
+  font-size: 18px;
+  border: none;
+  vertical-align: bottom;
+  height: 34px;
+  width: 36px;
+}
+
+.headlineButton:hover,
+.headlineButton:focus {
+  background: none;
+}
+
+.public-DraftEditorPlaceholder-inner {
+  position: absolute;
+  color: #aaaaaa;
+}
+
+#inlineToolbar {
+  display: flex;
+  background: rgb(251, 251, 251);
+
+}
+
+#styledHeadlinesButton {
+  padding-top: 0.1rem;
+  background: rgb(251, 251, 251);
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  color: rgb(132, 132, 132);
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+#styledHeadlinesButton:hover {
+  background: rgb(243, 243, 243);
+}

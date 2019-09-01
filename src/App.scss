@@ -1,23 +1,77 @@
+@import "../src/css/buttons";
+@import "../src/css/draft";
+@import "../src/css/hashtag";
+@import "../src/css/link";
+@import "../src/css/toolbar";
+@import "../src/css/calendar";
+@import "../src/css/result";
+@import "../src/css/buttonsCustom";
+@import "../src/css/searchBar";
+@import "../src/css/datePicker";
+@import "../src/css/mainView";
+@import "../src/css/entryList";
+@import "../src/css/modal";
+
+html,
+body {
+    min-height: 100%;
+    --primary-style-color: rgb(174, 189, 206);
+    --secondary-style-color: #F0F7FF;
+    --border-color: rgba(66, 72, 79, 0.39);
+    --calendar-border-color: #0000002f;
+    --placeholder-color: rgb(108, 117, 125);
+    --calendar-highlight-color: #CFC3AE;
+    --calendar-active-color: #606F82;
+}
+
+body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#root {
+    flex: 1 100%;
+}
+
 div.DraftEditor-root {
     background-color: #ffffff8c;
     width: 100%;
-    margin: auto;
-    -webkit-box-shadow: 10px 10px 26px -19px rgba(0, 0, 0, 0.49);
-    -moz-box-shadow: 10px 10px 26px -19px rgba(0, 0, 0, 0.49);
-    box-shadow: 10px 10px 26px -19px rgba(0, 0, 0, 0.49);
-    height: 80vh;
-    overflow-y: scroll;
+    margin: 0;
+    height: calc(100vh - 89px);
+    overflow-y: auto;
     padding: 20px;
-    font-size: 18px;
+    font-size: 17px;
     font-family: 'calibri', sans-serif;
 }
 
+::-webkit-scrollbar {
+    width: 0.5rem;
+    left: -10px;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--calendar-active-color);
+    border-radius: 0.25rem;
+}
+
 .add-entry {
-    border-bottom: 1px solid rgb(197, 197, 197);
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    align-items: self-start;
+    margin-top: 1.05rem !important;
+    border-bottom: 1px solid var(--border-color);
     cursor: pointer;
 
     p {
-        color: rgb(197, 197, 197);
+        color: var(--placeholder-color);
         margin-top: .7rem;
         margin-bottom: .5rem;
     }
@@ -30,12 +84,18 @@ div.DraftEditor-root {
 
     .title-input {
         border: none;
+        font-size: 1.5rem;
+        padding-left: 1.25rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        color: #212529;
     }
 
     .entry-date {
         display: flex;
         flex-direction: row;
         align-items: center;
+        cursor: pointer;
 
         .month-year {
             font-size: 12px;
@@ -44,12 +104,10 @@ div.DraftEditor-root {
         }
 
         .day {
-            font-size: 35px;
+            font-size: 2.5rem;
         }
     }
 }
-
-
 
 textarea:hover,
 input:hover,
@@ -63,20 +121,25 @@ button:hover,
 label:focus,
 .btn:active,
 .btn.active {
-    outline: 0px !important;
+    outline: 1px !important;
     -webkit-appearance: none;
     box-shadow: none !important;
 }
 
-.highlight {
-    border-radius: 50%;
-    background-color: #F2F2F2;
+select::-ms-expand {
+    display: none;
 }
 
-.circle {
-    border-radius: 50%;
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 2px 30px 2px 2px;
+    /*border: none; - if you want the border removed*/
 }
 
-.hiddenCalendar {
-    visibility: hidden;
+#underlinedEntryHeader {
+    margin-top: 0.1rem;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
 }

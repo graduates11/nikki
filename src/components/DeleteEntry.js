@@ -1,25 +1,56 @@
-import React, { useContext } from "react";
-import { Button } from "reactstrap";
+import React, { useContext, useState } from "react";
+import { Button, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { Store } from "./Store";
 
 const DeleteEntry = props => {
   const { dispatch } = useContext(Store);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDeleteModal = e => {
+    e && e.preventDefault();
+    e && e.stopPropagation();
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <Button
-      outline
-      color="secondary"
-      className="m-2"
-      onClick={() => {
-        dispatch({
-          type: "DELETE_ENTRY",
-          payload: {
-            id: props.id
-          }
-        });
-      }}
-    >
-      Delete
-    </Button>
+    <div className="deleteButtonDiv">
+      <span
+        className="hover deleteButtonSpan"
+        style={{ margin: 0 }}
+        onClick={toggleDeleteModal}
+      >
+        <i className="far fa-times-circle fa-sm"></i>
+      </span>
+      <Modal isOpen={isOpen} toggle={toggleDeleteModal}>
+        <ModalHeader className="modalHeaderCentered">
+          Are you sure you want to delete this entry?
+        </ModalHeader>
+        <ModalBody className="openDatePicker">
+          <Button
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
+            onClick={toggleDeleteModal}
+          >
+            Cancel
+          </Button>{" "}
+          <Button
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
+            onClick={() => {
+              toggleDeleteModal();
+              dispatch({
+                type: "DELETE_ENTRY",
+                payload: {
+                  id: props.id
+                }
+              });
+            }}
+          >
+            Delete
+          </Button>
+        </ModalBody>
+      </Modal>
+    </div>
   );
 };
 

@@ -1,19 +1,23 @@
-import EntriesByDate from "./entriesByDate";
-import EntriesByTag from "./entriesByTag";
-import MyCalendar from "./myCalendar";
+import MyCalendar from "./MyCalendar";
 import SearchBar from "./SearchBar";
 import TextEditor from "./TextEditor";
 import SearchResult from "./SearchResult";
 import DeleteEntry from "./DeleteEntry";
 import DateChanger from "./DateChanger";
+import EntriesByDate from "./EntriesByDate";
+import CurrentFileName from "./CurrentFileName";
+import AddFileModal from "./AddFileModal";
+import DeleteFileModal from "./DeleteFileModal";
 
 export {
   EntriesByDate,
-  EntriesByTag,
   MyCalendar,
   SearchBar,
   TextEditor,
   SearchResult,
   DeleteEntry,
-  DateChanger
+  DateChanger,
+  CurrentFileName,
+  AddFileModal,
+  DeleteFileModal
 };

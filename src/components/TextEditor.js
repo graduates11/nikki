@@ -1,19 +1,90 @@
-import { EditorState, ContentState } from "draft-js";
+import React from "react";
+import { Store } from "./Store";
+import { Input } from "reactstrap";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import { DateChanger } from "./index";
+import editorStyles from "../css/editorStyles.css";
 import Editor from "draft-js-plugins-editor";
 import createHashtagPlugin from "draft-js-hashtag-plugin";
-import { ItalicButton, BoldButton, UnderlineButton } from "draft-js-buttons";
+import {
+  ItalicButton,
+  BoldButton,
+  UnderlineButton,
+  CodeButton,
+  HeadlineOneButton,
+  HeadlineTwoButton,
+  HeadlineThreeButton,
+  UnorderedListButton,
+  OrderedListButton
+} from "draft-js-buttons";
 import createInlineToolbarPlugin from "draft-js-inline-toolbar-plugin";
 import createLinkPlugin from "draft-js-anchor-plugin";
-import React from "react";
-import { Button, Input } from "reactstrap";
-import { Store } from "./Store";
-import { DeleteEntry, DateChanger } from "./index";
-
 const hashtagPlugin = createHashtagPlugin();
 const inlineToolbarPlugin = createInlineToolbarPlugin();
 const linkPlugin = createLinkPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
 const plugins = [hashtagPlugin, inlineToolbarPlugin, linkPlugin];
+
+class HeadlinesPicker extends React.Component {
+  componentDidMount() {
+    setTimeout(() => {
+      window.addEventListener("click", this.onWindowClick);
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("click", this.onWindowClick);
+  }
+
+  onWindowClick = () =>
+    // Call `onOverrideContent` again with `undefined`
+    // so the toolbar can show its regular content again.
+    this.props.onOverrideContent(undefined);
+
+  render() {
+    const buttons = [HeadlineOneButton, HeadlineTwoButton, HeadlineThreeButton];
+    return (
+      <div>
+        {buttons.map((
+          Button,
+          i // eslint-disable-next-line
+				) => (
+          <Button key={i} {...this.props} />
+        ))}
+      </div>
+    );
+  }
+}
+
+class HeadlinesButton extends React.Component {
+  // When using a click event inside overridden content, mouse down
+  // events needs to be prevented so the focus stays in the editor
+  // and the toolbar remains visible  onMouseDown = (event) => event.preventDefault()
+  onMouseDown = event => event.preventDefault();
+
+  onClick = () =>
+    // A button can call `onOverrideContent` to replace the content
+    // of the toolbar. This can be useful for displaying sub
+    // menus or requesting additional information from the user.
+    this.props.onOverrideContent(HeadlinesPicker);
+
+  render() {
+    return (
+      <div
+        onMouseDown={this.onMouseDown}
+        className={editorStyles.headlineButtonWrapper}
+      >
+        <button
+          onClick={this.onClick}
+          id="styledHeadlinesButton"
+          className={editorStyles.headlineButton}
+        >
+          H
+        </button>
+      </div>
+    );
+  }
+}
 
 class TextEditor extends React.Component {
   // connect to the store:
@@ -24,7 +95,8 @@ class TextEditor extends React.Component {
       id: "default_id",
       text: "Your text...",
       title: "Your title...",
-      date: new Date()
+      date: new Date(),
+      modal: false
     },
     editorState: EditorState.createEmpty()
   };
@@ -37,13 +109,14 @@ class TextEditor extends React.Component {
 
   componentDidUpdate() {
     const currentEntry = this.context.state.entry;
+    if (this.props.fileOnClose) {
+      this.updateEntry();
+    }
     if (currentEntry.id !== this.state.entry.id) {
+      const content = convertFromRaw(currentEntry.editorState);
       this.setState({
         entry: currentEntry,
-        // if entry has editors state set it to that else:
-        editorState: EditorState.createWithContent(
-          ContentState.createFromText(currentEntry.text)
-        )
+        editorState: EditorState.createWithContent(content)
       });
     }
   }
@@ -54,12 +127,10 @@ class TextEditor extends React.Component {
     });
   };
 
-  // retrieve plain text from editor's state
   getPlainText = () => {
     return this.state.editorState.getCurrentContent().getPlainText("\u0001");
   };
 
-  // retrieve all hashtags from the entry
   getHashtags = () => {
     const text = this.getPlainText();
     const regex = /\B#\w\w+\b/g;
@@ -71,10 +142,10 @@ class TextEditor extends React.Component {
     const { entry, editorState } = this.state;
     const hashtags = this.getHashtags();
     const text = this.getPlainText();
-
+    const content = convertToRaw(editorState.getCurrentContent());
     const updatedEntry = {
       ...entry,
-      editorState: editorState,
+      editorState: content,
       text,
       tags: hashtags
     };
@@ -85,20 +156,29 @@ class TextEditor extends React.Component {
         entry: updatedEntry
       }
     });
+
+    this.props.toggleFileOnClose();
+  };
+
+  toggleModal = () => {
+    this.setState({ modal: !this.state.modal });
   };
 
   render() {
     return (
-      <section className="editor">
+      <section className="editor rightColumn">
         <div className="entry-header">
-          <Input
-            autoFocus
-            onChange={this.onTitleChange}
-            value={this.state.entry.title}
-            className="title-input mt-2"
-            type="text"
-            maxLength="50"
-          ></Input>
+          <div id="underlinedEntryHeader">
+            <Input
+              autoFocus
+              onChange={this.onTitleChange}
+              value={this.state.entry.title}
+              className="title-input mt-2"
+              type="text"
+              maxLength="75"
+              onBlur={this.updateEntry}
+            ></Input>
+          </div>
           <DateChanger />
         </div>
 
@@ -106,37 +186,25 @@ class TextEditor extends React.Component {
           editorState={this.state.editorState}
           onChange={this.onChange}
           plugins={plugins}
+          placeholder="Type here…"
           ref={element => {
             this.editor = element;
           }}
+          onBlur={this.updateEntry}
         />
         <InlineToolbar>
           {externalProps => (
-            <React.Fragment>
+            <div id="inlineToolbar">
               <BoldButton {...externalProps} />
               <ItalicButton {...externalProps} />
               <UnderlineButton {...externalProps} />
-              <linkPlugin.LinkButton {...externalProps} />
-            </React.Fragment>
+              <HeadlinesButton {...externalProps} />
+              <UnorderedListButton {...externalProps} />
+              <OrderedListButton {...externalProps} />
+              <CodeButton {...externalProps} />
+            </div>
           )}
         </InlineToolbar>
-        <Button
-          outline
-          color="secondary"
-          className="m-2"
-          onClick={this.updateEntry}
-        >
-          Save
-        </Button>
-        <Button
-          outline
-          color="secondary"
-          className="m-2"
-          onClick={this.props.addEntry}
-        >
-          Add entry
-        </Button>
-        <DeleteEntry id={this.state.entry.id} />
       </section>
     );
   }

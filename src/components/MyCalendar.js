@@ -20,26 +20,12 @@ const MyCalendar = () => {
 
   const getEntries = () => {
     ipcRenderer.send("get-all-entries");
-    return new Promise((resolve, reject) => {
-      ipcRenderer.once("get-all-entries-reply", (event, entries) => {
-        resolve(entries);
-        dispatch({
-          type: "GET_ALL_ENTRIES",
-          payload: {
-            allEntries: [...entries]
-          }
-        });
-      });
-      ipcRenderer.once("get-all-entries-error", (event, args) => {
-        reject(args);
-      });
-    });
   };
 
   useEffect(() => {
     getEntries();
     // eslint-disable-next-line
-  }, []);
+	}, [])
 
   const tileClassName = ({ date, view }) => {
     return view === "month" && datesWithEntries.includes(date.toDateString())
@@ -57,7 +43,9 @@ const MyCalendar = () => {
           });
         }}
         value={state.date}
-        className={state.searchBoolean === true ? "hiddenCalendar" : "null"}
+        className={
+          state.searchBoolean === true ? "hiddenCalendar" : "fullWidth"
+        }
         tileClassName={tileClassName}
       />
     </div>

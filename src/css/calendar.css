@@ -1,0 +1,40 @@
+.highlight {
+  border-radius: 50%;
+  background-color: var(--calendar-highlight-color);
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.hiddenCalendar {
+  display: none;
+}
+
+.react-calendar button {
+  /* border: 1px solid transparent; */
+}
+
+.react-calendar__tile--active {
+  background-color: var(--calendar-active-color) !important;
+  color: var(secondary-style-color) !important;
+}
+
+.react-calendar__tile--now {
+  font-weight: bold;
+}
+
+.fullWidth {
+  width: 100%;
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+  border-radius: 0.25rem;
+  color: rgb(33, 37, 41);
+  padding: 0.1rem;
+  border-color: var(--calendar-border-color);
+  background: white;
+}
+
+.react-date-picker__calendar {
+  width: 302px !important;
+}

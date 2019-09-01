@@ -1,0 +1,7 @@
+.modalHeaderCentered {
+  margin: auto;
+}
+
+.modal-content {
+  border-color: var(--border-color);
+}

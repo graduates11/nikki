@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
+import DatePicker from "react-date-picker";
 import { Store } from "./Store";
 
 const DateChanger = () => {
   const { state, dispatch } = useContext(Store);
-  // const [pickedDate, setPickedDate] = useState();
   const [isOpen, setIsOpen] = useState(false);
+  const [changedDate, setChangedDate] = useState();
 
   const date = new Date(state.entry.date);
 
@@ -16,27 +16,35 @@ const DateChanger = () => {
   const year = date.getFullYear();
   const day = date.getDate();
 
+  const submitChangedDate = e => {
+    if (e.target.id === "changeDate") {
+      if (changedDate === undefined) {
+        return toggleCalendar();
+      }
+      const changedEntry = { ...state.entry };
+      changedEntry.date = changedDate.toDateString();
+      dispatch({
+        type: "CHANGE_DATE",
+        payload: {
+          entry: changedEntry,
+          date: changedDate
+        }
+      });
+    }
+
+    toggleCalendar();
+  };
   const toggleCalendar = e => {
     e && e.preventDefault();
     setIsOpen(!isOpen);
   };
 
   const handleChange = date => {
-    // setPickedDate(date);
-    const changedEntry = state.entry;
-    changedEntry.date = date.toDateString();
-    dispatch({
-      type: "CHANGE_DATE",
-      payload: {
-        entry: changedEntry,
-        date: date
-      }
-    });
-    toggleCalendar();
+    setChangedDate(date);
   };
 
   return (
-    <div>
+    <div id="entryDate datePickerfullWidth">
       <span className="entry-date mt-2" onClick={toggleCalendar}>
         <span>
           <p className="month-year">
@@ -49,9 +57,34 @@ const DateChanger = () => {
           <p className="day">{day}</p>
         </span>
       </span>
-      {isOpen && (
-        <DatePicker selected={date} onChange={handleChange} withPortal inline />
-      )}
+      <Modal isOpen={isOpen} toggle={toggleCalendar}>
+        <ModalBody className="openDatePicker">
+          <DatePicker
+            onChange={handleChange}
+            value={changedDate === undefined ? date : changedDate}
+            tileClassName="circle"
+            format="dd MMM y"
+          ></DatePicker>
+        </ModalBody>
+        <ModalFooter className="openDatePicker">
+          <Button
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
+            id="cancel"
+            onClick={toggleCalendar}
+          >
+            Cancel
+          </Button>{" "}
+          <Button
+            color="white"
+            className="button button--antiman button--round-l button--text-medium"
+            id="changeDate"
+            onClick={submitChangedDate}
+          >
+            Change Date
+          </Button>
+        </ModalFooter>
+      </Modal>
     </div>
   );
 };

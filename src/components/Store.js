@@ -1,19 +1,25 @@
 import React from "react";
-
 export const Store = React.createContext();
 
 const initialState = {
   date: new Date(),
   entry: null,
   allEntries: [],
-  searchBoolean: false
+  searchBoolean: false,
+  currentFile: "",
+  allFiles: []
 };
 
 function reducer(state, action) {
-  const { date } = state;
+  const {
+    date,
+    entry,
+    searchResult,
+    currentFile,
+    allFiles,
+    searchBoolean
+  } = state;
   const allEntries = [...state.allEntries];
-  const { entry } = state;
-  const { searchResult } = state;
   switch (action.type) {
     case "SET_DATE": {
       const filteredEntry = state.allEntries.filter(
@@ -23,7 +29,9 @@ function reducer(state, action) {
         date: action.payload.date,
         allEntries,
         entry: filteredEntry ? filteredEntry : null,
-        searchBoolean: false
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
     }
     case "GET_ENTRY":
@@ -31,36 +39,59 @@ function reducer(state, action) {
         date,
         entry: action.payload.entry,
         allEntries: state.allEntries,
-        searchBoolean: false
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
-    case "CHANGE_DATE":
+    case "CHANGE_DATE": {
+      const allEntriesUpdated = state.allEntries.map(entry =>
+        entry.id === action.payload.entry.id
+          ? (entry = action.payload.entry)
+          : entry
+      );
       return {
         date: action.payload.date,
         entry: action.payload.entry,
-        allEntries,
-        searchBoolean: false
+        allEntries: allEntriesUpdated,
+        searchBoolean: false,
+        allFiles,
+        currentFile
       };
+    }
     case "ADD_NEW_ENTRY":
       return {
-        date: action.payload.entry.date,
+        date,
         entry: action.payload.entry,
         allEntries: [...state.allEntries].concat(action.payload.entry),
-        searchBoolean: false
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
-    case "GET_ALL_ENTRIES":
+    case "GET_ALL_ENTRIES": {
+      const filteredEntry =
+        action.payload.allEntries === undefined
+          ? null
+          : action.payload.allEntries.filter(
+              entry => entry.date === action.payload.date.toDateString()
+            )[0];
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry,
-        searchBoolean: false
+        entry: filteredEntry === undefined ? null : filteredEntry,
+        searchBoolean: false,
+        currentFile: action.payload.currentFile,
+        allFiles: action.payload.allFiles
       };
+    }
     case "SEARCH":
       return {
         date,
         allEntries,
         entry,
         searchResult: action.payload.searchResult,
-        searchBoolean: true
+        searchBoolean: true,
+        currentFile,
+        allFiles
       };
     case "GET_SEARCH_ENTRY":
       return {
@@ -68,29 +99,40 @@ function reducer(state, action) {
         entry: action.payload.entry,
         allEntries,
         searchResult,
-        searchBoolean: true
+        searchBoolean: true,
+        currentFile,
+        allFiles
       };
     case "CLEAR_SEARCH":
       return {
         date,
-        entry: null,
+        entry,
         allEntries,
         searchResult,
-        searchBoolean: false
+        searchBoolean: false,
+        allFiles,
+        currentFile
       };
-    case "DELETE_ENTRY":
+    case "DELETE_ENTRY": {
+      const entry =
+        state.entry !== null && action.payload.id === state.entry.id
+          ? null
+          : state.entry;
       return {
         date,
         allEntries: state.allEntries.filter(
           item => item.id !== action.payload.id
         ),
-        entry: null,
-        searchBoolean: false
+        entry,
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
+    }
     case "UPDATE_ENTRY":
       return {
         date,
-        allEntries: state.allEntries.map(item => {
+        allEntries: allEntries.map(item => {
           if (item.id === action.payload.entry.id) {
             item = action.payload.entry;
             return item;
@@ -99,8 +141,39 @@ function reducer(state, action) {
           }
         }),
         entry: action.payload.entry,
-        searchBoolean: false
+        searchBoolean: false,
+        currentFile,
+        allFiles
       };
+    case "CREATE_FILE":
+      return {
+        date: new Date(),
+        currentFile: action.payload.currentFile,
+        allEntries: [],
+        entry: null,
+        searchBoolean: false,
+        allFiles: action.payload.allFiles
+      };
+    case "CHANGE_FILE": {
+      return {
+        date: new Date(),
+        currentFile: action.payload.file,
+        allEntries,
+        entry: null,
+        searchBoolean: false,
+        allFiles
+      };
+    }
+    case "DELETE_FILE": {
+      return {
+        date,
+        currentFile,
+        allEntries,
+        entry,
+        searchBoolean,
+        allFiles: allFiles.filter(file => file !== action.payload.deletedFile)
+      };
+    }
     default:
       return state;
   }
@@ -109,6 +182,7 @@ function reducer(state, action) {
 export function StoreProvider(props) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const value = { state, dispatch };
+
   return <Store.Provider value={value}>{props.children}</Store.Provider>;
 }
 

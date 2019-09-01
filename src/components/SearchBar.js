@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Store } from "./Store";
-import { InputGroup, InputGroupAddon, Input, Button } from "reactstrap";
+import { Input } from "reactstrap";
 
 const Fuse = require("fuse.js");
 
 const options = {
   shouldSort: true,
-  threshold: 0.6,
+  threshold: 0.5,
   location: 0,
   distance: 100,
   maxPatternLength: 32,
@@ -28,33 +28,23 @@ const SearchBar = () => {
     event.preventDefault();
   };
 
-  const clearSearch = event => {
-    dispatch({
-      type: "CLEAR_SEARCH"
-    });
-    setValue("");
-    event.preventDefault();
-  };
-
   return (
-    <div>
-      <InputGroup>
-        <form onSubmit={handleSubmit}>
-          <Input
-            className="mt-2"
-            placeholder="Search"
-            type="text"
-            value={value}
-            onChange={event => setValue(event.target.value)}
-          />
-        </form>
-        <InputGroupAddon addonType="append">
-          <Button color="secondary" className="mt-2" onClick={clearSearch}>
-            x
-          </Button>
-        </InputGroupAddon>
-      </InputGroup>
-    </div>
+    <form onSubmit={handleSubmit} className="searchBar">
+      <Input
+        className="mt-2 searchBarBorder"
+        placeholder="Search"
+        type="search"
+        value={value}
+        onChange={event => {
+          setValue(event.target.value);
+          if (event.target.value === "") {
+            dispatch({
+              type: "CLEAR_SEARCH"
+            });
+          }
+        }}
+      ></Input>
+    </form>
   );
 };
 
