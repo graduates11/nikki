@@ -34,8 +34,8 @@ module.exports = {
     const entriesPath = path.join(userDataPath, "entries");
     await fsp.mkdir(entriesPath, { recursive: true });
   },
-  appDataExists: async () => {
-    const files = await appdb.get("files").value();
+  appDataExists: () => {
+    const files = appdb.get("files").value();
     return files !== undefined;
   },
   fileExists: async fileName => {
