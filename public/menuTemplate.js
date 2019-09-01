@@ -1,8 +1,17 @@
 const { app } = require("electron");
-const { getAllFilesSync, getCurrentFileSync } = require("./helpers.js");
+const {
+  getAllFilesSync,
+  getCurrentFileSync,
+  appDataExists
+} = require("./helpers.js");
 
 const createTemplate = mainWindow => {
-  const files = getAllFilesSync();
+  let files;
+  if (appDataExists()) {
+    files = getAllFilesSync();
+  } else {
+    files = ["My journal..."];
+  }
 
   let filesSubmenu;
   if (files) {
