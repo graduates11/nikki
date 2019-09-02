@@ -10,7 +10,7 @@ const createTemplate = mainWindow => {
   if (appDataExists()) {
     files = getAllFilesSync();
   } else {
-    files = ["My journal..."];
+    files = ["My journal"];
   }
 
   let filesSubmenu;

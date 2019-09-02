@@ -5,3 +5,12 @@
 .modal-content {
   border-color: var(--border-color);
 }
+
+.modal-error {
+  color: red;
+  margin: 0;
+  font-size: 12px;
+  padding-left: .1rem;
+  font-weight: 300;
+  height: .2rem;
+}
