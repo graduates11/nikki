@@ -6,11 +6,43 @@ const { ipcRenderer } = window;
 export default class AddFileModal extends React.Component {
   static contextType = Store;
   state = {
-    fileName: ""
+    fileName: null,
+    error: null,
+    isDisabled: true
   };
 
   onFileNameChange = e => {
-    this.setState({ fileName: e.target.value });
+    this.setState({
+      fileName: e.target.value,
+      isDisabled: e.target.value.length > 0 ? false : true
+    });
+  };
+
+  validateFileName = () => {
+    const { fileName, error } = this.state;
+    const regex = /^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/;
+    if (fileName.match(regex) === null || !/\S/.test(fileName)) {
+      this.setState({
+        error: "Invalid journal name"
+      });
+    } else if (this.context.state.allFiles.includes(fileName)) {
+      this.setState({
+        error: `${fileName} already exists`
+      });
+    } else {
+      error &&
+        this.setState({
+          error: null
+        });
+      this.createFile();
+    }
+  };
+
+  cancel = () => {
+    this.setState({
+      error: null
+    });
+    this.props.toggleModal();
   };
 
   createFile = () => {
@@ -20,6 +52,7 @@ export default class AddFileModal extends React.Component {
   };
 
   render() {
+    const { error, isDisabled } = this.state;
     return (
       <Modal isOpen={this.props.isModalOpen} toggle={this.props.toggleModal}>
         <ModalBody className="modalHeaderCentered">
@@ -33,17 +66,21 @@ export default class AddFileModal extends React.Component {
             placeholder="My journal..."
             onChange={this.onFileNameChange}
           ></Input>
+
+          <p className="modal-error">{error && error}</p>
+
           <Button
-            onClick={this.props.toggleModal}
+            onClick={this.cancel}
             color="white"
             className="button button--antiman button--round-l button--text-medium"
           >
             Cancel
           </Button>
           <Button
-            onClick={this.createFile}
+            onClick={this.validateFileName}
             color="white"
             className="button button--antiman button--round-l button--text-medium"
+            disabled={isDisabled}
           >
             Submit
           </Button>
