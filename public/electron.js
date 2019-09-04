@@ -2,6 +2,17 @@ const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
 const createMenu = require("./menu");
+const {
+  createFile,
+  initAppData,
+  appDataExists,
+  fileExists,
+  getData,
+  getCurrentFile,
+  setCurrentFile,
+  updateEntries,
+  deleteFile
+} = require("./helpers.js");
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -40,6 +51,15 @@ function createWindow() {
     mainWindow.webContents.openDevTools();
   }
 
+  mainWindow.on("close", async () => {
+    let currentFile;
+    try {
+      currentFile = await getCurrentFile();
+      mainWindow.webContents.send("menu-save-file", currentFile);
+    } catch (err) {
+      console.error(err);
+    }
+  });
   // Emitted when the window is closed.
   mainWindow.on("closed", () => (mainWindow = null));
 }
@@ -67,20 +87,10 @@ app.on("activate", function() {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();
+    const menu = createMenu(mainWindow);
+    Menu.setApplicationMenu(menu);
   }
 });
-
-const {
-  createFile,
-  initAppData,
-  appDataExists,
-  fileExists,
-  getData,
-  getCurrentFile,
-  setCurrentFile,
-  updateEntries,
-  deleteFile
-} = require("./helpers.js");
 
 ipcMain.on("get-all-entries", async (event, currentFile = null) => {
   let firstLaunch;
@@ -120,7 +130,6 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
         try {
           await createFile(currentFile);
           data = await getData(currentFile);
-          // add file to the menu bar
           event.reply("get-all-entries-reply", data);
         } catch (e) {
           console.error(e);
@@ -198,5 +207,3 @@ ipcMain.on("delete-file", async (event, fileName) => {
     );
   }
 });
-
-module.exports = mainWindow;

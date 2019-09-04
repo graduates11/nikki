@@ -51,6 +51,9 @@ export default class App extends React.Component {
   };
 
   onFinalSave = () => {
+    this.setState({
+      fileOnClose: true
+    });
     const { state } = this.context;
     const entries = [...state.allEntries];
     const { currentFile } = state;
@@ -58,9 +61,6 @@ export default class App extends React.Component {
       entries,
       file: currentFile
     };
-    this.setState({
-      fileOnClose: false
-    });
     ipcRenderer.send("final-save", JSON.stringify(data));
   };
 
