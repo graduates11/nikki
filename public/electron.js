@@ -120,7 +120,6 @@ ipcMain.on("get-all-entries", async (event, currentFile = null) => {
         try {
           await createFile(currentFile);
           data = await getData(currentFile);
-          // add file to the menu bar
           event.reply("get-all-entries-reply", data);
         } catch (e) {
           console.error(e);
@@ -198,5 +197,3 @@ ipcMain.on("delete-file", async (event, fileName) => {
     );
   }
 });
-
-module.exports = mainWindow;
