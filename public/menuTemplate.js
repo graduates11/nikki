@@ -32,7 +32,7 @@ const createTemplate = mainWindow => {
     };
   });
 
-  const changeFile = async file => {
+  const changeFile = file => {
     mainWindow.webContents.send("change-file", file);
   };
 
