@@ -7,39 +7,31 @@ const {
 
 const createTemplate = mainWindow => {
   let files;
+  let currentFile;
   if (appDataExists()) {
     files = getAllFilesSync();
+    currentFile = getCurrentFileSync();
   } else {
     files = ["My journal"];
+    currentFile = "My journal";
   }
 
-  let filesSubmenu;
-  if (files) {
-    filesSubmenu = files.map(file => {
-      return {
-        label: file,
-        submenu: [
-          {
-            label: "Open",
-            click: () => changeFile(file)
-          },
-          {
-            label: "Delete",
-            click: () => deleteFile(file)
-          }
-        ]
-      };
-    });
-  } else {
-    filesSubmenu = [
-      {
-        label: "My journal",
-        click: () => changeFile("My journal")
-      }
-    ];
-  }
+  const filesSubmenu = files.map(file => {
+    return {
+      label: file,
+      submenu: [
+        {
+          label: "Open",
+          click: () => changeFile(file)
+        },
+        {
+          label: "Delete",
+          click: () => deleteFile(file)
+        }
+      ]
+    };
+  });
 
-  const currentFile = getCurrentFileSync();
   const changeFile = async file => {
     mainWindow.webContents.send("change-file", file);
   };

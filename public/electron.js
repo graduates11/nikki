@@ -20,7 +20,6 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 707,
-    //titleBarStyle: "hiddenInset",
     webPreferences: {
       nodeIntegration: false,
       preload: __dirname + "/preload.js"
