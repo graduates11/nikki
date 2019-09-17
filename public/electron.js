@@ -6,7 +6,6 @@ const {
   createFile,
   initAppData,
   appDataExists,
-  fileExists,
   getData,
   getCurrentFile,
   setCurrentFile,
@@ -113,72 +112,12 @@ ipcMain.on("init", async (event, arg) => {
   }
 });
 
-ipcMain.on("get-all-entries", async (event, currentFile = null) => {
-  let firstLaunch;
-  let isFile;
-  let data;
+ipcMain.on("get-entries-by-filename", async (event, fileName) => {
   try {
-    firstLaunch = !(await appDataExists());
-    isFile = currentFile !== null ? await fileExists(currentFile) : false;
-    if (firstLaunch) {
-      try {
-        await initAppData();
-        await createFile("My journal");
-        data = await getData("My journal");
-        event.reply("get-all-entries-reply", data);
-      } catch (e) {
-        console.error(e);
-        event.reply(
-          "get-all-entries-error",
-          `Sorry, an error has occured: ${e.message}`
-        );
-      }
-    }
-    if (currentFile === null) {
-      try {
-        currentFile = await getCurrentFile();
-        data = await getData(currentFile);
-        event.reply("get-all-entries-reply", data);
-      } catch (e) {
-        console.error(e);
-        event.reply(
-          "get-all-entries-error",
-          `Sorry, an error has occured: ${e.message}`
-        );
-      }
-    } else if (currentFile !== null) {
-      if (!fileExists) {
-        try {
-          await createFile(currentFile);
-          data = await getData(currentFile);
-          event.reply("get-all-entries-reply", data);
-        } catch (e) {
-          console.error(e);
-          event.reply(
-            "get-all-entries-error",
-            `Sorry, an error has occured: ${e.message}`
-          );
-        }
-      } else if (fileExists) {
-        try {
-          data = await getData(currentFile);
-          await setCurrentFile(currentFile);
-          event.reply("get-all-entries-reply", data);
-        } catch (e) {
-          console.error(e);
-          event.reply(
-            "get-all-entries-error",
-            `Sorry, an error has occured: ${e.message}`
-          );
-        }
-      }
-    }
+    const data = await getData(fileName);
+    event.reply("get-entries-by-filename-reply", data);
   } catch (e) {
-    console.error(e);
-    event.reply(
-      "get-all-entries-error",
-      `Sorry, an error has occured: ${e.message}`
-    );
+    event.reply("get-entries-by-filename-error", e.message);
   }
 });
 
