@@ -80,22 +80,8 @@ export default class App extends React.Component {
     });
   };
 
-  handleGetAllEntriesError = (event, arg) => {
-    // handle error?
-    return arg;
-  };
   handleMenuSaveFile = () => {
     this.onFinalSave();
-  };
-
-  handleFinalSaveReply = (event, arg) => {
-    // handle success?
-    return arg;
-  };
-
-  handleFinalSaveError = (event, arg) => {
-    // handle error?
-    return arg;
   };
 
   handleChangeFile = (event, file) => {
@@ -103,7 +89,7 @@ export default class App extends React.Component {
       fileOnClose: true
     });
     this.onFinalSave();
-    ipcRenderer.send("get-all-entries", file);
+    ipcRenderer.send("get-entries-by-filename", file);
   };
 
   handleMenuCreateFile = () => {
@@ -144,12 +130,10 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-    ipcRenderer.on("get-all-entries-reply", this.handleGetAllEntries);
+    ipcRenderer.on("get-entries-by-filename-reply", this.handleGetAllEntries);
     ipcRenderer.on("menu-save-file", this.handleMenuSaveFile);
-    ipcRenderer.on("final-save-reply", this.handleFinalSaveReply);
-    ipcRenderer.on("get-all-entries-error", this.handleGetAllEntriesError);
     ipcRenderer.on("menu-create-file", this.handleMenuCreateFile);
-    ipcRenderer.on("change-file", this.handleChangeFile);
+    ipcRenderer.on("menu-change-file", this.handleChangeFile);
     ipcRenderer.on("create-file-reply", this.handleCreateFileReply);
     ipcRenderer.on("menu-delete-file", this.handleMenuDeleteFile);
     ipcRenderer.on("delete-file-reply", this.handleDeleteFileReply);
@@ -157,17 +141,12 @@ export default class App extends React.Component {
 
   componentWillUnmount() {
     ipcRenderer.removeListener(
-      "get-all-entries-reply",
+      "get-entries-by-filename-reply",
       this.handleGetAllEntries
     );
-    ipcRenderer.removeListener(
-      "get-all-entries-error",
-      this.handleGetAllEntriesError
-    );
     ipcRenderer.removeListener("menu-save-file", this.handleMenuSaveFile);
-    ipcRenderer.removeListener("final-save-reply", this.handleFinalSaveReply);
-    ipcRenderer.removeListener("change-file", this.handleChangeFile);
     ipcRenderer.removeListener("menu-create-file", this.handleMenuCreateFile);
+    ipcRenderer.removeListener("menu-change-file", this.handleChangeFile);
     ipcRenderer.removeListener("create-file-reply", this.handleCreateFileReply);
     ipcRenderer.removeListener("menu-delete-file", this.handleMenuDeleteFile);
     ipcRenderer.removeListener("delete-file-reply", this.handleDeleteFileReply);

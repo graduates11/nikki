@@ -33,7 +33,7 @@ const createTemplate = mainWindow => {
   });
 
   const changeFile = file => {
-    mainWindow.webContents.send("change-file", file);
+    mainWindow.webContents.send("menu-change-file", file);
   };
 
   const saveFile = () => {
