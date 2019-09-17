@@ -50,7 +50,7 @@ module.exports = {
     const entries = await db.get("entries").value();
     const files = await appdb.get("files").value();
     const data = {
-      entries,
+      entries: entries === undefined ? [] : entries,
       currentFile: fileName,
       files
     };

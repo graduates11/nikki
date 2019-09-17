@@ -1,25 +1,19 @@
 import React from "react";
 export const Store = React.createContext();
 
-const initialState = {
-  date: new Date(),
-  entry: null,
-  allEntries: [],
-  searchBoolean: false,
-  currentFile: "",
-  allFiles: []
-};
+// try creating different reducers to improve performance?
 
-function reducer(state, action) {
+export function reducer(state, action) {
   const {
     date,
     entry,
+    allEntries,
     searchResult,
     currentFile,
     allFiles,
     searchBoolean
   } = state;
-  const allEntries = [...state.allEntries];
+
   switch (action.type) {
     case "SET_DATE": {
       const filteredEntry = state.allEntries.filter(
@@ -177,13 +171,6 @@ function reducer(state, action) {
     default:
       return state;
   }
-}
-
-export function StoreProvider(props) {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
-  const value = { state, dispatch };
-
-  return <Store.Provider value={value}>{props.children}</Store.Provider>;
 }
 
 export const Consumer = Store.Consumer;
