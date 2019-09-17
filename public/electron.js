@@ -39,6 +39,7 @@ function createWindow() {
     minWidth: 650
   });
 
+  mainWindow.setTitle("Loading...");
   // and load the index.html of the app.
   mainWindow.loadURL(
     isDev
@@ -60,6 +61,7 @@ function createWindow() {
       console.error(err);
     }
   });
+
   // Emitted when the window is closed.
   mainWindow.on("closed", () => (mainWindow = null));
 }
@@ -89,6 +91,25 @@ app.on("activate", function() {
     createWindow();
     const menu = createMenu(mainWindow);
     Menu.setApplicationMenu(menu);
+  }
+});
+
+ipcMain.on("init", async (event, arg) => {
+  let currentFile;
+  let data;
+  try {
+    if (appDataExists()) {
+      currentFile = await getCurrentFile();
+      data = await getData(currentFile);
+    } else {
+      await initAppData();
+      currentFile = await createFile("My journal");
+      data = await getData("My journal");
+    }
+    event.reply("init-reply", data);
+  } catch (e) {
+    console.error(e);
+    event.reply("init-error", e.message);
   }
 });
 

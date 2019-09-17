@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Store } from "./Store";
 import Calendar from "react-calendar";
 import moment from "moment";
 import localization from "moment/locale/de";
-const { ipcRenderer } = window;
 
 moment.locale("de", localization);
 
@@ -17,15 +16,6 @@ const MyCalendar = () => {
       datesWithEntries.push(dateWithEntry);
     }
   }
-
-  const getEntries = () => {
-    ipcRenderer.send("get-all-entries");
-  };
-
-  useEffect(() => {
-    getEntries();
-    // eslint-disable-next-line
-	}, [])
 
   const tileClassName = ({ date, view }) => {
     return view === "month" && datesWithEntries.includes(date.toDateString())
