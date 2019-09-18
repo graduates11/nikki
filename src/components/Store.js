@@ -2,6 +2,29 @@ import React from "react";
 export const Store = React.createContext();
 
 // try creating different reducers to improve performance?
+let initialDate = { date: new Date() };
+export const DateContext = React.createContext();
+export const FileContext = React.createContext();
+
+function dateReducer(state, action) {
+  switch (action.type) {
+    case "SET_DATE": {
+      return {
+        date: action.payload.date
+      };
+    }
+    default:
+      return state;
+  }
+}
+
+export function DateContextProvider(props) {
+  const [state, dispatch] = React.useReducer(dateReducer, initialDate);
+  const value = { state, dispatch };
+  return (
+    <DateContext.Provider value={value}>{props.children}</DateContext.Provider>
+  );
+}
 
 export function reducer(state, action) {
   const {
@@ -62,7 +85,7 @@ export function reducer(state, action) {
         allFiles
       };
     case "GET_ALL_ENTRIES": {
-      const filteredEntry =
+      const filteredEntry = // BROKEN
         action.payload.allEntries === undefined
           ? null
           : action.payload.allEntries.filter(
@@ -71,7 +94,8 @@ export function reducer(state, action) {
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry: filteredEntry === undefined ? null : filteredEntry,
+        entry,
+        // entry: filteredEntry === undefined ? null : filteredEntry,
         searchBoolean: false,
         currentFile: action.payload.currentFile,
         allFiles: action.payload.allFiles
