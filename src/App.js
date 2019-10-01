@@ -3,7 +3,7 @@ import { Container, Col } from "reactstrap";
 import Moment from "moment";
 import {
   EntriesByDate,
-  MyCalendar,
+  Calendar,
   SearchBar,
   TextEditor,
   SearchResult,
@@ -186,7 +186,7 @@ export default class App extends React.Component {
         <Col className="leftColumn">
           <SearchBar />
           {state.searchBoolean === true ? <SearchResult /> : null}
-          <MyCalendar />
+          <Calendar />
           {state.searchBoolean === true ? null : (
             <EntriesByDate addEntry={this.addEntry} />
           )}

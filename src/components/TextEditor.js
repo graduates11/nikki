@@ -25,66 +25,66 @@ const linkPlugin = createLinkPlugin();
 const { InlineToolbar } = inlineToolbarPlugin;
 const plugins = [hashtagPlugin, inlineToolbarPlugin, linkPlugin];
 
-class HeadlinesPicker extends React.Component {
-  componentDidMount() {
-    setTimeout(() => {
-      window.addEventListener("click", this.onWindowClick);
-    });
-  }
+// class HeadlinesPicker extends React.Component {
+//   componentDidMount() {
+//     setTimeout(() => {
+//       window.addEventListener("click", this.onWindowClick);
+//     });
+//   }
 
-  componentWillUnmount() {
-    window.removeEventListener("click", this.onWindowClick);
-  }
+//   componentWillUnmount() {
+//     window.removeEventListener("click", this.onWindowClick);
+//   }
 
-  onWindowClick = () =>
-    // Call `onOverrideContent` again with `undefined`
-    // so the toolbar can show its regular content again.
-    this.props.onOverrideContent(undefined);
+//   onWindowClick = () =>
+//     // Call `onOverrideContent` again with `undefined`
+//     // so the toolbar can show its regular content again.
+//     this.props.onOverrideContent(undefined);
 
-  render() {
-    const buttons = [HeadlineOneButton, HeadlineTwoButton, HeadlineThreeButton];
-    return (
-      <div>
-        {buttons.map((
-          Button,
-          i // eslint-disable-next-line
-				) => (
-          <Button key={i} {...this.props} />
-        ))}
-      </div>
-    );
-  }
-}
+//   render() {
+//     const buttons = [HeadlineOneButton, HeadlineTwoButton, HeadlineThreeButton];
+//     return (
+//       <div>
+//         {buttons.map((
+//           Button,
+//           i // eslint-disable-next-line
+// 				) => (
+//           <Button key={i} {...this.props} />
+//         ))}
+//       </div>
+//     );
+//   }
+// }
 
-class HeadlinesButton extends React.Component {
-  // When using a click event inside overridden content, mouse down
-  // events needs to be prevented so the focus stays in the editor
-  // and the toolbar remains visible  onMouseDown = (event) => event.preventDefault()
-  onMouseDown = event => event.preventDefault();
+// class HeadlinesButton extends React.Component {
+//   // When using a click event inside overridden content, mouse down
+//   // events needs to be prevented so the focus stays in the editor
+//   // and the toolbar remains visible  onMouseDown = (event) => event.preventDefault()
+//   onMouseDown = event => event.preventDefault();
 
-  onClick = () =>
-    // A button can call `onOverrideContent` to replace the content
-    // of the toolbar. This can be useful for displaying sub
-    // menus or requesting additional information from the user.
-    this.props.onOverrideContent(HeadlinesPicker);
+//   onClick = () =>
+//     // A button can call `onOverrideContent` to replace the content
+//     // of the toolbar. This can be useful for displaying sub
+//     // menus or requesting additional information from the user.
+//     this.props.onOverrideContent(HeadlinesPicker);
 
-  render() {
-    return (
-      <div
-        onMouseDown={this.onMouseDown}
-        className={editorStyles.headlineButtonWrapper}
-      >
-        <button
-          onClick={this.onClick}
-          id="styledHeadlinesButton"
-          className={editorStyles.headlineButton}
-        >
-          H
-        </button>
-      </div>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <div
+//         onMouseDown={this.onMouseDown}
+//         className={editorStyles.headlineButtonWrapper}
+//       >
+//         <button
+//           onClick={this.onClick}
+//           id="styledHeadlinesButton"
+//           className={editorStyles.headlineButton}
+//         >
+//           H
+//         </button>
+//       </div>
+//     );
+//   }
+// }
 
 class TextEditor extends React.Component {
   // connect to the store:
@@ -107,19 +107,19 @@ class TextEditor extends React.Component {
     });
   };
 
-  componentDidUpdate() {
-    const currentEntry = this.context.state.entry;
-    if (this.props.fileOnClose) {
-      this.updateEntry();
-    }
-    if (currentEntry.id !== this.state.entry.id) {
-      const content = convertFromRaw(currentEntry.editorState);
-      this.setState({
-        entry: currentEntry,
-        editorState: EditorState.createWithContent(content)
-      });
-    }
-  }
+  // componentDidUpdate() {
+  //   const currentEntry = this.context.state.entry;
+  //   if (this.props.fileOnClose) {
+  //     this.updateEntry();
+  //   }
+  //   if (currentEntry.id !== this.state.entry.id) {
+  //     const content = convertFromRaw(currentEntry.editorState);
+  //     this.setState({
+  //       entry: currentEntry,
+  //       editorState: EditorState.createWithContent(content)
+  //     });
+  //   }
+  // }
 
   onTitleChange = e => {
     this.setState({
@@ -138,31 +138,31 @@ class TextEditor extends React.Component {
     return hashtags;
   };
 
-  updateEntry = () => {
-    const { entry, editorState } = this.state;
-    const hashtags = this.getHashtags();
-    const text = this.getPlainText();
-    const content = convertToRaw(editorState.getCurrentContent());
-    const updatedEntry = {
-      ...entry,
-      editorState: content,
-      text,
-      tags: hashtags
-    };
+  // updateEntry = () => {
+  //   const { entry, editorState } = this.state;
+  //   const hashtags = this.getHashtags();
+  //   const text = this.getPlainText();
+  //   const content = convertToRaw(editorState.getCurrentContent());
+  //   const updatedEntry = {
+  //     ...entry,
+  //     editorState: content,
+  //     text,
+  //     tags: hashtags
+  //   };
 
-    this.context.dispatch({
-      type: "UPDATE_ENTRY",
-      payload: {
-        entry: updatedEntry
-      }
-    });
+  //   this.context.dispatch({
+  //     type: "UPDATE_ENTRY",
+  //     payload: {
+  //       entry: updatedEntry
+  //     }
+  //   });
 
-    this.props.toggleFileOnClose();
-  };
+  //   this.props.toggleFileOnClose();
+  // };
 
-  toggleModal = () => {
-    this.setState({ modal: !this.state.modal });
-  };
+  // toggleModal = () => {
+  //   this.setState({ modal: !this.state.modal });
+  // };
 
   render() {
     return (
@@ -179,7 +179,7 @@ class TextEditor extends React.Component {
               onBlur={this.updateEntry}
             ></Input>
           </div>
-          <DateChanger />
+          {/* <DateChanger /> */}
         </div>
 
         <Editor
@@ -198,7 +198,7 @@ class TextEditor extends React.Component {
               <BoldButton {...externalProps} />
               <ItalicButton {...externalProps} />
               <UnderlineButton {...externalProps} />
-              <HeadlinesButton {...externalProps} />
+              {/* <HeadlinesButton {...externalProps} /> */}
               <UnorderedListButton {...externalProps} />
               <OrderedListButton {...externalProps} />
               <CodeButton {...externalProps} />

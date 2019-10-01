@@ -2,29 +2,29 @@ import React from "react";
 export const Store = React.createContext();
 
 // try creating different reducers to improve performance?
-let initialDate = { date: new Date() };
-export const DateContext = React.createContext();
-export const FileContext = React.createContext();
 
-function dateReducer(state, action) {
+export const LayoutContext = React.createContext();
+
+const initialLayout = {
+  hide: false,
+  search_mode: false,
+  calendar_mode: true
+};
+const layoutReducer = (state = initialLayout, action) => {
   switch (action.type) {
-    case "SET_DATE": {
-      return {
-        date: action.payload.date
-      };
+    case "SEARCH_MODE": {
+      return { hide: false, search_mode: true, calendar_mode: false };
     }
-    default:
-      return state;
+    case "CALENDAR_MODE": {
+      return { hide: false, search_mode: false, calendar_mode: true };
+    }
+    case "HIDE": {
+      return { ...state, hide: true };
+    }
+    // default:
+    //   return "default";
   }
-}
-
-export function DateContextProvider(props) {
-  const [state, dispatch] = React.useReducer(dateReducer, initialDate);
-  const value = { state, dispatch };
-  return (
-    <DateContext.Provider value={value}>{props.children}</DateContext.Provider>
-  );
-}
+};
 
 export function reducer(state, action) {
   const {
