@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.scss";
 import * as serviceWorker from "./serviceWorker";
 import { reducer, Store } from "./components/Store";
-import AppLayout from "./components/AppLayout";
 
 const { ipcRenderer } = window;
 let initialState;
@@ -18,7 +17,6 @@ function StoreProvider(props) {
 
 ipcRenderer.on("init-reply", (event, response) => {
   const { currentFile, files, entries } = JSON.parse(response);
-  console.log(entries.map(entry => entry.date));
   initialState = {
     date: new Date(),
     entry: null,
@@ -29,13 +27,12 @@ ipcRenderer.on("init-reply", (event, response) => {
     allFiles: files
   };
 
-  ReactDOM.render(<AppLayout />, document.getElementById("root"));
-  // ReactDOM.render(
-  //   <StoreProvider>
-  //     <App />
-  //   </StoreProvider>,
-  //   document.getElementById("root")
-  // );
+  ReactDOM.render(
+    <StoreProvider>
+      <App />
+    </StoreProvider>,
+    document.getElementById("root")
+  );
 });
 
 ipcRenderer.send("init");

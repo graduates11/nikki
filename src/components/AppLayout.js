@@ -9,7 +9,7 @@ import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
 
 const modifiers = {
-  highlighted: new Date(2019, 9, 19)
+  highlighted: [new Date(2019, 9, 19), new Date(2019, 9, 21)]
 };
 
 const AppLayout = props => {

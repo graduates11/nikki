@@ -1,4 +1,4 @@
-import Calendar from "./Calendar";
+import Calendar from "./DayPicker";
 import SearchBar from "./SearchBar";
 import TextEditor from "./TextEditor";
 import SearchResult from "./SearchResult";

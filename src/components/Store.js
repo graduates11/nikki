@@ -10,6 +10,7 @@ const initialLayout = {
   search_mode: false,
   calendar_mode: true
 };
+
 const layoutReducer = (state = initialLayout, action) => {
   switch (action.type) {
     case "SEARCH_MODE": {
@@ -18,7 +19,7 @@ const layoutReducer = (state = initialLayout, action) => {
     case "CALENDAR_MODE": {
       return { hide: false, search_mode: false, calendar_mode: true };
     }
-    case "HIDE": {
+    case "HIDE_LEFTBAR": {
       return { ...state, hide: true };
     }
     // default:
