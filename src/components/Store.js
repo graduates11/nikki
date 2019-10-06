@@ -1,32 +1,6 @@
 import React from "react";
 export const Store = React.createContext();
 
-// try creating different reducers to improve performance?
-
-export const LayoutContext = React.createContext();
-
-const initialLayout = {
-  hide: false,
-  search_mode: false,
-  calendar_mode: true
-};
-
-const layoutReducer = (state = initialLayout, action) => {
-  switch (action.type) {
-    case "SEARCH_MODE": {
-      return { hide: false, search_mode: true, calendar_mode: false };
-    }
-    case "CALENDAR_MODE": {
-      return { hide: false, search_mode: false, calendar_mode: true };
-    }
-    case "HIDE_LEFTBAR": {
-      return { ...state, hide: true };
-    }
-    // default:
-    //   return "default";
-  }
-};
-
 export function reducer(state, action) {
   const {
     date,
@@ -173,17 +147,7 @@ export function reducer(state, action) {
         searchBoolean: false,
         allFiles: action.payload.allFiles
       };
-    case "CHANGE_FILE": {
-      return {
-        date: new Date(),
-        currentFile: action.payload.file,
-        allEntries,
-        entry: null,
-        searchBoolean: false,
-        allFiles
-      };
-    }
-    case "DELETE_FILE": {
+    case "DELETE_FILE":
       return {
         date,
         currentFile,
@@ -192,7 +156,6 @@ export function reducer(state, action) {
         searchBoolean,
         allFiles: allFiles.filter(file => file !== action.payload.deletedFile)
       };
-    }
     default:
       return state;
   }

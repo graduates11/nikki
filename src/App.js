@@ -65,17 +65,16 @@ export default class App extends React.Component {
   };
 
   handleGetAllEntries = (event, data) => {
-    const { state, dispatch } = this.context;
+    const { dispatch } = this.context;
     const { entries, files, currentFile } = JSON.parse(data);
-    const { date, entry } = state;
     dispatch({
       type: "GET_ALL_ENTRIES",
       payload: {
-        date,
-        entry,
-        allEntries: entries.length > 0 ? entries : [],
-        allFiles: files ? files : [],
-        currentFile: currentFile
+        date: new Date(),
+        entry: null,
+        allEntries: entries,
+        allFiles: files,
+        currentFile
       }
     });
   };
@@ -180,6 +179,7 @@ export default class App extends React.Component {
   };
   render() {
     const { state } = this.context;
+    console.log(state.date);
     return (
       <div className="App mainViewFlex">
         <CurrentFileName />
