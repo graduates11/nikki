@@ -4888,7 +4888,7 @@ get-stream@^5.1.0:
   dependencies:
     pump "^3.0.0"
 
-get-user-locale@^1.1.1, get-user-locale@^1.2.0:
+get-user-locale@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/get-user-locale/-/get-user-locale-1.2.0.tgz#e4940db90a6694a512455af3f756903a01410eb7"
   integrity sha512-yodJVDMWnM4ZOGa+n1ofebE8u+yjd8FIZMqthUK+xcOQcmfU2ECaP5gLiTMt6j0R/e67QsEelES0fQYLy/oHPg==
@@ -9111,29 +9111,36 @@ react-app-polyfill@^1.0.1:
     regenerator-runtime "0.13.3"
     whatwg-fetch "3.0.0"
 
-react-calendar@^2.18.0, react-calendar@^2.19.0:
-  version "2.19.1"
-  resolved "https://registry.yarnpkg.com/react-calendar/-/react-calendar-2.19.1.tgz#6d56ec4abc5c93681b980e46fedb86712542531e"
-  integrity sha512-BVV6q7mRFB0Gcc0N3UhfpQHzUTCsSbNj7RFIVXW3ZmcB+57Vx6QY+Y81va7GShedDDViwpAba99rAi8KaBUJDw==
+react-calendar@^2.19.1:
+  version "2.19.2"
+  resolved "https://registry.yarnpkg.com/react-calendar/-/react-calendar-2.19.2.tgz#496e78eb11a00aee1ae6b5d02d221ed1ca2db952"
+  integrity sha512-zKbWxwmYEg84grFsCJz9EYpnGqsZy0iV67dHzkVE0EhBdXMg2eISBQYvw4+t8zdy5ySxQkDhUW8X8ERbSyZPVw==
   dependencies:
     get-user-locale "^1.2.0"
     merge-class-names "^1.1.1"
     prop-types "^15.6.0"
     react-lifecycles-compat "^3.0.4"
 
-react-date-picker@^7.8.0:
-  version "7.8.1"
-  resolved "https://registry.yarnpkg.com/react-date-picker/-/react-date-picker-7.8.1.tgz#9dac7af457596649e97a664dfd6b38826b314a0d"
-  integrity sha512-mwWfhtj1aqTObg8ZwGqc5J58JjqVJzNqoLs30fOSgTjinebPGHaNeGUTd2vlDjMFN+bTwP/WLl1jwCDCTlMguw==
+react-date-picker@^7.8.2:
+  version "7.8.2"
+  resolved "https://registry.yarnpkg.com/react-date-picker/-/react-date-picker-7.8.2.tgz#448657c6d7fc8e225ff06c7f9345488894d416ce"
+  integrity sha512-1zYjN+ez4QYShDpM20zN8tRmAwDMnAIxGUpji0rYrVMVAxWV2uNRvUpETsXz4FQobts6iA/nCiUJay33+k0tow==
   dependencies:
-    get-user-locale "^1.1.1"
+    get-user-locale "^1.2.0"
     make-event-props "^1.1.0"
     merge-class-names "^1.1.1"
     prop-types "^15.6.0"
-    react-calendar "^2.18.0"
+    react-calendar "^2.19.1"
     react-fit "^1.0.3"
     react-lifecycles-compat "^3.0.4"
-    update-input-width "^1.1.0"
+    update-input-width "^1.1.1"
+
+react-day-picker@^7.3.2:
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-7.3.2.tgz#b9b9b0000ba53b2c9df9bccb79664862aba6b60a"
+  integrity sha512-mij2j2Un/v2V2ow+hf/hFBMdl6Eis/C/YhBtlI6Xpbvh3Q6WMix78zEkCdw6i9GldafOrpnupWKofv/h5oSI4g==
+  dependencies:
+    prop-types "^15.6.2"
 
 react-dev-utils@^9.0.1:
   version "9.0.3"
@@ -11083,7 +11090,7 @@ upath@^1.1.1:
   resolved "https://registry.yarnpkg.com/upath/-/upath-1.2.0.tgz#8f66dbcd55a883acdae4408af8b035a5044c1894"
   integrity sha512-aZwGpamFO61g3OlfT7OQCHqhGnW43ieH9WZeP7QxN/G/jS4jfqUkZxoryvJgVPEcrl5NL/ggHsSmLMHuH64Lhg==
 
-update-input-width@^1.1.0:
+update-input-width@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/update-input-width/-/update-input-width-1.1.1.tgz#075cad85e20f542a5eccc216937ab8d57a1ab892"
   integrity sha512-khNPvsmV9CJbvOlK0Wou2FLPNcKFQepq5yKHyClxz39A3TTkCkkDOOdOs1xoMNWKTesN+qQALffoNP4P8Jydgw==

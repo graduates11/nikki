@@ -87,7 +87,6 @@ class HeadlinesButton extends React.Component {
 }
 
 class TextEditor extends React.Component {
-  // connect to the store:
   static contextType = Store;
 
   state = {

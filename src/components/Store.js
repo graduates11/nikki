@@ -1,8 +1,6 @@
 import React from "react";
 export const Store = React.createContext();
 
-// try creating different reducers to improve performance?
-
 export function reducer(state, action) {
   const {
     date,
@@ -62,7 +60,7 @@ export function reducer(state, action) {
         allFiles
       };
     case "GET_ALL_ENTRIES": {
-      const filteredEntry =
+      const filteredEntry = // BROKEN
         action.payload.allEntries === undefined
           ? null
           : action.payload.allEntries.filter(
@@ -71,7 +69,8 @@ export function reducer(state, action) {
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry: filteredEntry === undefined ? null : filteredEntry,
+        entry,
+        // entry: filteredEntry === undefined ? null : filteredEntry,
         searchBoolean: false,
         currentFile: action.payload.currentFile,
         allFiles: action.payload.allFiles
@@ -148,17 +147,7 @@ export function reducer(state, action) {
         searchBoolean: false,
         allFiles: action.payload.allFiles
       };
-    case "CHANGE_FILE": {
-      return {
-        date: new Date(),
-        currentFile: action.payload.file,
-        allEntries,
-        entry: null,
-        searchBoolean: false,
-        allFiles
-      };
-    }
-    case "DELETE_FILE": {
+    case "DELETE_FILE":
       return {
         date,
         currentFile,
@@ -167,7 +156,6 @@ export function reducer(state, action) {
         searchBoolean,
         allFiles: allFiles.filter(file => file !== action.payload.deletedFile)
       };
-    }
     default:
       return state;
   }

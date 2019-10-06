@@ -1,4 +1,4 @@
-import MyCalendar from "./MyCalendar";
+import Calendar from "./Calendar";
 import SearchBar from "./SearchBar";
 import TextEditor from "./TextEditor";
 import SearchResult from "./SearchResult";
@@ -11,7 +11,7 @@ import DeleteFileModal from "./DeleteFileModal";
 
 export {
   EntriesByDate,
-  MyCalendar,
+  Calendar,
   SearchBar,
   TextEditor,
   SearchResult,
