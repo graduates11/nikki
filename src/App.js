@@ -171,7 +171,7 @@ export default class App extends React.Component {
               ? dateWithTime
               : dateWithoutTime,
           text: "",
-          date: state.date.toDateString(),
+          date: state.date,
           editorState: convertToRaw(content.getCurrentContent())
         }
       }
@@ -179,6 +179,7 @@ export default class App extends React.Component {
   };
   render() {
     const { state } = this.context;
+    console.log(state);
     return (
       <div className="App mainViewFlex">
         <CurrentFileName />
