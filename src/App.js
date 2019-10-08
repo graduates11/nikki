@@ -71,7 +71,6 @@ export default class App extends React.Component {
       type: "GET_ALL_ENTRIES",
       payload: {
         date: new Date(),
-        entry: null,
         allEntries: entries,
         allFiles: files,
         currentFile
@@ -171,7 +170,7 @@ export default class App extends React.Component {
               ? dateWithTime
               : dateWithoutTime,
           text: "",
-          date: state.date,
+          date: state.date.toString(),
           editorState: convertToRaw(content.getCurrentContent())
         }
       }

@@ -8,7 +8,7 @@ const DateChanger = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [changedDate, setChangedDate] = useState();
 
-  const { date } = state.entry;
+  const date = new Date(state.entry.date);
 
   const month = date.toLocaleString("default", {
     month: "long"
