@@ -11,14 +11,7 @@ const Calendar = () => {
     highlighted: dates.concat(new Date(state.date))
   };
 
-  const handleClick = date => {
-    dispatch({
-      type: "SET_DATE",
-      payload: { date }
-    });
-  };
-
-  const handleMonthChange = date => {
+  const handleChange = date => {
     dispatch({
       type: "SET_DATE",
       payload: { date }
@@ -29,8 +22,8 @@ const Calendar = () => {
     <DayPicker
       month={state.date}
       modifiers={modifiers}
-      onDayClick={handleClick}
-      onMonthChange={handleMonthChange}
+      onDayClick={handleChange}
+      onMonthChange={handleChange}
     />
   );
 };
