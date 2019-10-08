@@ -18,8 +18,7 @@ export function reducer(state, action) {
   switch (action.type) {
     case "SET_DATE":
       firstEntry = state.allEntries.find(
-        entry =>
-          entry.date.toDateString() === action.payload.date.toDateString()
+        entry => entry.date === action.payload.date.toString()
       );
       return {
         date: action.payload.date,
@@ -33,7 +32,7 @@ export function reducer(state, action) {
       return {
         date,
         entry: action.payload.entry,
-        allEntries: state.allEntries,
+        allEntries,
         searchBoolean: false,
         currentFile,
         allFiles
