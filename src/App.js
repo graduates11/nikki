@@ -179,7 +179,6 @@ export default class App extends React.Component {
   };
   render() {
     const { state } = this.context;
-    console.log(state.date);
     return (
       <div className="App mainViewFlex">
         <CurrentFileName />
