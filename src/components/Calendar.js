@@ -18,11 +18,19 @@ const Calendar = () => {
     });
   };
 
+  const handleMonthChange = date => {
+    dispatch({
+      type: "SET_DATE",
+      payload: { date }
+    });
+  };
+
   return (
     <DayPicker
       month={state.date}
       modifiers={modifiers}
       onDayClick={handleClick}
+      onMonthChange={handleMonthChange}
     />
   );
 };

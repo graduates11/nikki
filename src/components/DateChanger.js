@@ -8,7 +8,7 @@ const DateChanger = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [changedDate, setChangedDate] = useState();
 
-  const date = new Date(state.entry.date);
+  const { date } = state.entry;
 
   const month = date.toLocaleString("default", {
     month: "long"
@@ -22,7 +22,7 @@ const DateChanger = () => {
         return toggleCalendar();
       }
       const changedEntry = { ...state.entry };
-      changedEntry.date = changedDate.toDateString();
+      changedEntry.date = changedDate;
       dispatch({
         type: "CHANGE_DATE",
         payload: {

@@ -18,7 +18,8 @@ export function reducer(state, action) {
   switch (action.type) {
     case "SET_DATE":
       firstEntry = state.allEntries.find(
-        entry => entry.date === action.payload.date.toDateString()
+        entry =>
+          entry.date.toDateString() === action.payload.date.toDateString()
       );
       return {
         date: action.payload.date,
