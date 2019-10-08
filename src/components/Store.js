@@ -12,20 +12,22 @@ export function reducer(state, action) {
     searchBoolean
   } = state;
 
+  let firstEntry;
+  let updatedEntries;
+
   switch (action.type) {
-    case "SET_DATE": {
-      const filteredEntry = state.allEntries.filter(
+    case "SET_DATE":
+      firstEntry = state.allEntries.find(
         entry => entry.date === action.payload.date.toDateString()
-      )[0];
+      );
       return {
         date: action.payload.date,
         allEntries,
-        entry: filteredEntry ? filteredEntry : null,
+        entry: firstEntry ? firstEntry : null,
         searchBoolean: false,
         currentFile,
         allFiles
       };
-    }
     case "GET_ENTRY":
       return {
         date,
@@ -35,8 +37,8 @@ export function reducer(state, action) {
         currentFile,
         allFiles
       };
-    case "CHANGE_DATE": {
-      const allEntriesUpdated = state.allEntries.map(entry =>
+    case "CHANGE_DATE":
+      updatedEntries = state.allEntries.map(entry =>
         entry.id === action.payload.entry.id
           ? (entry = action.payload.entry)
           : entry
@@ -44,12 +46,11 @@ export function reducer(state, action) {
       return {
         date: action.payload.date,
         entry: action.payload.entry,
-        allEntries: allEntriesUpdated,
+        allEntries: updatedEntries,
         searchBoolean: false,
         allFiles,
         currentFile
       };
-    }
     case "ADD_NEW_ENTRY":
       return {
         date,
@@ -59,23 +60,15 @@ export function reducer(state, action) {
         currentFile,
         allFiles
       };
-    case "GET_ALL_ENTRIES": {
-      const filteredEntry = // BROKEN
-        action.payload.allEntries === undefined
-          ? null
-          : action.payload.allEntries.filter(
-              entry => entry.date === action.payload.date.toDateString()
-            )[0];
+    case "GET_ALL_ENTRIES":
       return {
         date: action.payload.date,
         allEntries: action.payload.allEntries,
-        entry,
-        // entry: filteredEntry === undefined ? null : filteredEntry,
+        entry: null,
         searchBoolean: false,
         currentFile: action.payload.currentFile,
         allFiles: action.payload.allFiles
       };
-    }
     case "SEARCH":
       return {
         date,
@@ -106,22 +99,20 @@ export function reducer(state, action) {
         allFiles,
         currentFile
       };
-    case "DELETE_ENTRY": {
-      const entry =
-        state.entry !== null && action.payload.id === state.entry.id
-          ? null
-          : state.entry;
+    case "DELETE_ENTRY":
       return {
         date,
         allEntries: state.allEntries.filter(
           item => item.id !== action.payload.id
         ),
-        entry,
+        entry:
+          state.entry !== null && action.payload.id === state.entry.id
+            ? null
+            : state.entry,
         searchBoolean: false,
         currentFile,
         allFiles
       };
-    }
     case "UPDATE_ENTRY":
       return {
         date,
